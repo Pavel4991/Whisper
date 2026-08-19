@@ -1,5 +1,9 @@
 # Whisper
 
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=Pavel4991_Whisper&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=Pavel4991_Whisper)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Pavel4991_Whisper&metric=coverage)](https://sonarcloud.io/summary/new_code?id=Pavel4991_Whisper)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=Pavel4991_Whisper&metric=bugs)](https://sonarcloud.io/summary/new_code?id=Pavel4991_Whisper)
+
 Чат в реальном времени — улучшенная версия учебного проекта hexlet-chat (Slack-аналог).
 
 > Проект в активной разработке: готов каркас (Vite + React 19 + TypeScript + CI),
@@ -53,7 +57,8 @@ npm run dev
 ## Тесты и CI
 
 - Vitest + React Testing Library, MSW, Playwright (e2e)
-- GitHub Actions: lint + typecheck + test на каждый PR — [статус](https://github.com/Pavel4991/Whisper/actions)
+- GitHub Actions: lint + build + test + coverage + SonarQube scan на каждый PR — [статус](https://github.com/Pavel4991/Whisper/actions)
+- SonarCloud: [анализ качества кода](https://sonarcloud.io/project/overview?id=Pavel4991_Whisper)
 
 ## Роадмап
 

@@ -7,9 +7,13 @@ Whisper — чат в реальном времени, улучшенная ве
 
 ## Команды
 - `npm run dev` — Vite dev server (HMR)
+- `npm run start-server` — бэкенд @hexlet/chat-server (порт 5001)
+- `npm run develop` — бэкенд + фронтенд одновременно (concurrently)
 - `npm run build` — tsc -b && vite build
 - `npm run lint` — eslint
 - `npm test` — vitest (npm run test:watch — watch)
+- `npm run test:coverage` — vitest с покрытием (lcov → coverage/lcov.info)
+- Makefile дублирует команды: make install/build/lint/test/coverage/develop
 
 ## Стек
 - React 19, TypeScript (strict: true)
@@ -58,6 +62,11 @@ src/
 - MSW — мок REST + socket.io
 - Playwright — e2e: регистрация → создание канала → обмен сообщениями
 - Новые фичи требуют тестов
+- Покрытие: vitest v8 → coverage/lcov.info (SonarQube читает этот отчёт)
+
+## CI
+- GitHub Actions (.github/workflows/ci.yml): lint → build → test → coverage → SonarQube scan
+- SonarCloud: org hexlet-project, projectKey Pavel4991_Whisper (sonar-project.properties)
 
 ## Роадмап
 см. docs/ROADMAP.md

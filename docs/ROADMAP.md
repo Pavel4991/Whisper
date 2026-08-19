@@ -21,8 +21,10 @@
 - [ ] Горячие клавиши (Ctrl+K, Ctrl+N, Esc)
 
 ## Тесты и инфраструктура
-- [ ] Vitest + RTL, MSW, Playwright e2e
-- [ ] CI: lint + typecheck + test (GitHub Actions)
+- [x] Vitest + React Testing Library (каркас, smoke-тест)
+- [ ] MSW — мок REST + socket.io
+- [ ] Playwright e2e
+- [x] CI: lint + typecheck + test + coverage + SonarQube (GitHub Actions)
 
 ## Собственный бэкенд (отдельно)
 - [ ] Общие типы фронта/бэка в shared/
