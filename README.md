@@ -1,75 +1,60 @@
-# React + TypeScript + Vite
+# Whisper
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Чат в реальном времени — улучшенная версия учебного проекта hexlet-chat (Slack-аналог).
 
-Currently, two official plugins are available:
+> Проект в активной разработке: готов каркас (Vite + React 19 + TypeScript + CI),
+> функциональность — по [роадмапу](docs/ROADMAP.md).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Возможности (план)
+- 🔐 Регистрация и авторизация
+- 💬 Обмен сообщениями в реальном времени (WebSockets)
+- 📁 Управление каналами — создание, переименование, удаление
+- 🔄 Автоматическое обновление без перезагрузки страницы
+- 🚫 Фильтр нецензурной лексики (leo-profanity)
+- 🌐 Локализация (i18next)
+- 🌙 Тёмная тема, 👥 онлайн-пользователи, 🔍 поиск и др. — см. [роадмап](docs/ROADMAP.md)
 
-## React Compiler
+## Технологии
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+| Технология | Назначение |
+|---|---|
+| React 19 + TypeScript (strict) | UI и типизация |
+| TanStack Query | Серверное состояние (каналы, сообщения) |
+| Zustand | Клиентское состояние (модалки, текущий канал, draft) |
+| React Router | Маршрутизация |
+| Socket.io-client | Реалтайм |
+| Axios | HTTP |
+| Mantine + @mantine/form + Yup | UI-кит, формы и валидация |
+| i18next, leo-profanity | Локализация, цензура |
+| Vite, Vitest, MSW, Playwright | Сборка и тесты |
 
-## Expanding the ESLint configuration
+## Установка и запуск
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+```bash
+# Установка зависимостей
+npm install
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+# Запуск бэкенда @hexlet/chat-server (порт 5001)
+npx start-server
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+# Режим разработки (Vite с HMR)
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Команды
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+| Команда | Описание |
+|---|---|
+| `npm run dev` | Dev-сервер (HMR) |
+| `npm run build` | Production-сборка (tsc + vite) |
+| `npm run lint` | Проверка линтером |
+| `npm test` | Тесты (vitest) |
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Тесты и CI
 
-```
+- Vitest + React Testing Library, MSW, Playwright (e2e)
+- GitHub Actions: lint + typecheck + test на каждый PR — [статус](https://github.com/Pavel4991/Whisper/actions)
+
+## Роадмап
+
+см. [docs/ROADMAP.md](docs/ROADMAP.md)
