@@ -29,7 +29,7 @@ Whisper — чат в реальном времени, улучшенная ве
 ## Структура (Feature-Sliced Design)
 src/
 ├── app/        # провайдеры (Mantine, Query, Router, i18n), глобальные стили
-├── pages/      # маршруты-страницы (LoginPage, ChatPage)
+├── pages/      # маршруты-страницы (LoginPage, ChatPage, NotFoundPage)
 ├── widgets/    # композиции UI из фич/сущностей (Sidebar, ChatHeader, MessageList)
 ├── features/   # auth/, channel-management/, message-sending/, profile/
 ├── entities/   # channel/, message/, user/
@@ -47,7 +47,9 @@ src/
 - Бизнес-логика (model/) отделена от UI (ui/)
 
 ## Конвенции
-- strict TS; все API-ответы и события socket.io типизированы
+- strict TS (+ noUncheckedIndexedAccess, exactOptionalPropertyTypes: доступ по индексу
+  даёт T | undefined, optional-поля нельзя присваивать undefined); все API-ответы
+  и события socket.io типизированы
 - Доменные типы (Channel, Message, User) — в entities/<сущность>/model
 - Socket-события — типизированный набор (событие → payload); обновление кэша
   TanStack Query через queryClient.setQueryData
@@ -55,6 +57,10 @@ src/
   данные из сокета не дублируются в сторе
 - Компоненты списков мемоизированы; селекторы Zustand без лишних ре-рендеров
 - Ошибки: Error Boundaries + уведомления Mantine; API-ошибки нормализуются
+- React Router v7: Link/RouterProvider/createBrowserRouter/createMemoryRouter
+  импортируются из корневого 'react-router'; НЕ из 'react-router/dom' (в vitest
+  это даёт два экземпляра пакета и Link падает с NavigationContext: null).
+  v8 требует Node >= 22.22 (в проекте 22.20), поэтому остаёмся на v7
 - Не добавлять комментарии в код без запроса
 
 ## Тесты
