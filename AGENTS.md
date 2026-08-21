@@ -22,7 +22,7 @@ Whisper — чат в реальном времени, улучшенная ве
 - React Router — маршрутизация
 - Socket.io-client — реалтайм (типизированные события)
 - Axios — HTTP
-- Mantine — UI-кит; @mantine/form + Yup — формы и валидация
+- Mantine — UI-кит (core/hooks); react-hook-form — формы и валидация
 - i18next, leo-profanity
 - Vite, Vitest, MSW, Playwright
 
