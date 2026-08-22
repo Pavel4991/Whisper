@@ -1,1 +1,17 @@
-{}
+{
+  "ui": {
+    "homePage": {
+      "loginButton": "Войти",
+      "registerButton": "Зарегистрироваться"
+    },
+    "modals": {
+      "login": "Вход",
+      "register": "Регистрация",
+      "nameField": "Имя пользователя",
+      "passwordField": "Пароль",
+      "emailField": "Email",
+      "registerButton": "Зарегистрироваться",
+      "loginButton": "Войти"
+    }
+  }
+}

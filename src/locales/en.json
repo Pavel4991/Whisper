@@ -1,1 +1,17 @@
-{}
+{
+  "ui": {
+    "homePage": {
+      "loginButton": "Login",
+      "registerButton": "Register"
+    },
+    "modals": {
+      "login": "Login",
+      "register": "Register",
+      "nameField": "Name",
+      "passwordField": "Password",
+      "emailField": "Email",
+      "registerButton": "Register",
+      "loginButton": "Login"
+    }
+  }
+}
