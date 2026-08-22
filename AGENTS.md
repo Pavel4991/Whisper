@@ -1,39 +1,46 @@
 # AGENTS.md
 
 ## Проект
+
 Whisper — чат в реальном времени, улучшенная версия hexlet-chat (Slack-аналог).
 Фронтенд: React 19 + TypeScript (strict). Бэкенд сейчас — @hexlet/chat-server
 (socket.io + REST); собственный сервер планируется отдельно.
 
 ## Команды
+
 - `npm run dev` — Vite dev server (HMR)
 - `npm run start-server` — бэкенд @hexlet/chat-server (порт 5001)
 - `npm run develop` — бэкенд + фронтенд одновременно (concurrently)
 - `npm run build` — tsc -b && vite build
 - `npm run lint` — eslint
+- `npm run format` / `npm run format:check` — Prettier (format:check также шаг в CI)
 - `npm test` — vitest (npm run test:watch — watch)
 - `npm run test:coverage` — vitest с покрытием (lcov → coverage/lcov.info)
 - Makefile дублирует команды: make install/build/lint/test/coverage/develop
 
 ## Стек
+
 - React 19, TypeScript (strict: true)
 - TanStack Query — серверное состояние (каналы, сообщения)
 - Zustand — клиентское состояние (модалки, текущий канал, draft)
 - React Router — маршрутизация
 - Socket.io-client — реалтайм (типизированные события)
-- Axios — HTTP
-- Mantine — UI-кит (core/hooks); react-hook-form — формы и валидация
-- i18next, leo-profanity
-- Vite, Vitest, MSW, Playwright
+- Mantine — UI-кит (core/hooks/form); @mantine/form — формы и валидация
+- i18next — локализация
+- Vite, Vitest, Prettier
+
+Планируется (пока не установлено): Axios — HTTP; leo-profanity — цензура;
+MSW — мок REST + socket.io; Playwright — e2e.
 
 ## Структура (Feature-Sliced Design)
+
 src/
-├── app/        # провайдеры (Mantine, Query, Router, i18n), глобальные стили
-├── pages/      # маршруты-страницы (LoginPage, ChatPage, NotFoundPage)
-├── widgets/    # композиции UI из фич/сущностей (Sidebar, ChatHeader, MessageList)
-├── features/   # auth/, channel-management/, message-sending/, profile/
-├── entities/   # channel/, message/, user/
-├── shared/     # ui/, api/, types/, utils/, validation/, hooks/
+├── app/ # провайдеры (Mantine, Query, Router, i18n), глобальные стили
+├── pages/ # маршруты-страницы (HomePage, ChatPage, NotFoundPage)
+├── widgets/ # композиции UI из фич/сущностей (Sidebar, ChatHeader, MessageList)
+├── features/ # auth/, channel-management/, message-sending/, profile/
+├── entities/ # channel/, message/, user/
+├── shared/ # ui/, api/, types/, utils/, validation/, hooks/
 ├── locales/
 └── styles/
 
@@ -41,12 +48,14 @@ src/
 Алиас `@/` → `src/`.
 
 ## Правила импортов (FSD)
+
 - Слои импортируются строго сверху вниз: pages → widgets → features → entities → shared
 - Срезы одного слоя НЕ импортируют друг друга — общее выносится в shared
 - shared не импортирует ничего из приложения
 - Бизнес-логика (model/) отделена от UI (ui/)
 
 ## Конвенции
+
 - strict TS (+ noUncheckedIndexedAccess, exactOptionalPropertyTypes: доступ по индексу
   даёт T | undefined, optional-поля нельзя присваивать undefined); все API-ответы
   и события socket.io типизированы
@@ -64,15 +73,18 @@ src/
 - Не добавлять комментарии в код без запроса
 
 ## Тесты
+
 - Vitest + React Testing Library — сторы, формы, хуки
-- MSW — мок REST + socket.io
-- Playwright — e2e: регистрация → создание канала → обмен сообщениями
 - Новые фичи требуют тестов
 - Покрытие: vitest v8 → coverage/lcov.info (SonarQube читает этот отчёт)
+- Планируется: MSW (мок REST + socket.io) и Playwright e2e
+  (регистрация → создание канала → обмен сообщениями)
 
 ## CI
-- GitHub Actions (.github/workflows/ci.yml): lint → build → test → coverage → SonarQube scan
+
+- GitHub Actions (.github/workflows/ci.yml): lint → format:check → build → coverage (включает тесты) → SonarQube scan
 - SonarCloud: org hexlet-project, projectKey Pavel4991_Whisper (sonar-project.properties)
 
 ## Роадмап
+
 см. docs/ROADMAP.md

@@ -1,11 +1,13 @@
 # Роадмап
 
 ## База (аналог hexlet-chat)
+
 - [x] Базовый роутинг и страницы (Login / Chat / 404), FSD-каркас, strict TS, алиас `@/`
 - [ ] Регистрация/авторизация, каналы (создание/переименование/удаление)
 - [ ] Сообщения в реальном времени; фильтр leo-profanity; i18n
 
 ## Функциональные улучшения
+
 - [ ] Онлайн-пользователи и статусы (события joined/left)
 - [ ] Редактирование и удаление сообщений (soft-delete)
 - [ ] Реакции-эмодзи на сообщения
@@ -16,17 +18,20 @@
 - [ ] DM (личные сообщения)
 
 ## UX и надёжность
+
 - [ ] Тёмная тема (prefers-color-scheme + переключатель)
 - [ ] WebSocket reconnection (exponential backoff) + индикатор переподключения
 - [ ] Offline-детекция (navigator.onLine)
 - [ ] Горячие клавиши (Ctrl+K, Ctrl+N, Esc)
 
 ## Тесты и инфраструктура
+
 - [x] Vitest + React Testing Library (каркас, smoke-тест)
 - [ ] MSW — мок REST + socket.io
 - [ ] Playwright e2e
 - [x] CI: lint + typecheck + test + coverage + SonarQube (GitHub Actions)
 
 ## Собственный бэкенд (отдельно)
+
 - [ ] Общие типы фронта/бэка в shared/
 - [ ] REST + socket.io сервер (позже)

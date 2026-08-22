@@ -10,6 +10,7 @@
 > функциональность — по [роадмапу](docs/ROADMAP.md).
 
 ## Возможности (план)
+
 - 🔐 Регистрация и авторизация
 - 💬 Обмен сообщениями в реальном времени (WebSockets)
 - 📁 Управление каналами — создание, переименование, удаление
@@ -20,17 +21,18 @@
 
 ## Технологии
 
-| Технология | Назначение |
-|---|---|
-| React 19 + TypeScript (strict) | UI и типизация |
-| TanStack Query | Серверное состояние (каналы, сообщения) |
-| Zustand | Клиентское состояние (модалки, текущий канал, draft) |
-| React Router | Маршрутизация |
-| Socket.io-client | Реалтайм |
-| Axios | HTTP |
-| Mantine + @mantine/form + Yup | UI-кит, формы и валидация |
-| i18next, leo-profanity | Локализация, цензура |
-| Vite, Vitest, MSW, Playwright | Сборка и тесты |
+| Технология                     | Назначение                                           |
+| ------------------------------ | ---------------------------------------------------- |
+| React 19 + TypeScript (strict) | UI и типизация                                       |
+| TanStack Query                 | Серверное состояние (каналы, сообщения)              |
+| Zustand                        | Клиентское состояние (модалки, текущий канал, draft) |
+| React Router                   | Маршрутизация                                        |
+| Socket.io-client               | Реалтайм                                             |
+| Mantine + @mantine/form        | UI-кит, формы и валидация                            |
+| i18next                        | Локализация                                          |
+| Vite, Vitest                   | Сборка и тесты                                       |
+
+Планируется подключить: HTTP-клиент (axios), leo-profanity, MSW, Playwright — см. [роадмап](docs/ROADMAP.md).
 
 ## Установка и запуск
 
@@ -47,17 +49,19 @@ npm run dev
 
 ## Команды
 
-| Команда | Описание |
-|---|---|
-| `npm run dev` | Dev-сервер (HMR) |
-| `npm run build` | Production-сборка (tsc + vite) |
-| `npm run lint` | Проверка линтером |
-| `npm test` | Тесты (vitest) |
+| Команда                | Описание                       |
+| ---------------------- | ------------------------------ |
+| `npm run dev`          | Dev-сервер (HMR)               |
+| `npm run build`        | Production-сборка (tsc + vite) |
+| `npm run lint`         | Проверка линтером              |
+| `npm run format`       | Форматирование кода (Prettier) |
+| `npm run format:check` | Проверка форматирования        |
+| `npm test`             | Тесты (vitest)                 |
 
 ## Тесты и CI
 
-- Vitest + React Testing Library, MSW, Playwright (e2e)
-- GitHub Actions: lint + build + test + coverage + SonarQube scan на каждый PR — [статус](https://github.com/Pavel4991/Whisper/actions)
+- Vitest + React Testing Library; MSW и Playwright (e2e) запланированы
+- GitHub Actions: lint + format:check + build + coverage (включая тесты) + SonarQube scan на каждый PR — [статус](https://github.com/Pavel4991/Whisper/actions)
 - SonarCloud: [анализ качества кода](https://sonarcloud.io/project/overview?id=Pavel4991_Whisper)
 
 ## Роадмап
