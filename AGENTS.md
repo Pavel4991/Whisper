@@ -25,11 +25,12 @@ Whisper — чат в реальном времени, улучшенная ве
 - Zustand — клиентское состояние (модалки, текущий канал, draft)
 - React Router — маршрутизация
 - Socket.io-client — реалтайм (типизированные события)
+- Axios — HTTP-клиент (`shared/api/api-instance.ts`, Bearer-токен из `tokenStorage`)
 - Mantine — UI-кит (core/hooks/form); @mantine/form — формы и валидация
 - i18next — локализация
 - Vite, Vitest, Prettier
 
-Планируется (пока не установлено): Axios — HTTP; leo-profanity — цензура;
+Планируется (пока не установлено): leo-profanity — цензура;
 MSW — мок REST + socket.io; Playwright — e2e.
 
 ## Структура (Feature-Sliced Design)

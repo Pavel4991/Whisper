@@ -28,11 +28,12 @@
 | Zustand                        | Клиентское состояние (модалки, текущий канал, draft) |
 | React Router                   | Маршрутизация                                        |
 | Socket.io-client               | Реалтайм                                             |
+| Axios                          | HTTP-клиент (REST)                                   |
 | Mantine + @mantine/form        | UI-кит, формы и валидация                            |
 | i18next                        | Локализация                                          |
 | Vite, Vitest                   | Сборка и тесты                                       |
 
-Планируется подключить: HTTP-клиент (axios), leo-profanity, MSW, Playwright — см. [роадмап](docs/ROADMAP.md).
+Планируется подключить: leo-profanity, MSW, Playwright — см. [роадмап](docs/ROADMAP.md).
 
 ## Установка и запуск
 
@@ -46,6 +47,10 @@ npx start-server
 # Режим разработки (Vite с HMR)
 npm run dev
 ```
+
+В dev-режиме Vite проксирует `/api` и `/socket.io` на `localhost:5001` —
+CORS-запросы не возникают. Базовый URL API переопределяется переменной
+`VITE_API_BASE_URL` (по умолчанию `/api/v1`).
 
 ## Команды
 

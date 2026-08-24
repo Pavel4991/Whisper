@@ -24,6 +24,19 @@
 - [ ] Offline-детекция (navigator.onLine)
 - [ ] Горячие клавиши (Ctrl+K, Ctrl+N, Esc)
 
+## Технический долг и особенности
+
+- [ ] Хуки TanStack Query (`useLogin`, `useRegister`, `auth.queries`) живут в
+      `features/auth/api/`, а не в `model/` — осознанное отклонение от конвенции
+      в AGENTS.md. При рефакторинге решить: перенести в `model/` или обновить
+      формулировку конвенции
+- [ ] Auth: валидация формы регистрации (совпадение паролей), не отправлять
+      `passwordConfirm` на `/signup`
+- [ ] Auth: убрать `withCredentials` из `api-instance.ts` — сервер работает по
+      Bearer-токену, куки не нужны
+- [ ] Auth: тесты на `tokenStorage`, `authStore`, `useLogin`/`useRegister`
+      (сейчас фича не покрыта)
+
 ## Тесты и инфраструктура
 
 - [x] Vitest + React Testing Library (каркас, smoke-тест)
