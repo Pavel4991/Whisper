@@ -7,9 +7,9 @@
     "modals": {
       "login": "Login",
       "register": "Register",
-      "nameField": "Name",
+      "usernameField": "Name",
       "passwordField": "Password",
-      "emailField": "Email",
+      "passwordConfirmField": "Password confirmation",
       "registerButton": "Register",
       "loginButton": "Login"
     }

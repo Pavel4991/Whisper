@@ -7,9 +7,9 @@
     "modals": {
       "login": "Вход",
       "register": "Регистрация",
-      "nameField": "Имя пользователя",
+      "usernameField": "Имя пользователя",
       "passwordField": "Пароль",
-      "emailField": "Email",
+      "passwordConfirmField": "Подтверждение пароля",
       "registerButton": "Зарегистрироваться",
       "loginButton": "Войти"
     }

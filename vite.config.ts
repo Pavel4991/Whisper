@@ -12,6 +12,10 @@ export default defineConfig({
   },
   server: {
     open: true,
+    proxy: {
+      '/api': { target: 'http://localhost:5001', changeOrigin: true },
+      '/socket.io': { target: 'http://localhost:5001', ws: true },
+    },
   },
   test: {
     environment: 'jsdom',
