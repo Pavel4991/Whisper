@@ -4,6 +4,9 @@
       "loginButton": "Войти",
       "registerButton": "Зарегистрироваться"
     },
+    "chatPage": {
+      "logoutButton": "Выйти"
+    },
     "modals": {
       "login": "Вход",
       "register": "Регистрация",

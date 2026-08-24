@@ -1,6 +1,8 @@
 import { TextInput, Button, Box, Text } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router'
+
 import { registerFormConfig } from '@/features/auth/model/registerFormConfig'
 import { useRegister } from '../api/useRegister'
 
@@ -16,8 +18,15 @@ export function RegisterForm() {
 
   const { mutate: register, isPending, error } = useRegister()
 
+  const navigate = useNavigate()
+
   return (
-    <Box component="form" onSubmit={form.onSubmit((values) => register(values))}>
+    <Box
+      component="form"
+      onSubmit={form.onSubmit((values) =>
+        register(values, { onSuccess: () => navigate('/chat', { replace: true }) }),
+      )}
+    >
       {registerFormConfig.map((field) => (
         <TextInput
           key={field.name}

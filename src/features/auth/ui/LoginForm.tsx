@@ -1,6 +1,8 @@
 import { TextInput, Button, Box, Text } from '@mantine/core'
 import { useForm } from '@mantine/form'
 import { useTranslation } from 'react-i18next'
+import { useNavigate } from 'react-router'
+
 import { loginFormConfig } from '@/features/auth/model/loginFormConfig'
 import { useLogin } from '../api/useLogin'
 
@@ -15,8 +17,15 @@ export function LoginForm() {
 
   const { mutate: login, isPending, error } = useLogin()
 
+  const navigate = useNavigate()
+
   return (
-    <Box component="form" onSubmit={form.onSubmit((values) => login(values))}>
+    <Box
+      component="form"
+      onSubmit={form.onSubmit((values) =>
+        login(values, { onSuccess: () => navigate('/chat', { replace: true }) }),
+      )}
+    >
       {loginFormConfig.map((field) => (
         <TextInput
           key={field.name}

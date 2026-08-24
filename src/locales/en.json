@@ -4,6 +4,9 @@
       "loginButton": "Login",
       "registerButton": "Register"
     },
+    "chatPage": {
+      "logoutButton": "Logout"
+    },
     "modals": {
       "login": "Login",
       "register": "Register",
