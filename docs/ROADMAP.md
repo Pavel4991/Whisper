@@ -30,16 +30,19 @@
       `features/auth/api/`, а не в `model/` — осознанное отклонение от конвенции
       в AGENTS.md. При рефакторинге решить: перенести в `model/` или обновить
       формулировку конвенции
-- [ ] Auth: валидация формы регистрации (совпадение паролей), не отправлять
-      `passwordConfirm` на `/signup`
+- [x] Auth: валидация формы регистрации (совпадение паролей), не отправлять
+      `passwordConfirm` на `/signup` — решено через zod-схемы + transformValues
 - [ ] Auth: убрать `withCredentials` из `api-instance.ts` — сервер работает по
       Bearer-токену, куки не нужны
+- [ ] Auth: `RegisterCredentials` тип — вывести через `z.infer` из схемы
+      вместо ручного определения в `model/types.ts` (опционально)
 - [ ] Auth: тесты на `tokenStorage`, `authStore`, `useLogin`/`useRegister`
       (сейчас фича не покрыта)
 
 ## Тесты и инфраструктура
 
 - [x] Vitest + React Testing Library (каркас, smoke-тест)
+- [ ] Покрытие тестами ≥ 80% — по плану [TESTING_PLAN.md](TESTING_PLAN.md)
 - [ ] MSW — мок REST + socket.io
 - [ ] Playwright e2e
 - [x] CI: lint + typecheck + test + coverage + SonarQube (GitHub Actions)

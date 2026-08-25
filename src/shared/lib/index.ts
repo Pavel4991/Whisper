@@ -1,0 +1,1 @@
+export { createTranslatedResolver } from './translatedResolver'

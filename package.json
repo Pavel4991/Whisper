@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "start-server": "npx start-server",
+    "start-server": "start-server -s dist",
     "develop": "concurrently \"npm:start-server\" \"npm:dev\"",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
@@ -32,6 +32,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@hexlet/chat-server": "^2.0.4",
     "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.5",

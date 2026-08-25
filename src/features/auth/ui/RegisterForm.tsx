@@ -1,10 +1,25 @@
 import { TextInput, Button, Box, Text } from '@mantine/core'
-import { useForm } from '@mantine/form'
+import { useForm, schemaResolver } from '@mantine/form'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
+import { createTranslatedResolver } from '@/shared/lib'
 
 import { registerFormConfig } from '@/features/auth/model/registerFormConfig'
 import { useRegister } from '../api/useRegister'
+
+import { usernameSchema, passwordSchema } from '@/shared/validation'
+import * as z from 'zod'
+
+const registerSchema = z
+  .object({
+    username: usernameSchema,
+    password: passwordSchema,
+    passwordConfirm: z.string(),
+  })
+  .refine((data) => data.password === data.passwordConfirm, {
+    message: 'validation.passwordsDoNotMatch',
+    path: ['passwordConfirm'],
+  })
 
 export function RegisterForm() {
   const { t } = useTranslation()
@@ -14,6 +29,8 @@ export function RegisterForm() {
       password: '',
       passwordConfirm: '',
     },
+    validate: createTranslatedResolver(schemaResolver(registerSchema, { sync: true }), t),
+    validateInputOnBlur: true,
   })
 
   const { mutate: register, isPending, error } = useRegister()
@@ -24,7 +41,10 @@ export function RegisterForm() {
     <Box
       component="form"
       onSubmit={form.onSubmit((values) =>
-        register(values, { onSuccess: () => navigate('/chat', { replace: true }) }),
+        register(
+          { username: values.username, password: values.password },
+          { onSuccess: () => navigate('/chat', { replace: true }) },
+        ),
       )}
     >
       {registerFormConfig.map((field) => (

@@ -16,5 +16,12 @@
       "registerButton": "Register",
       "loginButton": "Login"
     }
+  },
+  "validation": {
+    "requiredField": "Required field",
+    "usernameTooShort": "Too short name",
+    "usernameTooLong": "Too long name",
+    "passwordTooShort": "Too short password",
+    "passwordsDoNotMatch": "Passwords do not match"
   }
 }

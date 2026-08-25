@@ -1,10 +1,16 @@
 import { TextInput, Button, Box, Text } from '@mantine/core'
-import { useForm } from '@mantine/form'
+import { useForm, schemaResolver } from '@mantine/form'
 import { useTranslation } from 'react-i18next'
 import { useNavigate } from 'react-router'
+import { createTranslatedResolver } from '@/shared/lib'
 
 import { loginFormConfig } from '@/features/auth/model/loginFormConfig'
 import { useLogin } from '../api/useLogin'
+
+import { requiredStringSchema } from '@/shared/validation'
+import * as z from 'zod'
+
+const loginSchema = z.object({ username: requiredStringSchema, password: requiredStringSchema })
 
 export function LoginForm() {
   const { t } = useTranslation()
@@ -13,6 +19,7 @@ export function LoginForm() {
       username: '',
       password: '',
     },
+    validate: createTranslatedResolver(schemaResolver(loginSchema, { sync: true }), t),
   })
 
   const { mutate: login, isPending, error } = useLogin()

@@ -27,6 +27,7 @@ Whisper — чат в реальном времени, улучшенная ве
 - Socket.io-client — реалтайм (типизированные события)
 - Axios — HTTP-клиент (`shared/api/api-instance.ts`, Bearer-токен из `tokenStorage`)
 - Mantine — UI-кит (core/hooks/form); @mantine/form — формы и валидация
+- Zod —声明式 валидация (схемы в shared/validation/)
 - i18next — локализация
 - Vite, Vitest, Prettier
 
@@ -41,7 +42,7 @@ src/
 ├── widgets/ # композиции UI из фич/сущностей (Sidebar, ChatHeader, MessageList)
 ├── features/ # auth/, channel-management/, message-sending/, profile/
 ├── entities/ # channel/, message/, user/
-├── shared/ # ui/, api/, types/, utils/, validation/, hooks/
+├── shared/ # ui/, api/, types/, utils/, lib/, validation/, hooks/
 ├── locales/
 └── styles/
 
@@ -71,6 +72,10 @@ src/
   импортируются из корневого 'react-router'; НЕ из 'react-router/dom' (в vitest
   это даёт два экземпляра пакета и Link падает с NavigationContext: null).
   v8 требует Node >= 22.22 (в проекте 22.20), поэтому остаёмся на v7
+- Валидация форм: zod-схемы в `shared/validation/`, атомарные правила
+  (`requiredStringSchema`, `usernameSchema`, `passwordSchema`) переиспользуются;
+  сообщения — ключи локалей; обёртка `createTranslatedResolver` (`shared/lib/`)
+  связывает zod ↔ i18next
 - Не добавлять комментарии в код без запроса
 
 ## Тесты

@@ -16,5 +16,12 @@
       "registerButton": "Зарегистрироваться",
       "loginButton": "Войти"
     }
+  },
+  "validation": {
+    "requiredField": "Обязательное поле",
+    "usernameTooShort": "Слишком короткое имя",
+    "usernameTooLong": "Слишком длинное имя",
+    "passwordTooShort": "Слишком короткий пароль",
+    "passwordsDoNotMatch": "Пароли не совпадают"
   }
 }
