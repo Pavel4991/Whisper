@@ -1,4 +1,4 @@
-const TOKEN_KEY = 'whisper_auth_token'
+export const TOKEN_KEY = 'whisper_auth_token'
 
 export const tokenStorage = {
   getToken: (): string | null => {

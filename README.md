@@ -4,6 +4,8 @@
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Pavel4991_Whisper&metric=coverage)](https://sonarcloud.io/summary/new_code?id=Pavel4991_Whisper)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=Pavel4991_Whisper&metric=bugs)](https://sonarcloud.io/summary/new_code?id=Pavel4991_Whisper)
 
+[Демо](https://whisper-dae0.onrender.com)
+
 Чат в реальном времени — улучшенная версия учебного проекта hexlet-chat (Slack-аналог).
 
 > Проект в активной разработке: готов каркас (Vite + React 19 + TypeScript + CI),
@@ -27,9 +29,9 @@
 | TanStack Query                 | Серверное состояние (каналы, сообщения)              |
 | Zustand                        | Клиентское состояние (модалки, текущий канал, draft) |
 | React Router                   | Маршрутизация                                        |
-| Socket.io-client               | Реалтайм                                             |
+| ws                             | Реалтайм                                             |
 | Axios                          | HTTP-клиент (REST)                                   |
-| Mantine + @mantine/form        | UI-кит, формы и валидация                            |
+| Mantine + @mantine/form + Zod  | UI-кит, формы и声明式 валидация                      |
 | i18next                        | Локализация                                          |
 | Vite, Vitest                   | Сборка и тесты                                       |
 
@@ -42,7 +44,7 @@
 npm install
 
 # Запуск бэкенда @hexlet/chat-server (порт 5001)
-npx start-server
+npm run start-server
 
 # Режим разработки (Vite с HMR)
 npm run dev

@@ -43,11 +43,12 @@
 
 - [x] Vitest + React Testing Library (каркас, smoke-тест)
 - [ ] Покрытие тестами ≥ 80% — по плану [TESTING_PLAN.md](TESTING_PLAN.md)
-- [ ] MSW — мок REST + socket.io
+- [ ] MSW — мок REST + ws
 - [ ] Playwright e2e
 - [x] CI: lint + typecheck + test + coverage + SonarQube (GitHub Actions)
 
 ## Собственный бэкенд (отдельно)
 
 - [ ] Общие типы фронта/бэка в shared/
-- [ ] REST + socket.io сервер (позже)
+- [ ] REST + ws сервер (позже)
+- [ ] Миграция фронтового реалтайма с socket.io-client на ws (при написании собственного сервера)

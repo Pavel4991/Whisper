@@ -4,7 +4,7 @@
 
 Whisper — чат в реальном времени, улучшенная версия hexlet-chat (Slack-аналог).
 Фронтенд: React 19 + TypeScript (strict). Бэкенд сейчас — @hexlet/chat-server
-(socket.io + REST); собственный сервер планируется отдельно.
+(ws + REST); собственный сервер планируется отдельно.
 
 ## Команды
 
@@ -24,7 +24,7 @@ Whisper — чат в реальном времени, улучшенная ве
 - TanStack Query — серверное состояние (каналы, сообщения)
 - Zustand — клиентское состояние (модалки, текущий канал, draft)
 - React Router — маршрутизация
-- Socket.io-client — реалтайм (типизированные события)
+- ws — реалтайм
 - Axios — HTTP-клиент (`shared/api/api-instance.ts`, Bearer-токен из `tokenStorage`)
 - Mantine — UI-кит (core/hooks/form); @mantine/form — формы и валидация
 - Zod —声明式 валидация (схемы в shared/validation/)
@@ -32,7 +32,7 @@ Whisper — чат в реальном времени, улучшенная ве
 - Vite, Vitest, Prettier
 
 Планируется (пока не установлено): leo-profanity — цензура;
-MSW — мок REST + socket.io; Playwright — e2e.
+MSW — мок REST + ws; Playwright — e2e.
 
 ## Структура (Feature-Sliced Design)
 
@@ -60,7 +60,7 @@ src/
 
 - strict TS (+ noUncheckedIndexedAccess, exactOptionalPropertyTypes: доступ по индексу
   даёт T | undefined, optional-поля нельзя присваивать undefined); все API-ответы
-  и события socket.io типизированы
+  и события ws типизированы
 - Доменные типы (Channel, Message, User) — в entities/<сущность>/model
 - Socket-события — типизированный набор (событие → payload); обновление кэша
   TanStack Query через queryClient.setQueryData
@@ -83,7 +83,7 @@ src/
 - Vitest + React Testing Library — сторы, формы, хуки
 - Новые фичи требуют тестов
 - Покрытие: vitest v8 → coverage/lcov.info (SonarQube читает этот отчёт)
-- Планируется: MSW (мок REST + socket.io) и Playwright e2e
+- Планируется: MSW (мок REST + ws) и Playwright e2e
   (регистрация → создание канала → обмен сообщениями)
 
 ## CI
