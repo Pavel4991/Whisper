@@ -52,6 +52,7 @@ export function RegisterForm() {
           key={field.name}
           label={t(field.tKey)}
           placeholder={t(field.tKey)}
+          errorProps={{ 'data-testid': `${field.name}-error` }}
           {...form.getInputProps(field.name)}
           mb="md"
         />
@@ -59,7 +60,11 @@ export function RegisterForm() {
       <Button type="submit" disabled={isPending} fullWidth>
         {t('ui.modals.registerButton')}
       </Button>
-      {error && <Text color="red">Ошибка: {error.message}</Text>}
+      {error && (
+        <Text color="red" data-testid="register-form-server-error">
+          Ошибка: {error.message}
+        </Text>
+      )}
     </Box>
   )
 }

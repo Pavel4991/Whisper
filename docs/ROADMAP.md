@@ -36,14 +36,16 @@
       Bearer-токену, куки не нужны
 - [ ] Auth: `RegisterCredentials` тип — вывести через `z.infer` из схемы
       вместо ручного определения в `model/types.ts` (опционально)
-- [ ] Auth: тесты на `tokenStorage`, `authStore`, `useLogin`/`useRegister`
-      (сейчас фича не покрыта)
+- [x] Auth: unit-тесты на `tokenStorage`, `authStore`, `authApi` и UI-компоненты
+      (Login/Register/ProtectedRoute/Logout), включая флоу через MSW
+- [ ] Auth: тесты на хуки `useLogin`/`useRegister` и сценарии pending/error — покрыть
+      отдельно (сейчас проверяются в составе UI-тестов форм)
 
 ## Тесты и инфраструктура
 
 - [x] Vitest + React Testing Library (каркас, smoke-тест)
+- [x] MSW — мок REST (auth: /login, /signup); сервер подключён глобально в `src/test/setup.ts`
 - [ ] Покрытие тестами ≥ 80% — по плану [TESTING_PLAN.md](TESTING_PLAN.md)
-- [ ] MSW — мок REST + ws
 - [ ] Playwright e2e
 - [x] CI: lint + typecheck + test + coverage + SonarQube (GitHub Actions)
 

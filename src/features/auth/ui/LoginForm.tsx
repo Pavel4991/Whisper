@@ -38,6 +38,7 @@ export function LoginForm() {
           key={field.name}
           label={t(field.tKey)}
           placeholder={t(field.tKey)}
+          errorProps={{ 'data-testid': `${field.name}-error` }}
           {...form.getInputProps(field.name)}
           mb="md"
         />
@@ -45,7 +46,11 @@ export function LoginForm() {
       <Button type="submit" disabled={isPending} fullWidth>
         {t('ui.modals.loginButton')}
       </Button>
-      {error && <Text color="red">Ошибка: {error.message}</Text>}
+      {error && (
+        <Text color="red" data-testid="login-form-server-error">
+          Ошибка: {error.message}
+        </Text>
+      )}
     </Box>
   )
 }

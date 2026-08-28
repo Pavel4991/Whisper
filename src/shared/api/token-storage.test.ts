@@ -16,7 +16,7 @@ describe('tokenStorage', () => {
       expect(tokenStorage.getToken()).toBeNull()
     })
 
-    it('returns key on browser side', () => {
+    it('returns stored token on browser side', () => {
       localStorage.setItem(TOKEN_KEY, 'test-token')
 
       expect(tokenStorage.getToken()).toBe('test-token')
@@ -24,7 +24,7 @@ describe('tokenStorage', () => {
   })
 
   describe('setToken', () => {
-    it('added token to localStorage', () => {
+    it('stores token in localStorage', () => {
       tokenStorage.setToken('new-token')
 
       expect(localStorage.getItem(TOKEN_KEY)).toBe('new-token')
@@ -32,7 +32,7 @@ describe('tokenStorage', () => {
   })
 
   describe('clearToken', () => {
-    it('clear localStorage', () => {
+    it('removes token from localStorage', () => {
       localStorage.setItem(TOKEN_KEY, 'token-to-delete')
 
       tokenStorage.clearToken()

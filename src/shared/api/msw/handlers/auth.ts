@@ -10,11 +10,14 @@ interface AuthCredentials {
 const authRequest = async ({ request }: { request: StrictRequest<AuthCredentials> }) => {
   const requestData = await request.json()
 
-  if (!requestData.username || !requestData.password) {
-    return new HttpResponse(JSON.stringify({ error: 'Username and password are required' }), {
-      status: 400,
+  const createErrorResponse = () =>
+    new HttpResponse(JSON.stringify({ error: 'Unauthorized' }), {
+      status: 401,
       headers: { 'Content-Type': 'application/json' },
     })
+
+  if (requestData.username !== 'test-username' || requestData.password !== 'test-password') {
+    return createErrorResponse()
   }
 
   return HttpResponse.json({
