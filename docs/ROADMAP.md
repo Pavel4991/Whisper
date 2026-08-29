@@ -36,6 +36,9 @@
       Bearer-токену, куки не нужны
 - [ ] Auth: `RegisterCredentials` тип — вывести через `z.infer` из схемы
       вместо ручного определения в `model/types.ts` (опционально)
+- [ ] MSW: единая типизированная фикстура (`src/test/fixtures/`) + factory
+      `createResourceHandlers` вместо дублирования `testData` в
+      `channels.ts`/`messages.ts`; мутируемый state без сброса между тестами
 - [x] Auth: unit-тесты на `tokenStorage`, `authStore`, `authApi` и UI-компоненты
       (Login/Register/ProtectedRoute/Logout), включая флоу через MSW
 - [ ] Auth: тесты на хуки `useLogin`/`useRegister` и сценарии pending/error — покрыть
