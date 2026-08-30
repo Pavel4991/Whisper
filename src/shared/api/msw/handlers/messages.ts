@@ -2,6 +2,7 @@ import { http, HttpResponse, type HttpResponseResolver, type PathParams } from '
 import { BASE_URL } from '../../api-instance'
 import { createErrorResponse } from '../lib/createErrorResponse'
 import { authCheck } from '../lib/authCheck'
+import { testMessages } from '@/test/fixtures/messages'
 
 interface MessageCredentials {
   body: string
@@ -23,11 +24,6 @@ interface MessageErrorResponse {
   error: string
 }
 
-const testData = [
-  { id: '1', body: 'test-text-message-1', channelId: '1', username: 'admin', removable: true },
-  { id: '2', body: 'test-text-message-2', channelId: '2', username: 'admin', removable: true },
-]
-
 const fetchMessagesRequest: HttpResponseResolver<
   PathParams,
   MessageCredentials,
@@ -35,7 +31,7 @@ const fetchMessagesRequest: HttpResponseResolver<
 > = async ({ request }) => {
   const authError = authCheck(request)
   if (authError) return authError
-  return HttpResponse.json<MessageSuccessResponse[]>(testData)
+  return HttpResponse.json<MessageSuccessResponse[]>(testMessages)
 }
 
 const addMessageRequest: HttpResponseResolver<
@@ -71,6 +67,7 @@ const editMessageRequest: HttpResponseResolver<
   const authError = authCheck(request)
   if (authError) return authError
 
+  const messagesToEdit = structuredClone(testMessages)
   const { id } = params
   const requestData = await request.json()
 
@@ -78,7 +75,7 @@ const editMessageRequest: HttpResponseResolver<
     return createErrorResponse<MessageErrorResponse>('Bad Request', 400)
   }
 
-  const messageToEdit = testData.find((message) => message.id === id)
+  const messageToEdit = messagesToEdit.find((message) => message.id === id)
 
   if (!messageToEdit) {
     return createErrorResponse<MessageErrorResponse>('Not Found', 404)
@@ -99,7 +96,7 @@ const removeMessageRequest: HttpResponseResolver<
 
   const { id } = params
 
-  const messageToRemove = testData.find((message) => message.id === id)
+  const messageToRemove = testMessages.find((message) => message.id === id)
 
   if (!messageToRemove) {
     return createErrorResponse<MessageErrorResponse>('Not Found', 404)

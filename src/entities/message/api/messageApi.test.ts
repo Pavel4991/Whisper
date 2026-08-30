@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it } from 'vitest'
 import { messageApi } from './messageApi'
 import { tokenStorage } from '@/shared/api'
 import type { Message } from '../model/types'
+import { testMessages } from '@/test/fixtures/messages'
 
 describe('messageApi', () => {
   beforeEach(() => {
@@ -12,22 +13,7 @@ describe('messageApi', () => {
     it('returns messages from server', async () => {
       const result = await messageApi.fetchMessages()
 
-      expect(result).toEqual<Message[]>([
-        {
-          id: '1',
-          body: 'test-text-message-1',
-          channelId: '1',
-          username: 'admin',
-          removable: true,
-        },
-        {
-          id: '2',
-          body: 'test-text-message-2',
-          channelId: '2',
-          username: 'admin',
-          removable: true,
-        },
-      ])
+      expect(result).toEqual<Message[]>(testMessages)
     })
 
     it('rejects without token', async () => {

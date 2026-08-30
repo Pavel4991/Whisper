@@ -24,7 +24,8 @@ Whisper — чат в реальном времени, улучшенная ве
 - TanStack Query — серверное состояние (каналы, сообщения)
 - Zustand — клиентское состояние (модалки, текущий канал, draft)
 - React Router — маршрутизация
-- ws — реалтайм
+- socket.io-client — реалтайм (бэкенд @hexlet/chat-server на socket.io);
+  `ws` — только для будущего собственного сервера (см. ROADMAP)
 - Axios — HTTP-клиент (`shared/api/api-instance.ts`, Bearer-токен из `tokenStorage`)
 - Mantine — UI-кит (core/hooks/form); @mantine/form — формы и валидация
 - Zod —声明式 валидация (схемы в shared/validation/)

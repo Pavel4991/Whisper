@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it } from 'vitest'
 import { channelApi } from './channelApi'
 import { tokenStorage } from '@/shared/api'
 import type { Channel } from '../model/types'
+import { testChannels } from '@/test/fixtures/channels'
 
 describe('channelApi', () => {
   beforeEach(() => {
@@ -12,10 +13,7 @@ describe('channelApi', () => {
     it('returns channels from server', async () => {
       const result = await channelApi.fetchChannels()
 
-      expect(result).toEqual<Channel[]>([
-        { id: '1', name: 'test-channel-name-1', removable: true },
-        { id: '2', name: 'test-channel-name-2', removable: true },
-      ])
+      expect(result).toEqual<Channel[]>(testChannels)
     })
 
     it('rejects without token', async () => {

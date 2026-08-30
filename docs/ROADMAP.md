@@ -3,7 +3,8 @@
 ## База (аналог hexlet-chat)
 
 - [x] Базовый роутинг и страницы (Login / Chat / 404), FSD-каркас, strict TS, алиас `@/`
-- [ ] Регистрация/авторизация, каналы (создание/переименование/удаление)
+- [x] Регистрация/авторизация (формы + валидация zod, защита роута, API/MSW)
+- [ ] Каналы: создание/переименование/удаление (мутации + UI-модалки)
 - [ ] Сообщения в реальном времени; фильтр leo-profanity; i18n
 
 ## Функциональные улучшения
@@ -36,9 +37,13 @@
       Bearer-токену, куки не нужны
 - [ ] Auth: `RegisterCredentials` тип — вывести через `z.infer` из схемы
       вместо ручного определения в `model/types.ts` (опционально)
-- [ ] MSW: единая типизированная фикстура (`src/test/fixtures/`) + factory
-      `createResourceHandlers` вместо дублирования `testData` в
-      `channels.ts`/`messages.ts`; мутируемый state без сброса между тестами
+- [ ] MSW: тестовые данные вынесены в фикстуры (`src/test/fixtures/channels.ts`,
+      `messages.ts`), но ещё нет factory `createResourceHandlers`; мутируемый
+      state без сброса между тестами не решён (handler-ы защищены
+      `structuredClone` в rename/edit, но фикстуры не аннотированы
+      доменными типами `Channel[]`/`Message[]`). Также — импорт фикстур из
+      хэндлеров MSW (`shared → test`) — осознанное исключение: MSW
+      используется только из тестов
 - [x] Auth: unit-тесты на `tokenStorage`, `authStore`, `authApi` и UI-компоненты
       (Login/Register/ProtectedRoute/Logout), включая флоу через MSW
 - [ ] Auth: тесты на хуки `useLogin`/`useRegister` и сценарии pending/error — покрыть
@@ -47,7 +52,7 @@
 ## Тесты и инфраструктура
 
 - [x] Vitest + React Testing Library (каркас, smoke-тест)
-- [x] MSW — мок REST (auth: /login, /signup); сервер подключён глобально в `src/test/setup.ts`
+- [x] MSW — мок REST (auth: /login, /signup; /channels, /messages); сервер подключён глобально в `src/test/setup.ts`
 - [ ] Покрытие тестами ≥ 80% — по плану [TESTING_PLAN.md](TESTING_PLAN.md)
 - [ ] Playwright e2e
 - [x] CI: lint + typecheck + test + coverage + SonarQube (GitHub Actions)

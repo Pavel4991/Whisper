@@ -2,6 +2,7 @@ import { http, HttpResponse, type HttpResponseResolver, type PathParams } from '
 import { BASE_URL } from '../../api-instance'
 import { createErrorResponse } from '../lib/createErrorResponse'
 import { authCheck } from '../lib/authCheck'
+import { testChannels } from '@/test/fixtures/channels'
 
 interface ChannelCredentials {
   name: string
@@ -19,19 +20,6 @@ interface ChannelErrorResponse {
   error: string
 }
 
-const testData = [
-  {
-    id: '1',
-    name: 'test-channel-name-1',
-    removable: true,
-  },
-  {
-    id: '2',
-    name: 'test-channel-name-2',
-    removable: true,
-  },
-]
-
 const fetchChannelsRequest: HttpResponseResolver<
   PathParams,
   ChannelCredentials,
@@ -40,7 +28,7 @@ const fetchChannelsRequest: HttpResponseResolver<
   const authError = authCheck(request)
   if (authError) return authError
 
-  return HttpResponse.json<ChannelSuccessResponse[]>(testData)
+  return HttpResponse.json<ChannelSuccessResponse[]>(testChannels)
 }
 
 const createChannelRequest: HttpResponseResolver<
@@ -76,6 +64,7 @@ const renameChannelRequest: HttpResponseResolver<
   const authError = authCheck(request)
   if (authError) return authError
 
+  const channelsToEdit = structuredClone(testChannels)
   const { id } = params
   const requestData = await request.json()
 
@@ -83,7 +72,7 @@ const renameChannelRequest: HttpResponseResolver<
     return createErrorResponse<ChannelErrorResponse>('Bad Request', 400)
   }
 
-  const channelToRename = testData.find((channel) => channel.id === id)
+  const channelToRename = channelsToEdit.find((channel) => channel.id === id)
 
   if (!channelToRename) {
     return createErrorResponse<ChannelErrorResponse>('Not Found', 404)
@@ -104,7 +93,7 @@ const removeChannelRequest: HttpResponseResolver<
 
   const { id } = params
 
-  const channelToRemove = testData.find((channel) => channel.id === id)
+  const channelToRemove = testChannels.find((channel) => channel.id === id)
 
   if (!channelToRemove) {
     return createErrorResponse<ChannelErrorResponse>('Not Found', 404)
