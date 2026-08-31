@@ -14,8 +14,8 @@ export const channelApi = {
     return response.data
   },
 
-  renameChannel: async (payload: { id: string; newName: string }): Promise<Channel> => {
-    const response = await apiInstance.patch(`/channels/${payload.id}`, { name: payload.newName })
+  renameChannel: async (payload: { id: string; name: string }): Promise<Channel> => {
+    const response = await apiInstance.patch(`/channels/${payload.id}`, { name: payload.name })
     return response.data
   },
 

@@ -33,13 +33,13 @@ describe('channelApi', () => {
 
   describe('renameChannel', () => {
     it('returns renamed channel', async () => {
-      const result = await channelApi.renameChannel({ id: '1', newName: 'renamed-test-channel' })
+      const result = await channelApi.renameChannel({ id: '1', name: 'renamed-test-channel' })
 
       expect(result).toEqual<Channel>({ id: '1', name: 'renamed-test-channel', removable: true })
     })
 
     it('rejects for unknown channel id', async () => {
-      await expect(channelApi.renameChannel({ id: '999', newName: 'any' })).rejects.toThrow()
+      await expect(channelApi.renameChannel({ id: '999', name: 'any' })).rejects.toThrow()
     })
   })
 

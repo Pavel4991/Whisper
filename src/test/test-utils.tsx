@@ -5,6 +5,9 @@ import { createMemoryRouter, RouterProvider, type RouteObject } from 'react-rout
 import { MantineThemeProvider } from '@/app/providers/mantine'
 
 import '@/app/providers/i18n'
+import { BASE_URL } from '@/shared/api/api-instance'
+import { http, HttpResponse } from 'msw'
+import { server } from '@/shared/api/msw/server'
 
 interface RenderOptionsWithRouter extends Omit<RenderOptions, 'wrapper'> {
   route?: string
@@ -17,7 +20,6 @@ function createTestQueryClient() {
     defaultOptions: {
       queries: {
         retry: false,
-        gcTime: 0,
       },
       mutations: { retry: false },
     },
@@ -53,10 +55,21 @@ export function renderWithProviders(
 
 export function renderHookWithProviders<Result, Props>(callback: (initialProps: Props) => Result) {
   const queryClient = createTestQueryClient()
+
   const result = renderHook(callback, {
     wrapper: ({ children }: { children: ReactNode }) => (
       <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     ),
   })
   return { ...result, queryClient }
+}
+
+// TODO: status захардкожен 400; расширить на (method, path, status = 400)
+// при появлении необходимости возвращать разные коды ошибок (404, 500 и т.д.)
+export function mockServerError(method: 'get' | 'post' | 'patch' | 'delete', path: string) {
+  server.use(
+    http[method](`${BASE_URL}${path}`, () =>
+      HttpResponse.json({ error: 'Bad Request' }, { status: 400 }),
+    ),
+  )
 }
