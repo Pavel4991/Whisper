@@ -1,14 +1,14 @@
 export const registerFormConfig = [
   {
     name: 'username',
-    tKey: 'ui.modals.usernameField',
+    tKey: 'ui.authModals.usernameField',
   },
   {
     name: 'password',
-    tKey: 'ui.modals.passwordField',
+    tKey: 'ui.authModals.passwordField',
   },
   {
     name: 'passwordConfirm',
-    tKey: 'ui.modals.passwordConfirmField',
+    tKey: 'ui.authModals.passwordConfirmField',
   },
 ] as const

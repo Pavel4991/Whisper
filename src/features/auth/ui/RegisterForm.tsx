@@ -58,7 +58,7 @@ export function RegisterForm() {
         />
       ))}
       <Button type="submit" disabled={isPending} fullWidth>
-        {t('ui.modals.registerButton')}
+        {t('ui.authModals.registerButton')}
       </Button>
       {error && (
         <Text color="red" data-testid="register-form-server-error">

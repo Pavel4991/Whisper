@@ -26,10 +26,10 @@
       `src/features/auth/api/useRegister.test.tsx` — пока не выделены отдельно;
       флоу успеха/ошибки покрыт в UI-тестах форм (см. Фаза 2)
 
-## Фаза 2 — UI-компоненты ✅
+## Фаза 2 — UI-компоненты ✅- [x] `src/features/auth/ui/ProtectedRoute.test.tsx`
 
-- [x] `src/features/auth/ui/ProtectedRoute.test.tsx`
       авторизованный → рендер `<Outlet />`; неавторизованный → redirect на `/`
+
 - [x] `src/features/auth/ui/AuthModal.test.tsx`
       заголовок и форма соответствуют `modalType` ('login' | 'register')
 - [x] `src/features/auth/ui/LoginForm.test.tsx`,
@@ -42,6 +42,24 @@
       (кэш сессии `authKeys.session()` — проверить явно)
 - [x] `src/pages/home/ui/HomePage.test.tsx`
       кнопки Login/Register открывают модалку с соответствующим типом
+
+## Фаза 3 — каналы (мутации + UI)
+
+- [x] `src/entities/channel/model/currentChannelStore.test.ts`
+      старт на `'1'`, set (реализовано в Коммите 1)
+- [x] `src/features/channel-management/model/useCreateChannel.test.ts`,
+      `useRenameChannel.test.ts`, `useRemoveChannel.test.ts`
+      успех (обновление кэша через `setQueryData`) и ошибка (кэш без изменений) —
+      реализовано в Коммите 1
+- [ ] `src/features/channel-management/ui/ChannelModal.test.tsx`
+      рендер по `modalType`; сабмит add вызывает create + закрывает;
+      rename; remove-подтверждение; серверная ошибка — ОТЛОЖЕНО (следующий коммит)
+- [ ] `src/widgets/sidebar/ui/ChannelItem.test.tsx`
+      рендер; клик вызывает `setCurrentChannelId`; Menu открывает rename/remove;
+      для не-removable пунктов нет — ОТЛОЖЕНО (следующий коммит)
+- [ ] `src/widgets/sidebar/ui/Sidebar.test.tsx`
+      список каналов из MSW; клик выбирает канал (currentChannelId обновился);
+      кнопки Add/Dropdown открывают модалку — ОТЛОЖЕНО (следующий коммит)
 
 ## Соглашения для тестов
 

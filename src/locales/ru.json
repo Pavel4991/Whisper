@@ -7,7 +7,7 @@
     "chatPage": {
       "logoutButton": "Выйти"
     },
-    "modals": {
+    "authModals": {
       "login": "Вход",
       "register": "Регистрация",
       "usernameField": "Имя пользователя",
@@ -15,6 +15,16 @@
       "passwordConfirmField": "Подтверждение пароля",
       "registerButton": "Зарегистрироваться",
       "loginButton": "Войти"
+    },
+    "channelModals": {
+      "menuLabel": "Управление каналом",
+      "createChannel": "Добавить канал",
+      "renameChannel": "Переименовать канал",
+      "removeChannel": "Удалить канал",
+      "submitButton": "Отправить",
+      "cancelButton": "Отмена",
+      "deleteButton": "Удалить",
+      "removeChannelConfirm": "Вы уверены?"
     }
   },
   "validation": {
@@ -22,6 +32,8 @@
     "usernameTooShort": "Слишком короткое имя",
     "usernameTooLong": "Слишком длинное имя",
     "passwordTooShort": "Слишком короткий пароль",
-    "passwordsDoNotMatch": "Пароли не совпадают"
+    "passwordsDoNotMatch": "Пароли не совпадают",
+    "channelNameTooShort": "Слишком короткое имя",
+    "channelNameTooLong": "Слишком длинное имя"
   }
 }

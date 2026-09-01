@@ -7,7 +7,7 @@
     "chatPage": {
       "logoutButton": "Logout"
     },
-    "modals": {
+    "authModals": {
       "login": "Login",
       "register": "Register",
       "usernameField": "Name",
@@ -15,6 +15,16 @@
       "passwordConfirmField": "Password confirmation",
       "registerButton": "Register",
       "loginButton": "Login"
+    },
+    "channelModals": {
+      "menuLabel": "Channel management",
+      "createChannel": "Add channel",
+      "renameChannel": "Rename channel",
+      "removeChannel": "Remove channel",
+      "submitButton": "Submit",
+      "cancelButton": "Cancel",
+      "deleteButton": "Delete",
+      "removeChannelConfirm": "Are you sure?"
     }
   },
   "validation": {
@@ -22,6 +32,8 @@
     "usernameTooShort": "Too short name",
     "usernameTooLong": "Too long name",
     "passwordTooShort": "Too short password",
-    "passwordsDoNotMatch": "Passwords do not match"
+    "passwordsDoNotMatch": "Passwords do not match",
+    "channelNameTooShort": "Too short name",
+    "channelNameTooLong": "Too long name"
   }
 }

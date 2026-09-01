@@ -8,3 +8,8 @@ export const usernameSchema = z
   .max(20, 'validation.usernameTooLong')
 
 export const passwordSchema = z.string().min(6, 'validation.passwordTooShort')
+
+export const channelNameSchema = z
+  .string()
+  .min(1, 'validation.channelNameTooShort')
+  .max(20, 'validation.channelNameTooLong')

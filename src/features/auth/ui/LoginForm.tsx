@@ -44,7 +44,7 @@ export function LoginForm() {
         />
       ))}
       <Button type="submit" disabled={isPending} fullWidth>
-        {t('ui.modals.loginButton')}
+        {t('ui.authModals.loginButton')}
       </Button>
       {error && (
         <Text color="red" data-testid="login-form-server-error">

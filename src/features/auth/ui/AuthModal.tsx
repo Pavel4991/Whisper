@@ -15,7 +15,7 @@ export function AuthModal({ modalType, isOpened, onClose }: AuthModalProps) {
 
   return (
     <Modal
-      title={modalType === 'login' ? t('ui.modals.login') : t('ui.modals.register')}
+      title={modalType === 'login' ? t('ui.authModals.login') : t('ui.authModals.register')}
       opened={isOpened}
       onClose={onClose}
     >

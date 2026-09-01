@@ -1,1 +1,1 @@
-export { requiredStringSchema, usernameSchema, passwordSchema } from './schemas'
+export { requiredStringSchema, usernameSchema, passwordSchema, channelNameSchema } from './schemas'

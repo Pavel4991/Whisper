@@ -10,3 +10,5 @@ export interface RenameChannelPayload {
 export interface RemoveChannelPayload {
   id: string
 }
+
+export type ChannelModalType = 'createChannel' | 'renameChannel' | 'removeChannel'

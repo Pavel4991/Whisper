@@ -51,12 +51,16 @@ React 19 + TypeScript (strict) + FSD (Feature-Sliced Design).
   MSW-handler-ы импортируют фикстуры (rename/edit защищены `structuredClone`),
   `useMessages` фикс `toEqual([testMessages[0]])`; синхронизация доков
   (ROADMAP: auth [x], каналы-мутации [ ]; AGENTS: socket.io-client реалтайм)
+- e65065d **Фаза 3, Коммит 1**: `currentChannelStore` (zustand), barrel
+  `entities/channel/model/index.ts`, payload-типы каналов, мутации
+  `useCreateChannel`/`useRenameChannel`/`useRemoveChannel` (+ `setQueryData`),
+  re-export хуков; тесты хуков и стора
 
 ### Статусы проверок (актуально)
 
-- Тесты: 44 passed (14 файлов)
+- Тесты: 52 passed (18 файлов)
 - Lint, format:check, build — чистые
-- Фаза 1/2/рефакторинг запушены в `main`
+- Фаза 1/2/рефакторинг запушены в `main`; Фаза 3, Коммит 1 — в `main`
 
 ### Открытые техдолги (подробно в docs/ROADMAP.md)
 
@@ -75,7 +79,8 @@ React 19 + TypeScript (strict) + FSD (Feature-Sliced Design).
 - [x] **Фаза 1** — API-слой каналов/сообщений (REST) + MSW
 - [x] **Фаза 2** — query-хуки чтения `useChannels`/`useMessages` + тесты
 - [x] **Промежуточный рефакторинг** — фикстуры + синхронизация доков
-- [ ] **Фаза 3** — каналы: создание/переименование/удаление (мутации + UI). НА ТЕКУЩЕЙ СЕССИИ ПЛАНИРУЕТСЯ.
+- [ ] **Фаза 3** — каналы: создание/переименование/удаление (мутации + UI). Реализация готова
+      (2 коммита: мутации + UI); UI-тесты каналов — отложены в отдельный коммит.
 - [ ] **Фаза 4** — сообщения в реальном времени (MSW socket.io + socket.io-client), leo-profanity, i18n
 - [ ] **Функциональные улучшения** (см. ROADMAP): онлайн-статусы, edit/delete сообщений soft-delete, реакции, пагинация, поиск, упоминания, непрочитанные, DM
 - [ ] **UX/надёжность**: тёмная тема, reconnection, offline, горячие клавиши
@@ -148,48 +153,44 @@ React 19 + TypeScript (strict) + FSD (Feature-Sliced Design).
 
 #### Коммит 2: `feat(widgets): add channel sidebar with CRUD modal and integrate into chat`
 
-UI и интеграция.
+UI и интеграция (реализовано).
 
-- `src/locales/ru.json` + `en.json`:
-  `validation.channelNameTooShort`, `validation.channelNameTooLong`,
-  `ui.sidebar.channels`, `ui.sidebar.addChannel`,
-  `ui.channelModal.add/rename/remove`, `ui.channelModal.channelNameField`,
-  `ui.channelModal.addButton/renameButton/removeButton`,
-  `ui.channelModal.removeConfirmText`
-- `src/shared/validation/schemas.ts` — добавить `channelNameSchema`
-  (string min 1 `validation.channelNameTooShort` / max 50 `validation.channelNameTooLong`);
-  `src/shared/validation/index.ts` — экспорт `channelNameSchema`
-- `src/features/channel-management/model/channelFormConfig.ts` (new) — конфиг
-  поля name (образец `features/auth/model/loginFormConfig.ts`)
+- `@tabler/icons-react` — установлен (иконки DotsVertical/Edit/Trash в Menu)
+- `ui.modals.*` → `ui.authModals.*` — переименовано в локалях и auth-коде
+- `src/locales/ru.json` + `en.json`: `validation.channelNameTooShort/TooLong`,
+  `ui.channelModals.*` (menuLabel, createChannel, renameChannel, removeChannel,
+  submitButton, cancelButton, deleteButton, removeChannelConfirm)
+- `src/shared/validation/schemas.ts` — `channelNameSchema` (min 1 / max 20);
+  `src/shared/validation/index.ts` — экспорт
+- `src/features/channel-management/model/types.ts` — `ChannelModalType =
+'createChannel' | 'renameChannel' | 'removeChannel'`
+- `src/features/channel-management/model/channelFormConfig.ts` (new) — объект
+  по `ChannelModalType`: submitTKey/cancelTkey
 - `src/features/channel-management/ui/ChannelModal.tsx` (new):
-  `{ mode, isOpened, channel?, onClose }`:
-  - mode add: TextInput name + кнопка → `useCreateChannel`, закрыть по success
-  - mode rename: форма pre-filled `channel.name` → `useRenameChannel({id})`, закрыть по success
-  - mode remove: подтверждение (имя канала) + кнопка → `useRemoveChannel({id})`, закрыть по success
-  - валидация `createTranslatedResolver(schemaResolver(channelSchema, {sync:true}), t)`
-  - `data-testid` для полей/ошибок (паттерн LoginForm)
-- `src/features/channel-management/index.ts` (new) — re-export `ChannelModal`
-- `src/widgets/sidebar/ui/Sidebar.tsx` (new): `useChannels()` список; клик →
-  `setCurrentChannel()` (подсветка активного); «+ Добавить канал» → модал add;
-  для removable → rename/remove; локальный `useState` активной модалки
-  (mode + channel)
-- `src/widgets/sidebar/index.ts` (new)
-- `src/pages/chat/ui/ChatPage.tsx` — рендер `<Sidebar />` + правая область
-  (заглушка; сообщения — Фаза 4); опционально заголовок с именем текущего канала
-- (FSD) widgets может импортировать entity `useChannels` и feature `ChannelModal`
+  `{ modalType, isOpened, onClose, channelId }`; единый `useForm` (add/rename —
+  валидация `channelNameSchema` через `createTranslatedResolver`; remove —
+  подтверждение `removeChannelConfirm`); серверная ошибка `data-testid=
+channel-modal-server-error`; закрыть по success
+- `src/widgets/sidebar/ui/ChannelItem.tsx` (new): строка канала; клик →
+  `setCurrentChannelId(channel.id)` (переключение канала); подсветка активного;
+  Mantine `<Menu>` (ActionIcon-якорь) c пунктами rename/remove для `removable`
+- `src/widgets/sidebar/ui/Sidebar.tsx` (new): `useChannels` +
+  `useCurrentChannelStore`; кнопка «Добавить канал»; локальный стейт модалки
+  (`modalType` + `channelId`); рендер `ChannelModal`
+- `src/widgets/sidebar/index.ts` (new) — re-export `Sidebar`
+- `src/pages/chat/ui/ChatPage.tsx` — `Flex`: `<Sidebar />` + правая область
+  (заглушка; сообщения — Фаза 4); сохранён `<h1>Chat</h1>` + `LogoutButton`
+- (FSD) widgets импортирует entity `useChannels`/`useCurrentChannelStore` и
+  feature `ChannelModal`
 
-Тесты Коммита 2:
-
-- `ChannelModal.test.tsx` — рендер по mode; сабмит add вызывает create + закрывает;
-  rename pre-filled; remove подтверждение; серверная ошибка показывается
-- `Sidebar.test.tsx` — список каналов из MSW; клик выбирает канал
-  (currentChannelId обновился); кнопки Add/Rename/Remove открывают модалку
+> Тесты UI-каналов (`ChannelModal.test.tsx`, `ChannelItem.test.tsx`,
+> `Sidebar.test.tsx`) — **отложены в отдельный коммит** (в текущем — не входят).
 
 Доки (в Коммите 2):
 
 - `docs/TESTING_PLAN.md` — добавить Фазу 3
-- `docs/ROADMAP.md` — строка 7: отметить создание/переименование/удаление каналов
-  `[x]` (сообщения в реалтайме — отдельной строкой)
+- `docs/ROADMAP.md` — отметить создание/переименование/удаление каналов
+  (строка 7) `[x]` (сообщения в реалтайме — отдельной строкой)
 
 ### Проверки (для обоих коммитов)
 
@@ -198,6 +199,8 @@ UI и интеграция.
 
 ## Заметки на будущее
 
+- Отложенный TODO Фазы 3: UI-тесты каналов — `ChannelModal.test.tsx`,
+  `ChannelItem.test.tsx`, `Sidebar.test.tsx` (одним коммитом после Commit 2).
 - После завершения ВСЕХ фаз — вернуться к техдолгу MSW (factory
   `createResourceHandlers`, мутируемый state, типизация фикстур, `shared → test`).
 - В Фазе 4 сообщений: понадобится MSW socket.io-события + socket.io-client

@@ -1,10 +1,10 @@
 export const loginFormConfig = [
   {
     name: 'username',
-    tKey: 'ui.modals.usernameField',
+    tKey: 'ui.authModals.usernameField',
   },
   {
     name: 'password',
-    tKey: 'ui.modals.passwordField',
+    tKey: 'ui.authModals.passwordField',
   },
 ] as const
