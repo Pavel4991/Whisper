@@ -63,16 +63,21 @@ modal and integrate into chat`: `ChannelModal` (единый по `modalType` =
   `Sidebar` (список, кнопка add, стейт модалки, `channel-list-server-error`),
   интеграция в `ChatPage`, `ui.modals.*` → `ui.authModals.*` в локалях/коде,
   доки синхронизированы (ROADMAP каналы `[x]`, TESTING_PLAN Фаза 3)
+- 5deb622 **Пункт G** `test: cover channel management UI (ChannelModal,
+  ChannelItem, Sidebar)`: правки ChannelModal.tsx (aria-label, errorProps,
+  data-testid), ChannelModal.test.tsx (8 тестов), ChannelItem.test.tsx (5),
+  Sidebar.test.tsx (6); синхронизация доков
 
 ### Статусы проверок (актуально)
 
-- Тесты: 52 passed (18 файлов); lint, format:check, build — чистые
-- Запушено в `main`: Фазы 1/2, рефакторинг, Фаза 3 (Коммиты 1 и 2)
+- Тесты: 71 passed (21 файлов); lint, format:check, build — чистые
+- Покрытие: 95.23% lines, 93.73% statements
+- Запушено в `main`: Фазы 1/2, рефакторинг, Фаза 3 (Коммиты 1, 2, Пункт G)
 
-### Текущая задача: Пункт G — тесты UI-каналов (НЕ начато)
+### Следующая задача: Фаза 4 — сообщения в реальном времени
 
-UI-тесты отложены из Commit 2 в отдельный коммит. Точный план — см. раздел
-«План Пункта G — тесты UI-каналов» в конце файла.
+Сообщения в реальном времени (MSW socket.io + socket.io-client),
+leo-profanity, i18n. См. ROADMAP.md.
 
 ### Открытые техдолги (подробно в docs/ROADMAP.md)
 
@@ -91,8 +96,8 @@ UI-тесты отложены из Commit 2 в отдельный коммит.
 - [x] **Фаза 1** — API-слой каналов/сообщений (REST) + MSW
 - [x] **Фаза 2** — query-хуки чтения `useChannels`/`useMessages` + тесты
 - [x] **Промежуточный рефакторинг** — фикстуры + синхронизация доков
-- [ ] **Фаза 3** — каналы: создание/переименование/удаление (мутации + UI). Реализация готова
-      (2 коммита: мутации + UI); UI-тесты каналов — отложены в отдельный коммит.
+- [x] **Фаза 3** — каналы: создание/переименование/удаление (мутации + UI + тесты).
+      3 коммита: мутации, UI, UI-тесты (Пункт G).
 - [ ] **Фаза 4** — сообщения в реальном времени (MSW socket.io + socket.io-client), leo-profanity, i18n
 - [ ] **Функциональные улучшения** (см. ROADMAP): онлайн-статусы, edit/delete сообщений soft-delete, реакции, пагинация, поиск, упоминания, непрочитанные, DM
 - [ ] **UX/надёжность**: тёмная тема, reconnection, offline, горячие клавиши

@@ -51,15 +51,15 @@
       `useRenameChannel.test.ts`, `useRemoveChannel.test.ts`
       успех (обновление кэша через `setQueryData`) и ошибка (кэш без изменений) —
       реализовано в Коммите 1
-- [ ] `src/features/channel-management/ui/ChannelModal.test.tsx`
-      рендер по `modalType`; сабмит add вызывает create + закрывает;
-      rename; remove-подтверждение; серверная ошибка — ОТЛОЖЕНО (следующий коммит)
-- [ ] `src/widgets/sidebar/ui/ChannelItem.test.tsx`
-      рендер; клик вызывает `setCurrentChannelId`; Menu открывает rename/remove;
-      для не-removable пунктов нет — ОТЛОЖЕНО (следующий коммит)
-- [ ] `src/widgets/sidebar/ui/Sidebar.test.tsx`
-      список каналов из MSW; клик выбирает канал (currentChannelId обновился);
-      кнопки Add/Dropdown открывают модалку — ОТЛОЖЕНО (следующий коммит)
+- [x] `src/features/channel-management/ui/ChannelModal.test.tsx`
+      рендер по `modalType`; сабмит add/rename + проверка кэша; remove-подтверждение;
+      валидация; серверная ошибка — реализовано в Пункте G
+- [x] `src/widgets/sidebar/ui/ChannelItem.test.tsx`
+      рендер; клик вызывает `setCurrentChannelId`; Menu rename/remove вызывает
+      `openModal` с правильными аргументами; не-removable: меню нет — реализовано в Пункте G
+- [x] `src/widgets/sidebar/ui/Sidebar.test.tsx`
+      список каналов из `setQueryData`; клик выбирает канал;
+      кнопки Add/Dropdown открывают модалку; серверная ошибка GET — реализовано в Пункте G
 
 ## Соглашения для тестов
 
