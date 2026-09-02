@@ -28,6 +28,7 @@ Whisper — чат в реальном времени, улучшенная ве
   `ws` — только для будущего собственного сервера (см. ROADMAP)
 - Axios — HTTP-клиент (`shared/api/api-instance.ts`, Bearer-токен из `tokenStorage`)
 - Mantine — UI-кит (core/hooks/form); @mantine/form — формы и валидация
+- @tabler/icons-react — иконки (используется в ChannelItem: Menu rename/remove)
 - Zod —声明式 валидация (схемы в shared/validation/)
 - i18next — локализация
 - Vite, Vitest, Prettier
@@ -40,9 +41,13 @@ Playwright — e2e.
 src/
 ├── app/ # провайдеры (Mantine, Query, Router, i18n), глобальные стили
 ├── pages/ # маршруты-страницы (HomePage, ChatPage, NotFoundPage)
-├── widgets/ # композиции UI из фич/сущностей (Sidebar, ChatHeader, MessageList)
-├── features/ # auth/, channel-management/, message-sending/, profile/
-├── entities/ # channel/, message/, user/
+├── widgets/ # композиции UI из фич/сущностей; реализован sidebar/ (Sidebar,
+│ # ChannelItem) — см. Phase 3; ChatHeader, MessageList — Phase 4+
+├── features/ # auth/ (реализован); channel-management/ (реализован: мутации
+│ # + единый ChannelModal по modalType + channelFormConfig по типу);
+│ # message-sending/, profile/ — плановые
+├── entities/ # channel/ (api + currentChannelStore) и message/ (api) —
+│ # реализованы; user/ — заглушка
 ├── shared/ # ui/, api/, types/, utils/, lib/, validation/, hooks/
 ├── locales/
 └── styles/
@@ -86,6 +91,10 @@ src/
 - Покрытие: vitest v8 → coverage/lcov.info (SonarQube читает этот отчёт)
 - MSW — мок REST (handlers в `shared/api/msw/`, сервер глобально подключён в
   `src/test/setup.ts`); тест-хелпер `renderWithProviders` — в `src/test/test-utils.tsx`
+- Фикстуры тестовых данных — `src/test/fixtures/channels.ts` (`testChannels`)
+  и `messages.ts` (`testMessages`); все каналы в фикстурах `removable: true`
+- Хелперы в `src/test/test-utils.tsx`: `renderHookWithProviders` (хуки и сторы),
+  `mockServerError(method, path)` (захардкожен на 400 — TODO расширить на коды)
 - Планируется: Playwright e2e (регистрация → создание канала → обмен сообщениями)
 
 ## CI
@@ -96,3 +105,4 @@ src/
 ## Роадмап
 
 см. docs/ROADMAP.md
+Текущий статус и пошаговый план работы — см. docs/SESSION_PLAN.md

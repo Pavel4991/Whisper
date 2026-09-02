@@ -55,12 +55,24 @@ React 19 + TypeScript (strict) + FSD (Feature-Sliced Design).
   `entities/channel/model/index.ts`, payload-типы каналов, мутации
   `useCreateChannel`/`useRenameChannel`/`useRemoveChannel` (+ `setQueryData`),
   re-export хуков; тесты хуков и стора
+- 559444e **Фаза 3, Коммит 2** `feat(widgets): add channel sidebar with CRUD
+modal and integrate into chat`: `ChannelModal` (единый по `modalType` =
+  createChannel/renameChannel/removeChannel, `channelId` пропом),
+  `channelFormConfig` по типу (не массив), `ChannelItem` (клик →
+  `setCurrentChannelId`, Menu rename/remove через `@tabler/icons-react`),
+  `Sidebar` (список, кнопка add, стейт модалки, `channel-list-server-error`),
+  интеграция в `ChatPage`, `ui.modals.*` → `ui.authModals.*` в локалях/коде,
+  доки синхронизированы (ROADMAP каналы `[x]`, TESTING_PLAN Фаза 3)
 
 ### Статусы проверок (актуально)
 
-- Тесты: 52 passed (18 файлов)
-- Lint, format:check, build — чистые
-- Фаза 1/2/рефакторинг запушены в `main`; Фаза 3, Коммит 1 — в `main`
+- Тесты: 52 passed (18 файлов); lint, format:check, build — чистые
+- Запушено в `main`: Фазы 1/2, рефакторинг, Фаза 3 (Коммиты 1 и 2)
+
+### Текущая задача: Пункт G — тесты UI-каналов (НЕ начато)
+
+UI-тесты отложены из Commit 2 в отдельный коммит. Точный план — см. раздел
+«План Пункта G — тесты UI-каналов» в конце файла.
 
 ### Открытые техдолги (подробно в docs/ROADMAP.md)
 
@@ -197,10 +209,72 @@ channel-modal-server-error`; закрыть по success
 `npm run format:check`, `npm test`, `npm run lint`, `npm run build`;
 в конце Фазы 3 — `npm run test:coverage`.
 
+## План Пункта G — тесты UI-каналов
+
+### Правки кода (тестируемость + доступность)
+
+- `src/features/channel-management/ui/ChannelModal.tsx`: в `TextInput` имени
+  добавить `label`/`aria-label` (ключ локали `ui.channelModals.nameField`) и
+  `errorProps={{ 'data-testid': 'name-error' }}` (паттерн `LoginForm`)
+- `src/locales/ru.json` + `en.json`: добавить `ui.channelModals.nameField`
+  («Название канала» / «Channel name»)
+
+### Тест-файл 1: `src/features/channel-management/ui/ChannelModal.test.tsx`
+
+- Сетап: `renderWithProviders`, `tokenStorage.setToken('test-token')`,
+  `onClose = vi.fn()`, сброс стора в `afterEach`
+- Заголовок по `modalType`: create/rename/remove («Добавить канал» /
+  «Переименовать канал» / «Удалить канал»)
+- remove: показывает `removeChannelConfirm`, поля ввода нет
+- create: ввод имени + сабмит → `onClose` вызван, кэш `channelKeys.all` обновлён
+- rename: `onClose` вызван, имя обновилось
+- remove: `onClose` вызван, канал убран из кэша
+- Валидация: пустой сабмит → виден `name-error`
+- Ошибка create: `mockServerError('post','/channels')` → `channel-modal-server-error`
+- (404 для rename/remove — расширить `mockServerError` или `server.use` со
+  статусом напрямую; `mockServerError` захардкожен на 400)
+
+### Тест-файл 2: `src/widgets/sidebar/ui/ChannelItem.test.tsx`
+
+- `ChannelItem` принимает `channel` и `openModal` (mock `vi.fn()`), обёрнут
+  `renderWithProviders` (для zustand-стора)
+- Рендер имени канала
+- Клик по каналу → `currentChannelId` в `useCurrentChannelStore` = `channel.id`
+- Removable: клик по `ActionIcon` (aria-label `ui.channelModals.menuLabel`) →
+  Menu; клик «Переименовать канал» → `openModal('renameChannel', id)`;
+  «Удалить канал» → `openModal('removeChannel', id)`
+- Не-removable: передать канал пропом `{ removable: false }` → Menu отсутствует
+  (`queryByRole`)
+
+### Тест-файл 3: `src/widgets/sidebar/ui/Sidebar.test.tsx`
+
+- `useChannels()` через MSW (`/channels`) → нужен токен; `findByText` пока грузится
+- Список каналов из `testChannels` + кнопка «Добавить канал»
+- Клик по каналу → `currentChannelId` обновлён
+- Кнопка «Добавить канал» → модалка «Добавить канал» открыта
+- Дропдаун канала → rename/remove открывают соответствующую модалку
+- (опц.) Ошибка списка: `mockServerError('get','/channels')` →
+  `channel-list-server-error`
+
+### Общий сетап тестов каналов
+
+- `afterEach`: сброс `useCurrentChannelStore` (глобальный zustand-синглтон)
+- Токен в `beforeAll`/`beforeEach`, очистка в `afterAll`/`afterEach`
+  (паттерн `useChannels.test`)
+
+### Проверки
+
+`npm run format:check && npm test && npm run lint && npm run build && npm run test:coverage`
+
+### Коммит (один тестовый, без push)
+
+`test: cover channel management UI (ChannelModal, ChannelItem, Sidebar)`
+
 ## Заметки на будущее
 
 - Отложенный TODO Фазы 3: UI-тесты каналов — `ChannelModal.test.tsx`,
   `ChannelItem.test.tsx`, `Sidebar.test.tsx` (одним коммитом после Commit 2).
+  → Пункт G, план развёрнут выше; приступить к работе.
 - После завершения ВСЕХ фаз — вернуться к техдолгу MSW (factory
   `createResourceHandlers`, мутируемый state, типизация фикстур, `shared → test`).
 - В Фазе 4 сообщений: понадобится MSW socket.io-события + socket.io-client

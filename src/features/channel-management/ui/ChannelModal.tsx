@@ -65,9 +65,17 @@ export function ChannelModal({ modalType, isOpened, onClose, channelId }: Channe
     <Modal title={t(`ui.channelModals.${modalType}`)} opened={isOpened} onClose={onClose}>
       <Box component="form" onSubmit={form.onSubmit(channelHandler)}>
         {modalType === 'removeChannel' ? (
-          <Text mb={10}>{t('ui.channelModals.removeChannelConfirm')}</Text>
+          <Text mb={10} data-testid="channel-remove-confirmation">
+            {t('ui.channelModals.removeChannelConfirm')}
+          </Text>
         ) : (
-          <TextInput mb={10} {...form.getInputProps('name')} disabled={isPending} />
+          <TextInput
+            mb={10}
+            aria-label={t(`ui.channelModals.${modalType}`)}
+            errorProps={{ 'data-testid': `channel-name-error` }}
+            {...form.getInputProps('name')}
+            disabled={isPending}
+          />
         )}
 
         {currentError && (
