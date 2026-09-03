@@ -22,7 +22,7 @@ describe('HomePage', () => {
     renderHomePage()
 
     const user = userEvent.setup()
-    const registerButton = await screen.findByRole('button', { name: 'Зарегистрироваться' })
+    const registerButton = await screen.findByRole('button', { name: 'Начать' })
 
     await user.click(registerButton)
 

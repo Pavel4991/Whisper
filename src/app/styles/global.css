@@ -1,0 +1,48 @@
+@import '@fontsource-variable/geist';
+@import '@fontsource-variable/geist-mono';
+
+:root {
+  --page-background: #edfaff;
+
+  --brand: #49b2b8;
+  --brand-subtle: #cff5f7;
+  --text-primary: #101b26;
+
+  /* --- ИНТЕРФЕЙСНЫЙ ШРИФТ (Основной) --- */
+  --font-fallback-sans:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  /* Указываем имя шрифта, созданное Fontsource */
+  --chat-font-sans: 'Geist Variable', var(--font-fallback-sans);
+
+  /* --- МОНОШИРИННЫЙ ШРИФТ (Логотип, бейджи) --- */
+  --font-fallback-mono: ui-monospace, SFMono-Regular, 'Segoe UI Mono', Menlo, Consolas, monospace;
+  /* Указываем имя шрифта, созданное Fontsource */
+  --chat-font-mono: 'Geist Mono Variable', var(--font-fallback-mono);
+}
+
+[data-mantine-color-scheme='dark'] {
+  --page-background: #292d3a;
+}
+
+body {
+  font-family: var(--chat-font-sans);
+  background-color: var(--page-background);
+  transition: background-color 0.2s ease;
+}
+
+a {
+  color: var(--mantine-color-blue-filled);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+button:hover {
+  opacity: 90%;
+}
+
+.font-mono {
+  font-family: var(--chat-font-mono);
+}

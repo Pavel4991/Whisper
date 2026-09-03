@@ -6,6 +6,7 @@ import { afterEach, describe, expect, it } from 'vitest'
 import { MantineThemeProvider } from '@/app/providers/mantine'
 import { routes } from '@/app/router/routes'
 import { useAuthStore } from '@/features/auth/model/authStore'
+import '@/app/providers/i18n'
 
 function renderRoute(path: string) {
   const router = createMemoryRouter(routes, { initialEntries: [path] })
@@ -27,7 +28,9 @@ describe('App routing', () => {
   it('renders HomePage at /', () => {
     renderRoute('/')
 
-    expect(screen.getByRole('heading', { name: 'HomePage' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { name: 'Создайте пространство для осмысленного диалога.' }),
+    ).toBeInTheDocument()
   })
 
   it('renders ChatPage at /chat when authenticated', () => {
@@ -41,7 +44,9 @@ describe('App routing', () => {
     renderRoute('/chat')
 
     expect(screen.queryByRole('heading', { name: 'Chat' })).not.toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: 'HomePage' })).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { name: 'Создайте пространство для осмысленного диалога.' }),
+    ).toBeInTheDocument()
   })
 
   it('renders NotFoundPage for unknown routes', () => {

@@ -1,14 +1,15 @@
-import { Button } from '@mantine/core'
-import { useTranslation } from 'react-i18next'
+import { Container } from '@mantine/core'
 import type { AuthModalType } from '@/features/auth/model/types'
 import { AuthModal } from '@/features/auth/ui/AuthModal'
 import { useDisclosure } from '@mantine/hooks'
 import { useState } from 'react'
+import { Header } from '@/widgets/header'
+import { useTranslation } from 'react-i18next'
 
 function HomePage() {
-  const { t } = useTranslation()
   const [opened, { open, close }] = useDisclosure(false)
   const [modalType, setModalType] = useState<AuthModalType>('login')
+  const { t } = useTranslation()
 
   const handleModalType = (type: AuthModalType) => {
     setModalType(type)
@@ -16,12 +17,11 @@ function HomePage() {
   }
 
   return (
-    <div>
-      <h1>HomePage</h1>
-      <Button onClick={() => handleModalType('login')}>{t('ui.homePage.loginButton')}</Button>
-      <Button onClick={() => handleModalType('register')}>{t('ui.homePage.registerButton')}</Button>
+    <Container size="lg">
+      <Header openModal={handleModalType} />
+      <h1>{t('ui.homePage.header')}</h1>
       <AuthModal modalType={modalType} isOpened={opened} onClose={close} />
-    </div>
+    </Container>
   )
 }
 

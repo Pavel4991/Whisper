@@ -1,8 +1,12 @@
 {
   "ui": {
     "homePage": {
-      "loginButton": "Login",
+      "header": "Make room for meaningful conversations.",
       "registerButton": "Register"
+    },
+    "header": {
+      "signinButton": "Sign in",
+      "registerButton": "Get started"
     },
     "chatPage": {
       "logoutButton": "Logout"
