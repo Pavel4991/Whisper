@@ -3,7 +3,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { render, renderHook, type RenderOptions } from '@testing-library/react'
 import { createMemoryRouter, RouterProvider, type RouteObject } from 'react-router'
 import { MantineThemeProvider } from '@/app/providers/mantine'
-
 import '@/app/providers/i18n'
 import { BASE_URL } from '@/shared/api/api-instance'
 import { http, HttpResponse } from 'msw'
@@ -66,10 +65,14 @@ export function renderHookWithProviders<Result, Props>(callback: (initialProps: 
 
 // TODO: status захардкожен 400; расширить на (method, path, status = 400)
 // при появлении необходимости возвращать разные коды ошибок (404, 500 и т.д.)
-export function mockServerError(method: 'get' | 'post' | 'patch' | 'delete', path: string) {
+export function mockServerError(
+  method: 'get' | 'post' | 'patch' | 'delete',
+  path: string,
+  status = 400,
+) {
   server.use(
     http[method](`${BASE_URL}${path}`, () =>
-      HttpResponse.json({ error: 'Bad Request' }, { status: 400 }),
+      HttpResponse.json({ error: 'Bad Request' }, { status }),
     ),
   )
 }

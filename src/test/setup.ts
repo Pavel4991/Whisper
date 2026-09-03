@@ -2,6 +2,8 @@ import '@testing-library/jest-dom/vitest'
 import { cleanup } from '@testing-library/react'
 import { afterEach, afterAll, beforeAll, vi } from 'vitest'
 import { server } from '../shared/api/msw/server'
+import { tokenStorage } from '@/shared/api/token-storage'
+import { useCurrentChannelStore } from '@/entities/channel/model/currentChannelStore'
 
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
@@ -17,14 +19,23 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 })
 
-beforeAll(() => server.listen({ onUnhandledRequest: 'error' }))
+beforeAll(() => {
+  server.listen({ onUnhandledRequest: 'error' })
+  tokenStorage.setToken('test-token')
+})
 
 afterEach(() => vi.unstubAllGlobals())
 
-afterEach(() => server.resetHandlers())
+afterEach(() => {
+  server.resetHandlers()
+  useCurrentChannelStore.setState({ currentChannelId: '1' })
+})
 
 afterEach(() => {
   cleanup()
 })
 
-afterAll(() => server.close())
+afterAll(() => {
+  tokenStorage.clearToken()
+  server.close()
+})

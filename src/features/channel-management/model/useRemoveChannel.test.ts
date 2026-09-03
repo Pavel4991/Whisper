@@ -1,6 +1,5 @@
-import { describe, expect, it, beforeAll, afterAll } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { waitFor, act } from '@testing-library/react'
-import { tokenStorage } from '@/shared/api'
 import { renderHookWithProviders, mockServerError } from '@/test/test-utils'
 import { useRemoveChannel } from './useRemoveChannel'
 import { useCurrentChannelStore, type Channel } from '@/entities/channel/model'
@@ -8,14 +7,6 @@ import { channelKeys } from '@/entities/channel/api/channel.queries'
 import { testChannels } from '@/test/fixtures/channels'
 
 describe('useRemoveChannel', () => {
-  beforeAll(() => {
-    tokenStorage.setToken('test-token')
-  })
-
-  afterAll(() => {
-    tokenStorage.clearToken()
-  })
-
   it('returns removed channel id from server', async () => {
     const setCurrentChannelId = useCurrentChannelStore.getState().setCurrentChannelId
     setCurrentChannelId('2')

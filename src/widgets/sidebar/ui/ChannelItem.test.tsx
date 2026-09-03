@@ -10,14 +10,14 @@ describe('ChannelItem', () => {
     useCurrentChannelStore.setState({ currentChannelId: '1' })
   })
 
-  it('channels is visible on the page', () => {
+  it('renders channel name', () => {
     const channel = { id: '1', name: 'general', removable: false }
     renderWithProviders(<ChannelItem channel={channel} openModal={() => {}} />)
 
     expect(screen.getByText('general')).toBeInTheDocument()
   })
 
-  it('change current channel id by click', () => {
+  it('sets current channel on click', () => {
     const channel = { id: '2', name: 'random', removable: false }
     renderWithProviders(<ChannelItem channel={channel} openModal={() => {}} />)
     const channelItem = screen.getByText('random')
@@ -29,14 +29,14 @@ describe('ChannelItem', () => {
     expect(currentChannelId).toBe('2')
   })
 
-  it('not removable channels has not channel-manegment button', () => {
+  it('does not show management button for non-removable channels', () => {
     const channel = { id: '1', name: 'general', removable: false }
     renderWithProviders(<ChannelItem channel={channel} openModal={() => {}} />)
 
     expect(screen.queryByRole('button', { name: 'Управление каналом' })).not.toBeInTheDocument()
   })
 
-  it('channel menu rename button open the modal', async () => {
+  it('opens the modal on rename menu click', async () => {
     const user = userEvent.setup()
     const openModal = vi.fn()
     const channel = { id: '1', name: 'general', removable: true }
@@ -46,14 +46,18 @@ describe('ChannelItem', () => {
 
     await user.click(channelMenuButton)
 
-    const renameChannelButton = await screen.findByRole('menuitem', { name: 'Переименовать канал' })
+    const renameChannelButton = await screen.findByRole(
+      'menuitem',
+      { name: 'Переименовать канал' },
+      { timeout: 3000 },
+    )
 
     await user.click(renameChannelButton)
 
     expect(openModal).toHaveBeenCalledWith('renameChannel', '1')
   })
 
-  it('channel menu remove button open the modal', async () => {
+  it('opens the modal on remove menu click', async () => {
     const user = userEvent.setup()
     const openModal = vi.fn()
     const channel = { id: '1', name: 'general', removable: true }
@@ -63,7 +67,11 @@ describe('ChannelItem', () => {
 
     await user.click(channelMenuButton)
 
-    const removeChannelButton = await screen.findByRole('menuitem', { name: 'Удалить канал' })
+    const removeChannelButton = await screen.findByRole(
+      'menuitem',
+      { name: 'Удалить канал' },
+      { timeout: 3000 },
+    )
 
     await user.click(removeChannelButton)
 

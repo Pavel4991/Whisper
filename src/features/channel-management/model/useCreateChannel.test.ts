@@ -1,6 +1,5 @@
-import { describe, expect, it, beforeAll, afterAll } from 'vitest'
+import { describe, expect, it } from 'vitest'
 import { waitFor, act } from '@testing-library/react'
-import { tokenStorage } from '@/shared/api'
 import { renderHookWithProviders, mockServerError } from '@/test/test-utils'
 import { useCreateChannel } from './useCreateChannel'
 import type { Channel } from '@/entities/channel/model'
@@ -8,14 +7,6 @@ import { channelKeys } from '@/entities/channel/api/channel.queries'
 import { testChannels } from '@/test/fixtures/channels'
 
 describe('useCreateChannel', () => {
-  beforeAll(() => {
-    tokenStorage.setToken('test-token')
-  })
-
-  afterAll(() => {
-    tokenStorage.clearToken()
-  })
-
   it('returns new channel from server', async () => {
     const hook = await renderHookWithProviders(() => useCreateChannel())
     hook.queryClient.setQueryData<Channel[]>(channelKeys.all, testChannels)

@@ -6,12 +6,12 @@ describe('currentChannelStore', () => {
     useCurrentChannelStore.getState().setCurrentChannelId('1')
   })
 
-  it('default current channel', () => {
+  it('returns the default current channel', () => {
     const currentChannelId = useCurrentChannelStore.getState().currentChannelId
     expect(currentChannelId).toBe('1')
   })
 
-  it('set current channel', () => {
+  it('sets the current channel', () => {
     const setCurrentChannelId = useCurrentChannelStore.getState().setCurrentChannelId
     setCurrentChannelId('2')
     const updatedCurrentChannelId = useCurrentChannelStore.getState().currentChannelId

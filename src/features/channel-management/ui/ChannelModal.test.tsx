@@ -1,4 +1,4 @@
-import { describe, expect, it, afterAll, vi } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { screen, fireEvent, waitFor } from '@testing-library/react'
 import { ChannelModal } from './ChannelModal'
 import { renderWithProviders } from '@/test/test-utils'
@@ -10,11 +10,7 @@ import { channelKeys } from '@/entities/channel/api/channel.queries'
 import { testChannels } from '@/test/fixtures/channels'
 
 describe('ChannelModal', () => {
-  afterAll(() => {
-    tokenStorage.clearToken()
-  })
-
-  it('render modal to create channel', () => {
+  it('renders create channel modal', () => {
     renderWithProviders(
       <ChannelModal modalType="createChannel" isOpened={true} onClose={() => {}} channelId="" />,
     )
@@ -22,7 +18,7 @@ describe('ChannelModal', () => {
     expect(screen.getByRole('heading', { name: 'Добавить канал' })).toBeInTheDocument()
   })
 
-  it('render modal to rename channel', () => {
+  it('renders rename channel modal', () => {
     renderWithProviders(
       <ChannelModal modalType="renameChannel" isOpened={true} onClose={() => {}} channelId="" />,
     )
@@ -30,7 +26,7 @@ describe('ChannelModal', () => {
     expect(screen.getByRole('heading', { name: 'Переименовать канал' })).toBeInTheDocument()
   })
 
-  it('render modal to remove channel', () => {
+  it('renders remove channel modal', () => {
     renderWithProviders(
       <ChannelModal modalType="removeChannel" isOpened={true} onClose={() => {}} channelId="" />,
     )
@@ -40,7 +36,7 @@ describe('ChannelModal', () => {
     expect(screen.queryByRole('textbox')).not.toBeInTheDocument()
   })
 
-  it('render validation error', () => {
+  it('renders validation error', () => {
     renderWithProviders(
       <ChannelModal modalType="createChannel" isOpened={true} onClose={() => {}} channelId="" />,
     )
@@ -50,7 +46,7 @@ describe('ChannelModal', () => {
     expect(screen.getByTestId('channel-name-error')).toBeInTheDocument()
   })
 
-  it('channel modal close after submition and adds channel to cache', async () => {
+  it('closes after submission and adds channel to cache', async () => {
     const user = userEvent.setup()
     const onClose = vi.fn()
     tokenStorage.setToken('test-token')
@@ -72,7 +68,7 @@ describe('ChannelModal', () => {
     expect(cachedChannels).toContainEqual(expect.objectContaining({ name: 'Новый канал' }))
   })
 
-  it('channel modal close after submition and adds renamed channel to cache', async () => {
+  it('closes after submission and adds renamed channel to cache', async () => {
     const user = userEvent.setup()
     const onClose = vi.fn()
     tokenStorage.setToken('test-token')
@@ -96,7 +92,7 @@ describe('ChannelModal', () => {
     expect(cachedChannels).toContainEqual(expect.objectContaining({ id: '1', name: 'Новый канал' }))
   })
 
-  it('channel modal close after submition and remove channel from cache', async () => {
+  it('closes after submission and removes channel from cache', async () => {
     const user = userEvent.setup()
     const onClose = vi.fn()
     tokenStorage.setToken('test-token')
@@ -118,7 +114,7 @@ describe('ChannelModal', () => {
     expect(cachedChannels).not.toContainEqual(expect.objectContaining({ id: '1' }))
   })
 
-  it('render server error', async () => {
+  it('renders server error', async () => {
     const user = userEvent.setup()
 
     mockServerError('post', '/channels')

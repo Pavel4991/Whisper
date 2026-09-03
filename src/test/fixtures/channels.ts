@@ -1,4 +1,6 @@
-export const testChannels = [
+import type { Channel } from '@/entities/channel/model'
+
+export const testChannels: Channel[] = [
   {
     id: '1',
     name: 'test-channel-name-1',

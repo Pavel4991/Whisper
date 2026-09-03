@@ -14,7 +14,7 @@ describe('Sidebar', () => {
     useCurrentChannelStore.setState({ currentChannelId: '1' })
   })
 
-  it('renders with channels', async () => {
+  it('renders channel list', async () => {
     const { queryClient } = renderWithProviders(<Sidebar />)
     queryClient.setQueryData<Channel[]>(channelKeys.all, testChannels)
 
@@ -22,7 +22,7 @@ describe('Sidebar', () => {
     expect(await screen.findByText('test-channel-name-2')).toBeInTheDocument()
   })
 
-  it('current channel id is change by click to channel item', async () => {
+  it('sets current channel on channel click', async () => {
     const { queryClient } = renderWithProviders(<Sidebar />)
     queryClient.setQueryData<Channel[]>(channelKeys.all, testChannels)
 
@@ -33,7 +33,7 @@ describe('Sidebar', () => {
     expect(currentChannelId).toBe('2')
   })
 
-  it('adding channel button open the modal', async () => {
+  it('opens channel creation modal', async () => {
     const { queryClient } = renderWithProviders(<Sidebar />)
     queryClient.setQueryData<Channel[]>(channelKeys.all, testChannels)
 
@@ -48,7 +48,7 @@ describe('Sidebar', () => {
     expect(createChannelModal).toBeInTheDocument()
   })
 
-  it('channel menu rename button open the modal', async () => {
+  it('opens rename modal from channel menu', async () => {
     const user = userEvent.setup()
     const { queryClient } = renderWithProviders(<Sidebar />)
     queryClient.setQueryData<Channel[]>(channelKeys.all, testChannels)
@@ -68,7 +68,7 @@ describe('Sidebar', () => {
     expect(await screen.findByRole('heading', { name: 'Переименовать канал' })).toBeInTheDocument()
   })
 
-  it('channel menu remove button open the modal', async () => {
+  it('opens remove modal from channel menu', async () => {
     const user = userEvent.setup()
     const { queryClient } = renderWithProviders(<Sidebar />)
     queryClient.setQueryData<Channel[]>(channelKeys.all, testChannels)
@@ -88,7 +88,7 @@ describe('Sidebar', () => {
     expect(await screen.findByRole('heading', { name: 'Удалить канал' })).toBeInTheDocument()
   })
 
-  it('adding channel throw server error', async () => {
+  it('shows server error for channel list', async () => {
     mockServerError('get', '/channels')
     const { queryClient } = renderWithProviders(<Sidebar />)
     queryClient.setQueryData<Channel[]>(channelKeys.all, testChannels)

@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/react'
 import { createMemoryRouter, RouterProvider } from 'react-router'
 import { afterEach, describe, expect, it } from 'vitest'
 
+import App from '@/app/App'
 import { MantineThemeProvider } from '@/app/providers/mantine'
 import { routes } from '@/app/router/routes'
 import { useAuthStore } from '@/features/auth/model/authStore'
@@ -23,6 +24,16 @@ function renderRoute(path: string) {
 describe('App routing', () => {
   afterEach(() => {
     useAuthStore.setState({ isAuth: false })
+  })
+
+  it('renders the app shell with providers on the home route', async () => {
+    render(<App />)
+
+    expect(
+      await screen.findByRole('heading', {
+        name: 'Создайте пространство для осмысленного диалога.',
+      }),
+    ).toBeInTheDocument()
   })
 
   it('renders HomePage at /', () => {

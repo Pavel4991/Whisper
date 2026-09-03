@@ -42,6 +42,9 @@
       (кэш сессии `authKeys.session()` — проверить явно)
 - [x] `src/pages/home/ui/HomePage.test.tsx`
       кнопки Login/Register открывают модалку с соответствующим типом
+- [x] `src/widgets/header/ui/Header.test.tsx`
+      рендер логотипа (`Whisper`); клики «Sign in»/«Get started» вызывают
+      `openModal('login')` / `openModal('register')`
 
 ## Фаза 3 — каналы (мутации + UI)
 
@@ -61,6 +64,24 @@
       список каналов из `setQueryData`; клик выбирает канал;
       кнопки Add/Dropdown открывают модалку; серверная ошибка GET — реализовано в Пункте G
 
+## Рефакторинг тест-инфраструктуры ✅
+
+- [x] `src/app/App.test.tsx` — добавлен смоук-тест рендера `<App />`
+      (провайдеры + реальный `createBrowserRouter` на `/`) — закрыто покрытие `App.tsx`
+- [x] Фикстуры типизированы доменными типами:
+      `testChannels: Channel[]` (`@/test/fixtures/channels.ts`),
+      `testMessages: Message[]` (`@/test/fixtures/messages.ts`)
+- [x] Глобальный тестовый токен: `tokenStorage.setToken('test-token')` в `beforeAll`
+      и `clearToken` в `afterAll` `src/test/setup.ts` — убраны дублирующие сетапы
+      из `useChannels`/`useMessages`/мутаций/`ChannelModal`/`authStore`
+- [x] `mockServerError(method, path, status = 400)` — добавлен параметр статуса
+      (закрыт TODO из `src/test/test-utils.tsx`)
+- [x] `useCurrentChannelStore` сбрасывается в `afterEach` глобального `setup.ts`
+- [x] Стабилизация флаки: `maxWorkers: 4` в `vite.config.ts` + таймаут
+      `findByRole('menuitem', ..., { timeout: 3000 })` в `ChannelItem.test.tsx`
+- [x] Нейминг тестов унифицирован (ед. стиль: глагол в настоящем времени,
+      грамматически корректно) — `ChannelItem`/`Sidebar`/`ChannelModal`/`currentChannelStore`
+
 ## Соглашения для тестов
 
 - Провайдеры стенда: Mantine + QueryClientProvider (изолированный
@@ -75,5 +96,6 @@
 
 ## Критерий готовности
 
-- `npm run test:coverage` ≥ 80% по lines и statements
+- [x] `npm run test:coverage` ≥ 80% по lines и statements — достигнуто
+      (96.96% lines / 95.34% stmts / 100% funcs)
 - Коммит: `test: cover auth flow and api layer with unit tests`

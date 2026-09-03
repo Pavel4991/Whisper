@@ -9,7 +9,6 @@ describe('useAuthStore', () => {
 
   afterEach(() => {
     useAuthStore.setState({ isAuth: false })
-    tokenStorage.clearToken()
   })
 
   it('isAuth is false by default', () => {

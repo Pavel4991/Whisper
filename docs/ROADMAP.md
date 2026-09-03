@@ -6,6 +6,8 @@
 - [x] Регистрация/авторизация (формы + валидация zod, защита роута, API/MSW)
 - [x] Каналы: создание/переименование/удаление (мутации + UI-модалки)
       (UI-тесты каналов — отложены отдельным коммитом)
+- [x] Landing-страница: header с логотипом и кнопками авторизации (widgets/header,
+      shared/ui/Logo), шрифты Geist via @fontsource-variable
 - [ ] Сообщения в реальном времени; фильтр leo-profanity; i18n
 
 ## Функциональные улучшения
@@ -39,12 +41,11 @@
 - [ ] Auth: `RegisterCredentials` тип — вывести через `z.infer` из схемы
       вместо ручного определения в `model/types.ts` (опционально)
 - [ ] MSW: тестовые данные вынесены в фикстуры (`src/test/fixtures/channels.ts`,
-      `messages.ts`), но ещё нет factory `createResourceHandlers`; мутируемый
-      state без сброса между тестами не решён (handler-ы защищены
-      `structuredClone` в rename/edit, но фикстуры не аннотированы
-      доменными типами `Channel[]`/`Message[]`). Также — импорт фикстур из
-      хэндлеров MSW (`shared → test`) — осознанное исключение: MSW
-      используется только из тестов
+      `messages.ts`) и аннотированы доменными типами (`Channel[]`/`Message[]`).
+      Остаётся решить: factory `createResourceHandlers`; мутируемый state без
+      сброса между тестами (handler-ы защищены `structuredClone` в rename/edit).
+      Также — импорт фикстур из хэндлеров MSW (`shared → test`) — осознанное
+      исключение: MSW используется только из тестов
 - [x] Auth: unit-тесты на `tokenStorage`, `authStore`, `authApi` и UI-компоненты
       (Login/Register/ProtectedRoute/Logout), включая флоу через MSW
 - [ ] Auth: тесты на хуки `useLogin`/`useRegister` и сценарии pending/error — покрыть
@@ -61,10 +62,14 @@
 ## Тесты и инфраструктура
 
 - [x] Vitest + React Testing Library (каркас, smoke-тест)
+- [x] Стабилизация флаки-теста портального `Menu`: `maxWorkers: 4` в
+      `vite.config.ts` (пиковая CPU-нагрузка при максимальном параллелизме) +
+      увеличенный таймаут `findByRole('menuitem')` в `ChannelItem.test.tsx`
 - [x] MSW — мок REST (auth: /login, /signup; /channels, /messages); сервер подключён глобально в `src/test/setup.ts`
-- [ ] Покрытие тестами ≥ 80% — по плану [TESTING_PLAN.md](TESTING_PLAN.md)
+- [x] Покрытие тестами ≥ 80% — достигнуто (96.96% lines / 95.34% stmts);
+      контроль планки на стороне SonarCloud quality gate — по [TESTING_PLAN.md](TESTING_PLAN.md)
 - [ ] Playwright e2e
-- [x] CI: lint + typecheck + test + coverage + SonarQube (GitHub Actions)
+- [x] CI: lint + format:check + build + coverage + SonarQube (GitHub Actions)
 
 ## Собственный бэкенд (отдельно)
 
