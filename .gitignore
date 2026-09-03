@@ -28,6 +28,9 @@ test-results/
 playwright-report/
 blob-report/
 
+# Local working documents
+docs/SESSION_PLAN.md
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
