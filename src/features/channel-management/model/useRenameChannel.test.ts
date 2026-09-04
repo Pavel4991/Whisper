@@ -7,7 +7,7 @@ import { channelKeys } from '@/entities/channel/api/channel.queries'
 import { testChannels } from '@/test/fixtures/channels'
 
 describe('useRenameChannel', () => {
-  it('returns renamed channel from server', async () => {
+  it('updates channel in cache on success', async () => {
     const hook = await renderHookWithProviders(() => useRenameChannel())
     hook.queryClient.setQueryData<Channel[]>(channelKeys.all, testChannels)
     act(() => {

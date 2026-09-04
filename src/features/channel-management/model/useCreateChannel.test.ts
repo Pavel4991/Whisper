@@ -7,7 +7,7 @@ import { channelKeys } from '@/entities/channel/api/channel.queries'
 import { testChannels } from '@/test/fixtures/channels'
 
 describe('useCreateChannel', () => {
-  it('returns new channel from server', async () => {
+  it('adds channel to cache on success', async () => {
     const hook = await renderHookWithProviders(() => useCreateChannel())
     hook.queryClient.setQueryData<Channel[]>(channelKeys.all, testChannels)
     act(() => {

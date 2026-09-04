@@ -3,5 +3,4 @@ export interface Message {
   channelId: string
   body: string
   username: string
-  removable: boolean
 }

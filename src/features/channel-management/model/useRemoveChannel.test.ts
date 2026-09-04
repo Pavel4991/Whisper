@@ -7,7 +7,7 @@ import { channelKeys } from '@/entities/channel/api/channel.queries'
 import { testChannels } from '@/test/fixtures/channels'
 
 describe('useRemoveChannel', () => {
-  it('returns removed channel id from server', async () => {
+  it('removes channel from cache on success', async () => {
     const setCurrentChannelId = useCurrentChannelStore.getState().setCurrentChannelId
     setCurrentChannelId('2')
     const hook = await renderHookWithProviders(() => useRemoveChannel())

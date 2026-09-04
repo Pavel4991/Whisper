@@ -15,7 +15,6 @@ interface MessageSuccessResponse {
   body: string
   channelId: string
   username: string
-  removable: boolean
 }
 
 type DeletedMessageSuccessResponse = Pick<MessageSuccessResponse, 'id'>
@@ -49,11 +48,10 @@ const addMessageRequest: HttpResponseResolver<
   }
 
   return HttpResponse.json<MessageSuccessResponse>({
-    id: '1',
+    id: '3',
     body: requestData.body,
     channelId: requestData.channelId,
     username: requestData.username,
-    removable: true,
   })
 }
 

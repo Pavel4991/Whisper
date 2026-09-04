@@ -26,17 +26,16 @@ describe('messageApi', () => {
   describe('addMessage', () => {
     it('returns newly added message', async () => {
       const result = await messageApi.addMessage({
-        body: 'test-text-message-1',
+        body: 'test-text-message-3',
         channelId: '1',
         username: 'admin',
       })
 
       expect(result).toEqual<Message>({
-        id: '1',
-        body: 'test-text-message-1',
+        id: '3',
+        body: 'test-text-message-3',
         channelId: '1',
         username: 'admin',
-        removable: true,
       })
     })
   })
@@ -50,7 +49,6 @@ describe('messageApi', () => {
         body: 'edited-test-text-message',
         channelId: '1',
         username: 'admin',
-        removable: true,
       })
     })
 
