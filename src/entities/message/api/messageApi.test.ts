@@ -1,12 +1,12 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import { messageApi } from './messageApi'
-import { tokenStorage } from '@/shared/api'
+import { sessionStorage } from '@/shared/api'
 import type { Message } from '../model/types'
 import { testMessages } from '@/test/fixtures/messages'
 
 describe('messageApi', () => {
   beforeEach(() => {
-    tokenStorage.setToken('test-token')
+    sessionStorage.setSession({ token: 'test-token', username: 'admin' })
   })
 
   describe('fetchMessages', () => {
@@ -17,7 +17,7 @@ describe('messageApi', () => {
     })
 
     it('rejects without token', async () => {
-      tokenStorage.clearToken()
+      sessionStorage.clearSession()
 
       await expect(messageApi.fetchMessages()).rejects.toThrow()
     })

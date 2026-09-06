@@ -4,10 +4,10 @@ import userEvent from '@testing-library/user-event'
 import { renderWithProviders } from '@/test/test-utils'
 import { LogoutButton } from './LogoutButton'
 import { useAuthStore } from '@/features/auth/model/authStore'
-import { tokenStorage } from '@/shared/api'
+import { sessionStorage } from '@/shared/api'
 
 describe('LogoutButton', () => {
-  it('clears token and redirects to / on logout', async () => {
+  it('clears session and redirects to / on logout', async () => {
     const testRoutes = [
       {
         path: '/',
@@ -21,14 +21,14 @@ describe('LogoutButton', () => {
 
     const user = userEvent.setup()
     const login = useAuthStore.getState().login
-    login('test-token')
+    login({ token: 'test-token', username: 'test-username' })
 
     renderWithProviders(<LogoutButton />, { routes: testRoutes, initialEntries: ['/chat'] })
     const logoutButton = screen.getByRole('button', { name: 'Выйти' })
 
     await user.click(logoutButton)
 
-    expect(tokenStorage.getToken()).toBeNull()
+    expect(sessionStorage.getSession()).toBeNull()
     expect(await screen.findByTestId('home-page')).toBeInTheDocument()
   })
 })

@@ -2,7 +2,7 @@ import '@testing-library/jest-dom/vitest'
 import { cleanup } from '@testing-library/react'
 import { afterEach, afterAll, beforeAll, vi } from 'vitest'
 import { server } from '../shared/api/msw/server'
-import { tokenStorage } from '@/shared/api/token-storage'
+import { sessionStorage } from '@/shared/api'
 import { useCurrentChannelStore } from '@/entities/channel/model/currentChannelStore'
 
 Object.defineProperty(window, 'matchMedia', {
@@ -21,7 +21,7 @@ Object.defineProperty(window, 'matchMedia', {
 
 beforeAll(() => {
   server.listen({ onUnhandledRequest: 'error' })
-  tokenStorage.setToken('test-token')
+  sessionStorage.setSession({ token: 'test-token', username: 'test-username' })
 })
 
 afterEach(() => vi.unstubAllGlobals())
@@ -36,6 +36,6 @@ afterEach(() => {
 })
 
 afterAll(() => {
-  tokenStorage.clearToken()
+  sessionStorage.clearSession()
   server.close()
 })

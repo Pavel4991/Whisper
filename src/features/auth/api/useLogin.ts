@@ -11,7 +11,7 @@ export const useLogin = () => {
   return useMutation({
     mutationFn: (credentials: LoginCredentials) => authApi.login(credentials),
     onSuccess: (authResponse) => {
-      login(authResponse.token)
+      login(authResponse)
       queryClient.setQueryData(authKeys.session(), authResponse.username)
     },
   })

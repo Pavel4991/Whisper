@@ -26,7 +26,7 @@ Whisper — чат в реальном времени, улучшенная ве
 - React Router — маршрутизация
 - socket.io-client — реалтайм (бэкенд @hexlet/chat-server на socket.io);
   `ws` — только для будущего собственного сервера (см. ROADMAP)
-- Axios — HTTP-клиент (`shared/api/api-instance.ts`, Bearer-токен из `tokenStorage`)
+- Axios — HTTP-клиент (`shared/api/api-instance.ts`, Bearer-токен из `sessionStorage` — единый модуль сессии token+username)
 - Mantine — UI-кит (core/hooks/form); @mantine/form — формы и валидация
 - @tabler/icons-react — иконки (используется в ChannelItem: Menu rename/remove)
 - Zod —声明式 валидация (схемы в shared/validation/)

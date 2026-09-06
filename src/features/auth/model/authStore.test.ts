@@ -1,6 +1,6 @@
 import { describe, expect, it, afterEach } from 'vitest'
 import { useAuthStore } from './authStore'
-import { tokenStorage } from '@/shared/api'
+import { sessionStorage } from '@/shared/api'
 
 describe('useAuthStore', () => {
   const { login, logout } = useAuthStore.getState()
@@ -16,17 +16,17 @@ describe('useAuthStore', () => {
   })
 
   it('login sets isAuth to true', () => {
-    login('test-token')
+    login({ token: 'test-token', username: 'test-username' })
 
     expect(getIsAuth()).toBe(true)
-    expect(tokenStorage.getToken()).toBe('test-token')
+    expect(sessionStorage.getSession()).toEqual({ token: 'test-token', username: 'test-username' })
   })
 
   it('logout sets isAuth to false', () => {
-    login('test-token')
+    login({ token: 'test-token', username: 'test-username' })
     logout()
 
     expect(getIsAuth()).toBe(false)
-    expect(tokenStorage.getToken()).toBeNull()
+    expect(sessionStorage.getSession()).toBeNull()
   })
 })

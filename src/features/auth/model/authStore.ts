@@ -1,22 +1,22 @@
 import { create } from 'zustand'
-import { tokenStorage } from '@/shared/api'
+import { sessionStorage, type Session } from '@/shared/api'
 
 interface AuthState {
   isAuth: boolean
-  login: (token: string) => void
+  login: (session: Session) => void
   logout: () => void
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
-  isAuth: !!tokenStorage.getToken(),
+  isAuth: !!sessionStorage.getSession(),
 
-  login: (token) => {
-    tokenStorage.setToken(token)
+  login: (session: Session) => {
+    sessionStorage.setSession(session)
     set({ isAuth: true })
   },
 
   logout: () => {
-    tokenStorage.clearToken()
+    sessionStorage.clearSession()
     set({ isAuth: false })
   },
 }))

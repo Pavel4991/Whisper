@@ -1,2 +1,2 @@
 export { apiInstance } from './api-instance'
-export { tokenStorage } from './token-storage'
+export { sessionStorage, type Session } from './session-storage'

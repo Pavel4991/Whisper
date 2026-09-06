@@ -38,6 +38,11 @@
       `passwordConfirm` на `/signup` — решено через zod-схемы + transformValues
 - [ ] Auth: убрать `withCredentials` из `api-instance.ts` — сервер работает по
       Bearer-токену, куки не нужны
+- [ ] Auth: username + token персистятся в localStorage (`whisper_auth_session`,
+      единый `sessionStorage` в `shared/api`) — временное решение для бутстрапа
+      сессии на релоаде: @hexlet/chat-server отдаёт bearer-токен без `/users/me`,
+      кэш TanStack Query только в памяти. Идеал: не хранить серверные данные на
+      клиенте — httpOnly-cookie / refresh-токен (см. «Собственный бэкенд»)
 - [ ] Auth: `RegisterCredentials` тип — вывести через `z.infer` из схемы
       вместо ручного определения в `model/types.ts` (опционально)
 - [ ] MSW: тестовые данные вынесены в фикстуры (`src/test/fixtures/channels.ts`,
@@ -46,7 +51,7 @@
       сброса между тестами (handler-ы защищены `structuredClone` в rename/edit).
       Также — импорт фикстур из хэндлеров MSW (`shared → test`) — осознанное
       исключение: MSW используется только из тестов
-- [x] Auth: unit-тесты на `tokenStorage`, `authStore`, `authApi` и UI-компоненты
+- [x] Auth: unit-тесты на `sessionStorage`, `authStore`, `authApi` и UI-компоненты
       (Login/Register/ProtectedRoute/Logout), включая флоу через MSW
 - [ ] Auth: тесты на хуки `useLogin`/`useRegister` и сценарии pending/error — покрыть
       отдельно (сейчас проверяются в составе UI-тестов форм)

@@ -1,12 +1,12 @@
 import { beforeEach, describe, expect, it } from 'vitest'
 import { channelApi } from './channelApi'
-import { tokenStorage } from '@/shared/api'
+import { sessionStorage } from '@/shared/api'
 import type { Channel } from '../model/types'
 import { testChannels } from '@/test/fixtures/channels'
 
 describe('channelApi', () => {
   beforeEach(() => {
-    tokenStorage.setToken('test-token')
+    sessionStorage.setSession({ token: 'test-token', username: 'test-username' })
   })
 
   describe('fetchChannels', () => {
@@ -17,7 +17,7 @@ describe('channelApi', () => {
     })
 
     it('rejects without token', async () => {
-      tokenStorage.clearToken()
+      sessionStorage.clearSession()
 
       await expect(channelApi.fetchChannels()).rejects.toThrow()
     })

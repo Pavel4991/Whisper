@@ -4,7 +4,7 @@ import { ChannelModal } from './ChannelModal'
 import { renderWithProviders } from '@/test/test-utils'
 import { mockServerError } from '@/test/test-utils'
 import userEvent from '@testing-library/user-event'
-import { tokenStorage } from '@/shared/api'
+import { sessionStorage } from '@/shared/api'
 import type { Channel } from '@/entities/channel/model'
 import { channelKeys } from '@/entities/channel/api/channel.queries'
 import { testChannels } from '@/test/fixtures/channels'
@@ -49,7 +49,7 @@ describe('ChannelModal', () => {
   it('closes after submission and adds channel to cache', async () => {
     const user = userEvent.setup()
     const onClose = vi.fn()
-    tokenStorage.setToken('test-token')
+    sessionStorage.setSession({ token: 'test-token', username: 'test-username' })
 
     const { queryClient } = renderWithProviders(
       <ChannelModal modalType="createChannel" isOpened={true} onClose={onClose} channelId="" />,
@@ -71,7 +71,7 @@ describe('ChannelModal', () => {
   it('closes after submission and adds renamed channel to cache', async () => {
     const user = userEvent.setup()
     const onClose = vi.fn()
-    tokenStorage.setToken('test-token')
+    sessionStorage.setSession({ token: 'test-token', username: 'test-username' })
 
     const { queryClient } = renderWithProviders(
       <ChannelModal modalType="renameChannel" isOpened={true} onClose={onClose} channelId="1" />,
@@ -95,7 +95,7 @@ describe('ChannelModal', () => {
   it('closes after submission and removes channel from cache', async () => {
     const user = userEvent.setup()
     const onClose = vi.fn()
-    tokenStorage.setToken('test-token')
+    sessionStorage.setSession({ token: 'test-token', username: 'test-username' })
 
     const { queryClient } = renderWithProviders(
       <ChannelModal modalType="removeChannel" isOpened={true} onClose={onClose} channelId="1" />,

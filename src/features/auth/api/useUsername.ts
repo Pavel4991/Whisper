@@ -1,7 +1,10 @@
 import { useQuery } from '@tanstack/react-query'
 import { authKeys } from './auth.queries'
+import { sessionStorage } from '@/shared/api'
 
 export const useUsername = () => {
+  const storedUsername = sessionStorage.getUsername()
+
   return useQuery({
     queryKey: authKeys.session(),
     queryFn: async () => {
@@ -9,5 +12,6 @@ export const useUsername = () => {
     },
     staleTime: Infinity,
     retry: false,
+    ...(storedUsername ? { initialData: storedUsername } : {}),
   })
 }
