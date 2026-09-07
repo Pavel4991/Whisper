@@ -29,6 +29,9 @@
       "cancelButton": "Cancel",
       "deleteButton": "Delete",
       "removeChannelConfirm": "Are you sure?"
+    },
+    "messageList": {
+      "isEmpty": "No messages yet"
     }
   },
   "validation": {

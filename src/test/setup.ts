@@ -19,6 +19,14 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 })
 
+class ResizeObserver {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+}
+
+window.ResizeObserver = ResizeObserver
+
 beforeAll(() => {
   server.listen({ onUnhandledRequest: 'error' })
   sessionStorage.setSession({ token: 'test-token', username: 'test-username' })

@@ -8,6 +8,9 @@
       (UI-тесты каналов — отложены отдельным коммитом)
 - [x] Landing-страница: header с логотипом и кнопками авторизации (widgets/header,
       shared/ui/Logo), шрифты Geist via @fontsource-variable
+- [x] UI сообщений (Фаза 4.2): `widgets/chat` (`ChatWindow`, `ChatHeader`,
+      `MessageList`) + `entities/message/ui/MessageItem` (dumb, username у чужих),
+      заголовок канала через `useCurrentChannel` (кэш + `select`)
 - [ ] Сообщения в реальном времени; фильтр leo-profanity; i18n
 
 ## Функциональные улучшения
@@ -63,6 +66,9 @@
       после удаления текущего канала возврат на `'1'` в `useRemoveChannel`.
       Позже, на собственном сервере — ввести явный маркер дефолтного канала
       (поле `default`/`isDefault` в `Channel`)
+- [ ] Сообщения: `useMessages`/`messageApi` пока не переведены на паттерн
+      `queryOptions()` (сделан только для каналов — `channelQueryOptions`);
+      привести для единообразия при следующей правке message-хуков
 
 ## Тесты и инфраструктура
 

@@ -1,17 +1,13 @@
-import { Box, Stack, Flex } from '@mantine/core'
-import { LogoutButton } from '@/features/auth/ui/LogoutButton'
+import { Box, Flex } from '@mantine/core'
 import { Sidebar } from '@/widgets/sidebar'
+import { ChatWindow } from '@/widgets/chat'
 
 function ChatPage() {
   return (
     <Box h="100vh">
       <Flex h="100%">
         <Sidebar />
-
-        <Stack h="100%">
-          <h1>Chat</h1>
-          <LogoutButton />
-        </Stack>
+        <ChatWindow />
       </Flex>
     </Box>
   )

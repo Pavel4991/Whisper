@@ -41,13 +41,16 @@ Playwright — e2e.
 src/
 ├── app/ # провайдеры (Mantine, Query, Router, i18n), глобальные стили
 ├── pages/ # маршруты-страницы (HomePage, ChatPage, NotFoundPage)
-├── widgets/ # композиции UI из фич/сущностей; реализован sidebar/ (Sidebar,
-│ # ChannelItem) — см. Phase 3; ChatHeader, MessageList — Phase 4+
+├── widgets/ # композиции UI из фич/сущностей; реализованы sidebar/ (Sidebar,
+│ # ChannelItem) и chat/ (ChatWindow, ChatHeader, MessageList) — Фаза 4.2:
+│ # список сообщений + заголовок канала через useCurrentChannel
 ├── features/ # auth/ (реализован); channel-management/ (реализован: мутации
 │ # + единый ChannelModal по modalType + channelFormConfig по типу);
 │ # message-sending/, profile/ — плановые
-├── entities/ # channel/ (api + currentChannelStore) и message/ (api) —
-│ # реализованы; user/ — заглушка
+├── entities/ # channel/ (api: channelApi + useChannels/useCurrentChannel +
+│ # channelQueryOptions; model: currentChannelStore) и message/
+│ # (api: messageApi + useMessages; ui: MessageItem) — реализованы;
+│ # user/ — заглушка
 ├── shared/ # ui/, api/, types/, utils/, lib/, validation/, hooks/
 ├── locales/
 └── styles/
@@ -72,6 +75,11 @@ src/
   TanStack Query через queryClient.setQueryData
 - Server state — только TanStack Query; клиентское состояние — Zustand;
   данные из сокета не дублируются в сторе
+- Query-конфиг — единая точка через `queryOptions()` (`channelQueryOptions` в
+  `entities/channel/api/channel.queries.ts`); деривация среза из кэша — через
+  `select` со стабильным селектором (`useCallback`), а не композицией-хуком
+  с `useMemo` (см. `useCurrentChannel`): экономит рендеры при фоновых
+  обновлениях и сохраняет флаги `isPending`/`isError`
 - Компоненты списков мемоизированы; селекторы Zustand без лишних ре-рендеров
 - Ошибки: Error Boundaries + уведомления Mantine; API-ошибки нормализуются
 - React Router v7: Link/RouterProvider/createBrowserRouter/createMemoryRouter

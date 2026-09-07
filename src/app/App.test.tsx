@@ -1,5 +1,5 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { render, screen } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
 import { createMemoryRouter, RouterProvider } from 'react-router'
 import { afterEach, describe, expect, it } from 'vitest'
 
@@ -44,17 +44,19 @@ describe('App routing', () => {
     ).toBeInTheDocument()
   })
 
-  it('renders ChatPage at /chat when authenticated', () => {
+  it('renders ChatPage at /chat when authenticated', async () => {
     useAuthStore.setState({ isAuth: true })
     renderRoute('/chat')
 
-    expect(screen.getByRole('heading', { name: 'Chat' })).toBeInTheDocument()
+    await waitFor(() =>
+      expect(screen.getByRole('heading', { name: 'test-channel-name-1' })).toBeInTheDocument(),
+    )
   })
 
   it('redirects unauthenticated user from /chat to /', () => {
     renderRoute('/chat')
 
-    expect(screen.queryByRole('heading', { name: 'Chat' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: 'test-channel-name-1' })).not.toBeInTheDocument()
     expect(
       screen.getByRole('heading', { name: 'Создайте пространство для осмысленного диалога.' }),
     ).toBeInTheDocument()

@@ -19,7 +19,15 @@ export function LogoutButton() {
   }
 
   return (
-    <Button onClick={() => handleLogout()} color="red">
+    <Button
+      onClick={() => handleLogout()}
+      type="button"
+      bg="var(--brand)"
+      radius="xl"
+      px={16}
+      py={10}
+      fw={500}
+    >
       {t('ui.chatPage.logoutButton')}
     </Button>
   )
