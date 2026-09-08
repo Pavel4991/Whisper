@@ -1,0 +1,31 @@
+.textareaInput {
+  padding: 10px 16px;
+  min-height: 48px;
+
+  border: 1px solid transparent !important;
+
+  &:focus,
+  &:focus-within,
+  &[data-focus] {
+    outline: none !important;
+    box-shadow: none !important;
+    border-color: transparent !important;
+  }
+}
+
+.sendButton {
+  background-color: var(--brand) !important;
+
+  color: var(--mantine-color-white) !important;
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.1s ease;
+
+  &:disabled,
+  &[data-disabled] {
+    cursor: not-allowed;
+    transform: none !important;
+    opacity: 0.6;
+  }
+}

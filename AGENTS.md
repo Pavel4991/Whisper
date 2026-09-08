@@ -46,7 +46,8 @@ src/
 │ # список сообщений + заголовок канала через useCurrentChannel
 ├── features/ # auth/ (реализован); channel-management/ (реализован: мутации
 │ # + единый ChannelModal по modalType + channelFormConfig по типу);
-│ # message-sending/, profile/ — плановые
+│ # message-sending/ (реализован: мутации 4.1 + MessageInput 4.3);
+│ # profile/ — плановые
 ├── entities/ # channel/ (api: channelApi + useChannels/useCurrentChannel +
 │ # channelQueryOptions; model: currentChannelStore) и message/
 │ # (api: messageApi + useMessages; ui: MessageItem) — реализованы;
@@ -81,7 +82,10 @@ src/
   с `useMemo` (см. `useCurrentChannel`): экономит рендеры при фоновых
   обновлениях и сохраняет флаги `isPending`/`isError`
 - Компоненты списков мемоизированы; селекторы Zustand без лишних ре-рендеров
-- Ошибки: Error Boundaries + уведомления Mantine; API-ошибки нормализуются
+- Ошибки: Error Boundaries + уведомления Mantine; API-ошибки нормализуются.
+  Серверные ошибки форм/мутаций показываются общими уведомлениями
+  (план: @mantine/notifications, см. ROADMAP) — инлайн-блок ошибки в
+  MessageInput сознательно не вводится
 - React Router v7: Link/RouterProvider/createBrowserRouter/createMemoryRouter
   импортируются из корневого 'react-router'; НЕ из 'react-router/dom' (в vitest
   это даёт два экземпляра пакета и Link падает с NavigationContext: null).
@@ -103,6 +107,9 @@ src/
   и `messages.ts` (`testMessages`); все каналы в фикстурах `removable: true`
 - Хелперы в `src/test/test-utils.tsx`: `renderHookWithProviders` (хуки и сторы),
   `mockServerError(method, path)` (захардкожен на 400 — TODO расширить на коды)
+- В `src/test/setup.ts` — моки `matchMedia`/`ResizeObserver`/`document.fonts`
+  (jsdom без FontFaceSet; Mantine `getEnv()` в этой версии всегда
+  'development', поэтому `autosize` у Textarea включается и в тестах)
 - Планируется: Playwright e2e (регистрация → создание канала → обмен сообщениями)
 
 ## CI

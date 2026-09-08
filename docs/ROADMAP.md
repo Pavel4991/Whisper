@@ -11,10 +11,17 @@
 - [x] UI сообщений (Фаза 4.2): `widgets/chat` (`ChatWindow`, `ChatHeader`,
       `MessageList`) + `entities/message/ui/MessageItem` (dumb, username у чужих),
       заголовок канала через `useCurrentChannel` (кэш + `select`)
+- [x] UI отправки (Фаза 4.3): `MessageInput` в `features/message-sending/ui`
+      (Textarea autosize, Enter=send, `canSend`/disabled, trim через
+      `transformValues`, reset на success; данные пропсами от `ChatWindow`)
 - [ ] Сообщения в реальном времени; фильтр leo-profanity; i18n
 
 ## Функциональные улучшения
 
+- [ ] Уведомления (Mantine @mantine/notifications): единый показ серверных
+      ошибок (форм, мутаций, сокета). Инлайн-блоки ошибок в `MessageInput`
+      сознательно НЕ вводятся — после финала все серверные ошибки всплывают
+      уведомлениями
 - [ ] Онлайн-пользователи и статусы (события joined/left)
 - [ ] Редактирование и удаление сообщений (soft-delete)
 - [ ] Реакции-эмодзи на сообщения

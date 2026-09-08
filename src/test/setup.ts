@@ -19,6 +19,14 @@ Object.defineProperty(window, 'matchMedia', {
   })),
 })
 
+Object.defineProperty(document, 'fonts', {
+  configurable: true,
+  value: {
+    addEventListener: vi.fn(),
+    removeEventListener: vi.fn(),
+  },
+})
+
 class ResizeObserver {
   observe() {}
   unobserve() {}

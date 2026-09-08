@@ -9,7 +9,9 @@
       "registerButton": "Начать"
     },
     "chatPage": {
-      "logoutButton": "Выйти"
+      "logoutButton": "Выйти",
+      "messageInput": "Напишите сообщение",
+      "sendButton": "Отправить"
     },
     "authModals": {
       "login": "Вход",

@@ -9,7 +9,9 @@
       "registerButton": "Get started"
     },
     "chatPage": {
-      "logoutButton": "Logout"
+      "logoutButton": "Logout",
+      "messageInput": "Write a message",
+      "sendButton": "Send"
     },
     "authModals": {
       "login": "Login",
