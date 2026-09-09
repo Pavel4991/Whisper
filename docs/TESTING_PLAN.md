@@ -82,6 +82,22 @@
 - [x] Нейминг тестов унифицирован (ед. стиль: глагол в настоящем времени,
       грамматически корректно) — `ChannelItem`/`Sidebar`/`ChannelModal`/`currentChannelStore`
 
+## MSW ws — socket.io/Engine.IO мок (Фаза 4.4, спайк)
+
+- [x] `src/shared/api/msw/ws/socketMock.ts` — link на `^ws://[^/]+(?:\/socket\.io)?\/?$`
+      (MSW вырезает `/socket.io/` из pathname при матчинге) + фреймы Engine.IO:
+      open `0{"sid":...}`, ping `2→3`, CONNECT `40→40{"sid":...}`
+- [x] `src/shared/api/msw/ws/rawWebSocket.test.tsx` — сырой WebSocket-обмен через MSW
+      (слушатели вешаются ДО open — иначе гонка микротасков уводит доставку)
+- [x] `src/shared/api/msw/ws/socketMock.test.tsx` — spike: `io({ transports: ['websocket'] })`
+      коннектится (`socket.connected === true`, `transport.ws` — `WebSocketOverride`)
+- Полифилл `globalThis.WebSocket` (npm-пакет `ws`) в `src/test/setup.ts`;
+  `server.listen()` на топ-левеле (engine.io-client захватывает WebSocket при
+  загрузке модуля — до eval тест-модулей)
+- vite.config.ts: absolute-алиасы socket.io/engine.io → `build/esm`,
+  `test.server.deps.inline`, плагин `engineioBrowserTransports` (node-транспорты
+  `*.node.js` → browser `*.js`), `ws` в devDependencies
+
 ## Соглашения для тестов
 
 - Провайдеры стенда: Mantine + QueryClientProvider (изолированный

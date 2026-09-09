@@ -5,6 +5,9 @@ import { server } from '../shared/api/msw/server'
 import { sessionStorage } from '@/shared/api'
 import { useCurrentChannelStore } from '@/entities/channel/model/currentChannelStore'
 
+const { WebSocket } = await import('ws')
+globalThis.WebSocket = WebSocket as unknown as typeof globalThis.WebSocket
+
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
   value: vi.fn().mockImplementation((query: string) => ({
@@ -35,8 +38,9 @@ class ResizeObserver {
 
 window.ResizeObserver = ResizeObserver
 
+server.listen({ onUnhandledRequest: 'error' })
+
 beforeAll(() => {
-  server.listen({ onUnhandledRequest: 'error' })
   sessionStorage.setSession({ token: 'test-token', username: 'test-username' })
 })
 

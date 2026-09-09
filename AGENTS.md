@@ -25,7 +25,9 @@ Whisper — чат в реальном времени, улучшенная ве
 - Zustand — клиентское состояние (модалки, текущий канал, draft)
 - React Router — маршрутизация
 - socket.io-client — реалтайм (бэкенд @hexlet/chat-server на socket.io);
-  `ws` — только для будущего собственного сервера (см. ROADMAP)
+  в тестах коннектится через MSW ws (мок фреймов Engine.IO/Socket.IO);
+  `ws` — polyfill `globalThis.WebSocket` в vitest и основа будущего
+  собственного сервера (см. ROADMAP)
 - Axios — HTTP-клиент (`shared/api/api-instance.ts`, Bearer-токен из `sessionStorage` — единый модуль сессии token+username)
 - Mantine — UI-кит (core/hooks/form); @mantine/form — формы и валидация
 - @tabler/icons-react — иконки (используется в ChannelItem: Menu rename/remove)
