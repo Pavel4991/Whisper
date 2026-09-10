@@ -3,6 +3,7 @@ import { messageApi } from '@/entities/message/api/messageApi'
 import { useQueryClient, useMutation } from '@tanstack/react-query'
 import type { AddMessagePayload } from './types'
 import type { Message } from '@/entities/message/model/types'
+import { appendMessageToCache } from '@/entities/message/model/messageCache'
 
 export function useAddMessage() {
   const queryClient = useQueryClient()
@@ -14,7 +15,7 @@ export function useAddMessage() {
     },
     onSuccess(newMessage) {
       queryClient.setQueryData<Message[]>(messageKeys.all, (messages) =>
-        messages ? [...messages, newMessage] : [newMessage],
+        appendMessageToCache(messages, newMessage),
       )
     },
   })

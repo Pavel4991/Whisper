@@ -98,6 +98,22 @@
   `test.server.deps.inline`, плагин `engineioBrowserTransports` (node-транспорты
   `*.node.js` → browser `*.js`), `ws` в devDependencies
 
+## Реалтайм `newMessage` (Фаза 4.4 + 4.5)
+
+- [x] `src/shared/api/socket-instance.test.ts` — синглтон: тот же экземпляр при
+      повторном `getSocket()`, новый — после `disconnectSocket()`
+- [x] `src/entities/message/model/socket.subscription.test.tsx` — REST→сокет→кэш
+      с дедупом (id `'3'` ровно один): `useAddMessage` + подписка на одном
+      QueryClient; «второе окно» — `ChatWindow` (канал `'2'`) получает
+      `emitNewMessage(...)` от «другого пользователя»
+- [x] `socketMock.ts` — `emitNewMessage(message)` через `socketLink.broadcast('42["newMessage",...]')`;
+      CONNECT с auth обрабатывается `data.startsWith('40')` (с токеном кадр
+      `40{"token":...}`, без — `40`)
+- [x] `useAddMessage.onSuccess` дедуплицирует через `appendMessageToCache`
+      (вместе с подпиской — общий хелпер `messageCache.ts`)
+- [x] `afterAll` в `src/test/setup.ts`: `disconnectSocket()` (динамический импорт
+      — чтобы не сдвинуть момент захвата `WebSocket` раньше `server.listen()`)
+
 ## Соглашения для тестов
 
 - Провайдеры стенда: Mantine + QueryClientProvider (изолированный

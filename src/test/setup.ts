@@ -55,7 +55,9 @@ afterEach(() => {
   cleanup()
 })
 
-afterAll(() => {
+afterAll(async () => {
   sessionStorage.clearSession()
+  const { disconnectSocket } = await import('@/shared/api/socket-instance')
+  disconnectSocket()
   server.close()
 })

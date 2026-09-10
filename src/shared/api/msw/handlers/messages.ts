@@ -2,6 +2,7 @@ import { http, HttpResponse, type HttpResponseResolver, type PathParams } from '
 import { BASE_URL } from '../../api-instance'
 import { createErrorResponse } from '../lib/createErrorResponse'
 import { authCheck } from '../lib/authCheck'
+import { emitNewMessage } from '../ws/socketMock'
 import { testMessages } from '@/test/fixtures/messages'
 
 interface MessageCredentials {
@@ -47,12 +48,16 @@ const addMessageRequest: HttpResponseResolver<
     return createErrorResponse<MessageErrorResponse>('Bad Request', 400)
   }
 
-  return HttpResponse.json<MessageSuccessResponse>({
+  const message = {
     id: '3',
     body: requestData.body,
     channelId: requestData.channelId,
     username: requestData.username,
-  })
+  }
+
+  emitNewMessage(message)
+
+  return HttpResponse.json<MessageSuccessResponse>(message)
 }
 
 type MessagePathParams = Pick<MessageSuccessResponse, 'id'>
