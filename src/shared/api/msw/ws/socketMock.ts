@@ -1,5 +1,6 @@
 import { ws } from 'msw'
 import type { Message } from '@/entities/message/model/types'
+import type { Channel } from '@/entities/channel/model/types'
 
 const openFrame =
   '0{"sid":"mock-socket-sid","upgrades":[],"pingInterval":25000,"pingTimeout":20000}'
@@ -17,5 +18,20 @@ export const socketMockHandler = socketLink.addEventListener('connection', ({ cl
 
 export function emitNewMessage(message: Message): void {
   const frame = `42["newMessage",${JSON.stringify(message)}]`
+  socketLink.broadcast(frame)
+}
+
+export function emitNewChannel(channel: Channel): void {
+  const frame = `42["newChannel",${JSON.stringify(channel)}]`
+  socketLink.broadcast(frame)
+}
+
+export function emitRenameChannel(channel: Channel): void {
+  const frame = `42["renameChannel",${JSON.stringify(channel)}]`
+  socketLink.broadcast(frame)
+}
+
+export function emitRemoveChannel(channelId: string): void {
+  const frame = `42["removeChannel",${JSON.stringify({ id: channelId })}]`
   socketLink.broadcast(frame)
 }

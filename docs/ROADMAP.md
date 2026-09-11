@@ -14,7 +14,16 @@
 - [x] UI отправки (Фаза 4.3): `MessageInput` в `features/message-sending/ui`
       (Textarea autosize, Enter=send, `canSend`/disabled, trim через
       `transformValues`, reset на success; данные пропсами от `ChatWindow`)
-- [ ] Сообщения в реальном времени; фильтр leo-profanity; i18n
+- [x] Сообщения в реальном времени (Фазы 4.4/4.5): MSW ws-мок Engine.IO/Socket.IO,
+      синглтон `getSocket`/`disconnectSocket`, подписка `newMessage` →
+      `appendMessageToCache` (дедуп с `useAddMessage.onSuccess`), эмиссия кадра
+      `42["newMessage",...]` из `socketMock.ts`
+- [x] Каналы в реальном времени (Фаза 5): подписка `newChannel`/`renameChannel`/
+      `removeChannel` в `features/channel-management/model/socket.subscription.ts`
+      (`upsertChannelToCache`/`removeChannelFromCache`, сброс `currentChannelId`
+      на `'1'`, чистка сообщений канала из `messageKeys.all`); эмиссия кадров из
+      MSW (`emitNewChannel`/`emitRenameChannel`/`emitRemoveChannel`)
+- [ ] Фильтр leo-profanity; i18n
 
 ## Функциональные улучшения
 

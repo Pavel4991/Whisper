@@ -52,8 +52,11 @@ export function renderWithProviders(
   }
 }
 
-export function renderHookWithProviders<Result, Props>(callback: (initialProps: Props) => Result) {
-  const queryClient = createTestQueryClient()
+export function renderHookWithProviders<Result, Props>(
+  callback: (initialProps: Props) => Result,
+  existingQueryClient?: QueryClient,
+) {
+  const queryClient = existingQueryClient ?? createTestQueryClient()
 
   const result = renderHook(callback, {
     wrapper: ({ children }: { children: ReactNode }) => (

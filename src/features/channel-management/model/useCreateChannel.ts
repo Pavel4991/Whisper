@@ -3,6 +3,7 @@ import { channelApi } from '@/entities/channel/api/channelApi'
 import type { CreateChannelPayload } from './types'
 import type { Channel } from '@/entities/channel/model'
 import { channelKeys } from '@/entities/channel/api/channel.queries'
+import { upsertChannelToCache } from '@/entities/channel/model/channelCache'
 
 export const useCreateChannel = () => {
   const queryClient = useQueryClient()
@@ -14,7 +15,7 @@ export const useCreateChannel = () => {
     },
     onSuccess: (newChannel) => {
       queryClient.setQueryData<Channel[]>(channelKeys.all, (channels) =>
-        channels ? [...channels, newChannel] : [newChannel],
+        upsertChannelToCache(channels, newChannel),
       )
     },
   })

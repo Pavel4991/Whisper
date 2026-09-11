@@ -114,6 +114,31 @@
 - [x] `afterAll` в `src/test/setup.ts`: `disconnectSocket()` (динамический импорт
       — чтобы не сдвинуть момент захвата `WebSocket` раньше `server.listen()`)
 
+## Реалтайм каналов (Фаза 5)
+
+- [x] `src/features/channel-management/model/socket.subscription.ts` — подписчик
+      `newChannel`/`renameChannel`/`removeChannel` (живёт в feature, а не в
+      `entities/channel`: FSD — срезы одного слоя не импортируют друг друга,
+      а при removeChannel нужна чистка сообщений из `entities/message`)
+- [x] `src/entities/channel/model/channelCache.ts` — единые хелперы кэша:
+      `upsertChannelToCache` (new+rename), `removeChannelFromCache`;
+      `src/entities/message/model/messageCache.ts` − `removeMessagesByChannelId`
+      (удаление канала чистит и его сообщения — в `useRemoveChannel.onSuccess`
+      и в WS-подписке)
+- [x] `useChannelSubscription()` смонтирован в `ChatPage`; remove сбрасывает
+      `currentChannelId` на `'1'` через `useCurrentChannelStore.getState()`
+      (без stale closure в обработчике)
+- [x] `renderHookWithProviders(callback, existingQueryClient?)` — опциональный
+      `QueryClient` для сценариев «мутация + подписка на одном клиенте»
+- [x] `src/features/channel-management/model/socket.subscription.test.tsx` — тест 1:
+      дедуп create (канал id `'3'` ровно один в кэше); тест 2: интеграция через
+      `<ChatPage/>` — `emitNewChannel` (появляется в Sidebar), `emitRenameChannel`
+      (имя обновилось в DOM), `emitRemoveChannel('2')` (канал и его сообщения
+      убраны, `currentChannelId` → `'1'`)
+- [x] `socketMock.ts` — `emitNewChannel`/`emitRenameChannel`/`emitRemoveChannel`
+      через `socketLink.broadcast('42["...",...]')`; вызываются из
+      `handlers/channels.ts` перед REST-ответом (как `app.io.emit` на бэкенде)
+
 ## Соглашения для тестов
 
 - Провайдеры стенда: Mantine + QueryClientProvider (изолированный

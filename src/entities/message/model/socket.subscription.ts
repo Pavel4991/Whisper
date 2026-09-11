@@ -5,7 +5,7 @@ import { messageKeys } from '../api/message.queries'
 import { appendMessageToCache } from './messageCache'
 import type { Message } from './types'
 
-export type SocketEvents = {
+export type MessageSocketEvents = {
   newMessage: (message: Message) => void
 }
 
@@ -13,7 +13,7 @@ export function useNewMessageSubscription() {
   const queryClient = useQueryClient()
 
   useEffect(() => {
-    const socket = getSocket<SocketEvents>()
+    const socket = getSocket<MessageSocketEvents>()
     const onNewMessage = (message: Message) => {
       queryClient.setQueryData<Message[]>(messageKeys.all, (messages) =>
         appendMessageToCache(messages, message),

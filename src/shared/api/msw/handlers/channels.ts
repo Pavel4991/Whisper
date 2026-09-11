@@ -3,6 +3,7 @@ import { BASE_URL } from '../../api-instance'
 import { createErrorResponse } from '../lib/createErrorResponse'
 import { authCheck } from '../lib/authCheck'
 import { testChannels } from '@/test/fixtures/channels'
+import { emitNewChannel, emitRenameChannel, emitRemoveChannel } from '../ws/socketMock'
 
 interface ChannelCredentials {
   name: string
@@ -45,11 +46,15 @@ const createChannelRequest: HttpResponseResolver<
     return createErrorResponse<ChannelErrorResponse>('Bad Request', 400)
   }
 
-  return HttpResponse.json<ChannelSuccessResponse>({
+  const channel = {
     id: '3',
     name: requestData.name,
     removable: true,
-  })
+  }
+
+  emitNewChannel(channel)
+
+  return HttpResponse.json<ChannelSuccessResponse>(channel)
 }
 
 interface ChannelPathParams {
@@ -80,6 +85,8 @@ const renameChannelRequest: HttpResponseResolver<
 
   channelToRename.name = requestData.name
 
+  emitRenameChannel(channelToRename)
+
   return HttpResponse.json<ChannelSuccessResponse>(channelToRename)
 }
 
@@ -100,6 +107,8 @@ const removeChannelRequest: HttpResponseResolver<
   }
 
   const deletedChannelId = { id: id }
+
+  emitRemoveChannel(id)
 
   return HttpResponse.json<DeleteChannelSuccessResponse>(deletedChannelId)
 }
