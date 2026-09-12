@@ -4,10 +4,10 @@ import { IconMessageCircle } from '@tabler/icons-react'
 export function Logo() {
   return (
     <Group align="center">
-      <ThemeIcon radius="xl" size={36} bg="var(--brand-subtle)" c="var(--brand)">
+      <ThemeIcon radius="xl" size={36} bg="brand.1" c="brand">
         <IconMessageCircle size={20} />
       </ThemeIcon>
-      <Text className="font-mono" tt="uppercase" fz="sm" c="var(--text-primary)">
+      <Text className="font-mono" tt="uppercase" fz="sm" c="var(--mantine-color-text)">
         Whisper
       </Text>
     </Group>

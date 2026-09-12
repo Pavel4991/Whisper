@@ -22,7 +22,7 @@ export function LogoutButton() {
     <Button
       onClick={() => handleLogout()}
       type="button"
-      bg="var(--brand)"
+      bg="brand"
       radius="xl"
       px={16}
       py={10}

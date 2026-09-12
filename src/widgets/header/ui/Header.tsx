@@ -10,7 +10,7 @@ export function Header({ openModal }: { openModal: (modalType: AuthModalType) =>
   const { t } = useTranslation()
 
   return (
-    <Box component="header" px={32} py={28}>
+    <Box component="header" px={{ base: 16, md: 32 }} py={28}>
       <Group justify="space-between" align="center">
         <Anchor component={Link} to="/" td="none">
           <Logo />
@@ -25,13 +25,13 @@ export function Header({ openModal }: { openModal: (modalType: AuthModalType) =>
             px={16}
             py={10}
             fw={400}
-            c="var(--text-primary)"
+            c="var(--mantine-color-text)"
           >
             {t('ui.header.signinButton')}
           </Button>
           <Button
             type="button"
-            bg="var(--brand)"
+            bg="brand"
             radius="xl"
             onClick={() => openModal('register')}
             px={16}

@@ -2,11 +2,7 @@
 @import '@fontsource-variable/geist-mono';
 
 :root {
-  --page-background: #edfaff;
-
-  --brand: #49b2b8;
-  --brand-subtle: #cff5f7;
-  --text-primary: #101b26;
+  --page-background: #f2f7fc;
 
   /* --- ИНТЕРФЕЙСНЫЙ ШРИФТ (Основной) --- */
   --font-fallback-sans:

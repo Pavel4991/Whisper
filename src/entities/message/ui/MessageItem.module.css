@@ -11,7 +11,7 @@
 
 .root[data-owner='other'] {
   background-color: var(--mantine-color-white);
-  color: var(--text-primary);
+  color: var(--mantine-color-text);
   border-radius: var(--mantine-radius-xl) var(--mantine-radius-xl) var(--mantine-radius-xl)
     var(--mantine-radius-lg);
   margin-right: auto;
@@ -23,7 +23,7 @@
 }
 
 .root[data-owner='current'] {
-  background-color: var(--brand);
+  background-color: var(--mantine-color-brand-filled);
   color: var(--mantine-color-white);
   border-radius: var(--mantine-radius-xl) var(--mantine-radius-xl) var(--mantine-radius-lg)
     var(--mantine-radius-xl);
