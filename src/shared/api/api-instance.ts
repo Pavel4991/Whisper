@@ -9,7 +9,6 @@ export const apiInstance = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  withCredentials: true,
 })
 
 apiInstance.interceptors.request.use((config) => {
