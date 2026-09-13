@@ -41,7 +41,9 @@
       клик: токен удалён из хранилища, `navigate('/', { replace: true })`
       (кэш сессии `authKeys.session()` — проверить явно)
 - [x] `src/pages/home/ui/HomePage.test.tsx`
-      кнопки Login/Register открывают модалку с соответствующим типом
+      кнопки Header открывают модалку (login/register); CTA hero открывают модалку
+      (primary → register, secondary → login); smoke-тест hero-визуала
+      (placeholder «Напишите что-то важное...»)
 - [x] `src/widgets/header/ui/Header.test.tsx`
       рендер логотипа (`Whisper`); клики «Sign in»/«Get started» вызывают
       `openModal('login')` / `openModal('register')`

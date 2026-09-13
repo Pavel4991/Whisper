@@ -8,6 +8,10 @@
       (UI-тесты каналов — отложены отдельным коммитом)
 - [x] Landing-страница: header с логотипом и кнопками авторизации (widgets/header,
       shared/ui/Logo), шрифты Geist via @fontsource-variable
+- [x] Редизайн лендинга: `HeroSection` + `HeroVisual` (декор-мокап PR-диалога) в
+      `pages/home/ui/`, `widgets/footer` (таглайн «Разговоры, которые хочется
+      сохранить.»), CTA → AuthModal register/login, копирайт на i18n,
+      цвета на токенах темы (brand/body/default-border), hover-анимация CTA
 - [x] UI сообщений (Фаза 4.2): `widgets/chat` (`ChatWindow`, `ChatHeader`,
       `MessageList`) + `entities/message/ui/MessageItem` (dumb, username у чужих),
       заголовок канала через `useCurrentChannel` (кэш + `select`)
@@ -55,7 +59,7 @@
       формулировку конвенции
 - [x] Auth: валидация формы регистрации (совпадение паролей), не отправлять
       `passwordConfirm` на `/signup` — решено через zod-схемы + transformValues
-- [ ] Auth: убрать `withCredentials` из `api-instance.ts` — сервер работает по
+- [x] Auth: убрать `withCredentials` из `api-instance.ts` — сервер работает по
       Bearer-токену, куки не нужны
 - [ ] Auth: username + token персистятся в localStorage (`whisper_auth_session`,
       единый `sessionStorage` в `shared/api`) — временное решение для бутстрапа

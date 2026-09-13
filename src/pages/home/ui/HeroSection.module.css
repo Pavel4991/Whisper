@@ -1,0 +1,13 @@
+.accent {
+  color: var(--mantine-color-brand-filled);
+}
+
+.ctaButton {
+  &:hover .ctaButtonRightSection {
+    transform: translateX(8px);
+  }
+}
+
+.ctaButtonRightSection {
+  transition: transform 200ms ease;
+}

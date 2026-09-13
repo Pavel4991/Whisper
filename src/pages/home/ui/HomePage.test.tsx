@@ -28,4 +28,32 @@ describe('HomePage', () => {
 
     expect(await screen.findByRole('heading', { name: 'Регистрация' })).toBeInTheDocument()
   })
+
+  it('opens login modal on secondary cta button click', async () => {
+    renderHomePage()
+
+    const user = userEvent.setup()
+    const loginButton = await screen.findByRole('button', { name: 'Уже есть аккаунт' })
+
+    await user.click(loginButton)
+
+    expect(await screen.findByRole('heading', { name: 'Вход' })).toBeInTheDocument()
+  })
+
+  it('opens register modal on primary cta button click', async () => {
+    renderHomePage()
+
+    const user = userEvent.setup()
+    const registerButton = await screen.findByRole('button', { name: 'Начать диалог' })
+
+    await user.click(registerButton)
+
+    expect(await screen.findByRole('heading', { name: 'Регистрация' })).toBeInTheDocument()
+  })
+
+  it('renders hero visual', () => {
+    renderHomePage()
+    const placeholder = screen.getByText('Напишите что-то важное...')
+    expect(placeholder).toBeInTheDocument()
+  })
 })

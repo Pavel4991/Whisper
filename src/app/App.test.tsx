@@ -31,7 +31,7 @@ describe('App routing', () => {
 
     expect(
       await screen.findByRole('heading', {
-        name: 'Создайте пространство для осмысленного диалога.',
+        name: 'Общение без лишнего шума',
       }),
     ).toBeInTheDocument()
   })
@@ -39,9 +39,7 @@ describe('App routing', () => {
   it('renders HomePage at /', () => {
     renderRoute('/')
 
-    expect(
-      screen.getByRole('heading', { name: 'Создайте пространство для осмысленного диалога.' }),
-    ).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Общение без лишнего шума' })).toBeInTheDocument()
   })
 
   it('renders ChatPage at /chat when authenticated', async () => {
@@ -57,9 +55,7 @@ describe('App routing', () => {
     renderRoute('/chat')
 
     expect(screen.queryByRole('heading', { name: 'test-channel-name-1' })).not.toBeInTheDocument()
-    expect(
-      screen.getByRole('heading', { name: 'Создайте пространство для осмысленного диалога.' }),
-    ).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Общение без лишнего шума' })).toBeInTheDocument()
   })
 
   it('renders NotFoundPage for unknown routes', () => {

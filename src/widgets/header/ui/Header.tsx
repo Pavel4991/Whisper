@@ -10,7 +10,7 @@ export function Header({ openModal }: { openModal: (modalType: AuthModalType) =>
   const { t } = useTranslation()
 
   return (
-    <Box component="header" px={{ base: 16, md: 32 }} py={28}>
+    <Box component="header" py={{ base: 14, sm: 28 }}>
       <Group justify="space-between" align="center">
         <Anchor component={Link} to="/" td="none">
           <Logo />

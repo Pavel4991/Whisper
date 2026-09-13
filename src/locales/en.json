@@ -1,8 +1,25 @@
 {
   "ui": {
     "homePage": {
-      "header": "Make room for meaningful conversations.",
-      "registerButton": "Register"
+      "heroSection": {
+        "title": "Conversations without the <accent>noise</accent>",
+        "description": "Whisper is a Slack-style chat for focused teams: channels keep topics clean, messages stay instant, and nothing important gets lost.",
+        "badge": "The quiet way to work together",
+        "cta": "Start a conversation",
+        "ctaSecondary": "I have an account"
+      },
+      "heroVisual": {
+        "chatName": "Alex Morgan",
+        "onlineStatus": "online now",
+        "messages": [
+          "Can you check my PR before lunch?",
+          "Sure, looking now. Left a couple of comments.",
+          "Nice, thanks."
+        ],
+        "placeholder": "Write something that matters...",
+        "sendButton": "Send"
+      },
+      "footer": "Conversations worth keeping."
     },
     "header": {
       "signinButton": "Sign in",
