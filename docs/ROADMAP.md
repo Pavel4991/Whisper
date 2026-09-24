@@ -7,7 +7,7 @@
 - [x] Каналы: создание/переименование/удаление (мутации + UI-модалки)
       (UI-тесты каналов — отложены отдельным коммитом)
 - [x] Landing-страница: header с логотипом и кнопками авторизации (widgets/header,
-      shared/ui/Logo), шрифты Geist via @fontsource-variable
+      shared/ui/Logo), шрифты Geist (`@fontsource/geist` + `@fontsource/geist-mono`)
 - [x] Редизайн лендинга: `HeroSection` + `HeroVisual` (декор-мокап PR-диалога) в
       `pages/home/ui/`, `widgets/footer` (таглайн «Разговоры, которые хочется
       сохранить.»), CTA → AuthModal register/login, копирайт на i18n,

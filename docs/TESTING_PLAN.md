@@ -43,7 +43,8 @@
 - [x] `src/pages/home/ui/HomePage.test.tsx`
       кнопки Header открывают модалку (login/register); CTA hero открывают модалку
       (primary → register, secondary → login); smoke-тест hero-визуала
-      (placeholder «Напишите что-то важное...»)
+      (placeholder «Напишите что-то важное...»); переключение login↔register
+      через redirection-ссылки форм
 - [x] `src/widgets/header/ui/Header.test.tsx`
       рендер логотипа (`Whisper`); клики «Sign in»/«Get started» вызывают
       `openModal('login')` / `openModal('register')`
@@ -140,6 +141,17 @@
 - [x] `socketMock.ts` — `emitNewChannel`/`emitRenameChannel`/`emitRemoveChannel`
       через `socketLink.broadcast('42["...",...]')`; вызываются из
       `handlers/channels.ts` перед REST-ответом (как `app.io.emit` на бэкенде)
+
+## Редизайн auth-модалки (zustand modalStore)
+
+- [x] `src/features/auth/model/modalStore.test.ts` — дефолты (`isOpened: false`,
+      `modalType: 'login'`), `openLoginModal`/`openRegisterModal`/`closeModal`;
+      сброс стора целиком в `beforeEach`
+- [x] `AuthModal.test.tsx` / `HomePage.test.tsx` — полный сброс
+      `useModalStore.setState({ isOpened: false, modalType: 'login' })`
+- [x] `HomePage.test.tsx` — switch-тесты: из login-модалки по ссылке
+      «Зарегистрироваться» → register-заголовок, из register по ссылке «Войти» →
+      login-заголовок
 
 ## Соглашения для тестов
 

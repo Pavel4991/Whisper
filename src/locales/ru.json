@@ -31,13 +31,18 @@
       "sendButton": "Отправить"
     },
     "authModals": {
-      "login": "Вход",
-      "register": "Регистрация",
+      "loginTitle": "С возвращением",
+      "loginDescription": "Войдите, чтобы продолжить работу команды.",
+      "registerTitle": "Создайте рабочее пространство команды",
+      "registerDescription": "Объедините команду, проекты и обсуждения в одном рабочем пространстве.",
       "usernameField": "Имя пользователя",
       "passwordField": "Пароль",
       "passwordConfirmField": "Подтверждение пароля",
       "registerButton": "Зарегистрироваться",
-      "loginButton": "Войти"
+      "loginButton": "Войти",
+      "loginRedirectionText": "Уже есть аккаунт? ",
+      "registerRedirectionText": "Нет аккаунта? ",
+      "serverError": "Ошибка: "
     },
     "channelModals": {
       "menuLabel": "Управление каналом",
