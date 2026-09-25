@@ -35,8 +35,8 @@ Whisper — чат в реальном времени, улучшенная ве
 - i18next — локализация
 - Vite, Vitest, Prettier
 
-Планируется (пока не установлено): leo-profanity — цензура;
-Playwright — e2e.
+Планируется (пока не установлен): Playwright — e2e.
+Цензура (leo-profanity) сознательно НЕ вводится.
 
 ## Структура (Feature-Sliced Design)
 
