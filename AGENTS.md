@@ -36,7 +36,6 @@ Whisper — чат в реальном времени, улучшенная ве
 - Vite, Vitest, Prettier
 
 Планируется (пока не установлен): Playwright — e2e.
-Цензура (leo-profanity) сознательно НЕ вводится.
 
 ## Структура (Feature-Sliced Design)
 

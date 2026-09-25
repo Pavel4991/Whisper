@@ -27,8 +27,6 @@
       (`upsertChannelToCache`/`removeChannelFromCache`, сброс `currentChannelId`
       на `'1'`, чистка сообщений канала из `messageKeys.all`); эмиссия кадров из
       MSW (`emitNewChannel`/`emitRenameChannel`/`emitRemoveChannel`)
-- [x] ~~Фильтр leo-profanity; i18n~~ — отменено решением: цензура (leo-profanity)
-      сознательно НЕ вводится; локализация i18next уже подключена
 
 ## Функциональные улучшения
 
