@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 
 import type { AuthModalType } from '@/features/auth/model/types'
 import { Logo } from '@/shared/ui/Logo'
+import { ThemeSwitcher } from '@/features/theme-switcher'
 
 import { Link } from 'react-router'
 
@@ -16,7 +17,8 @@ export function Header({ openModal }: { openModal: (modalType: AuthModalType) =>
           <Logo />
         </Anchor>
 
-        <Group>
+        <Group align="center">
+          <ThemeSwitcher />
           <Button
             type="button"
             variant="transparent"

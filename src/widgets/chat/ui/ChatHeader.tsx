@@ -1,6 +1,7 @@
 import { Box, Group, Title } from '@mantine/core'
 import { LogoutButton } from '@/features/auth/ui/LogoutButton'
 import { useCurrentChannel } from '@/entities/channel/api/useCurrentChannel'
+import { ThemeSwitcher } from '@/features/theme-switcher'
 
 export function ChatHeader() {
   const { data: currentChannel } = useCurrentChannel()
@@ -15,7 +16,10 @@ export function ChatHeader() {
     >
       <Group h="100%" justify="space-between" align="center">
         <Title order={2}>{currentChannel ? currentChannel.name : 'Chat'}</Title>
-        <LogoutButton />
+        <Group gap="lg">
+          <ThemeSwitcher />
+          <LogoutButton />
+        </Group>
       </Group>
     </Box>
   )

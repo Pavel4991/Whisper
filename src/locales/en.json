@@ -56,6 +56,9 @@
     },
     "messageList": {
       "isEmpty": "No messages yet"
+    },
+    "themeSwitcher": {
+      "toggle": "Toggle theme"
     }
   },
   "validation": {

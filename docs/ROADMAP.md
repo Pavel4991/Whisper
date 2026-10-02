@@ -45,13 +45,32 @@
 
 ## UX и надёжность
 
-- [ ] Тёмная тема (prefers-color-scheme + переключатель)
+- [x] Тёмная тема (prefers-color-scheme + переключатель) — кнопка в `Header`
+      и `ChatHeader` (`features/theme-switcher`), схема по умолчанию `auto`,
+      выбор персистится в `localStorage` (`mantine-color-scheme-value`),
+      FOUC закрыт инлайн-скриптом в `index.html`. Не сделано: хардкод цветов
+      чата — см. «Технический долг»
 - [ ] WebSocket reconnection (exponential backoff) + индикатор переподключения
 - [ ] Offline-детекция (navigator.onLine)
 - [ ] Горячие клавиши (Ctrl+K, Ctrl+N, Esc)
 
 ## Технический долг и особенности
 
+- [ ] Тема: хардкод цветов чата заменить на токены схемы — `Sidebar.tsx`
+      (`#F7F8FA`), `ChannelItem.tsx` (`#d4e9f2`), `MessageItem.module.css`
+      (`#388e92`), плюс `primaryShade: { light: 7, dark: 6 }` для brand.
+      Сейчас лендинг в тёмной теме корректен, а чат — нет
+- [ ] Тема: FOUC-скрипт в `index.html` — инлайн в `<head>`, тело дословно
+      скопировано из `ColorSchemeScript` (`@mantine/core`), `defaultColorScheme`
+      обязан совпадать с `MantineProvider`, иначе Mantine предупредит о
+      flicker. При обновлении Mantine сверить тело скрипта с исходником;
+      при вводе CSP скрипт молча заблокируется и тема станет всегда светлой —
+      нужен nonce или sha256-хеш, не `'unsafe-inline'`. Тестами не покрыт:
+      jsdom не грузит `index.html`, проверка только в браузере
+- [ ] Тема: хардкод цветов чата заменить на токены схемы — `Sidebar.tsx`
+      (`#F7F8FA`), `ChannelItem.tsx` (`#d4e9f2`), `MessageItem.module.css`
+      (`#388e92`), плюс `primaryShade: { light: 7, dark: 6 }` для brand.
+      Сейчас лендинг в тёмной теме корректен, а чат — нет
 - [ ] Хуки TanStack Query (`useLogin`, `useRegister`, `auth.queries`) живут в
       `features/auth/api/`, а не в `model/` — осознанное отклонение от конвенции
       в AGENTS.md. При рефакторинге решить: перенести в `model/` или обновить

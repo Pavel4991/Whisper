@@ -48,7 +48,8 @@ src/
 ├── features/ # auth/ (реализован); channel-management/ (реализован: мутации
 │ # + единый ChannelModal по modalType + channelFormConfig по типу);
 │ # message-sending/ (реализован: мутации 4.1 + MessageInput 4.3);
-│ # profile/ — плановые
+│ # theme-switcher/ (реализован: ThemeSwitcher, схема auto + FOUC-скрипт
+│ # в index.html); profile/ — плановые
 ├── entities/ # channel/ (api: channelApi + useChannels/useCurrentChannel +
 │ # channelQueryOptions; model: currentChannelStore) и message/
 │ # (api: messageApi + useMessages; ui: MessageItem) — реализованы;

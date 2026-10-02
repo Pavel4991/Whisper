@@ -30,6 +30,8 @@ blob-report/
 
 # Local working documents
 docs/SESSION_PLAN.md
+docs/BACKEND_PLAN.md
+docs/TASKS_PLAN.md
 
 # Editor directories and files
 .vscode/*

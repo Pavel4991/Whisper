@@ -153,6 +153,29 @@
       «Зарегистрироваться» → register-заголовок, из register по ссылке «Войти» →
       login-заголовок
 
+## Тёмная тема (переключатель)
+
+- [x] `src/features/theme-switcher/ui/ThemeSwitcher.test.tsx` — 4 теста: рендер
+      кнопки; переключение light → dark → light с проверкой
+      `data-mantine-color-scheme` на `documentElement`, значения в
+      `localStorage` (`mantine-color-scheme-value`) и смены иконки
+      (`data-testid="theme-icon-moon"` / `theme-icon-sun`); восстановление
+      сохранённой схемы при монтировании; ключевой кейс — первый клик при
+      тёмной системной схеме и пустом `localStorage`: даёт `light`
+- Изоляция темы: сброс `localStorage.removeItem('mantine-color-scheme-value')`
+  в `afterEach` внутри `describe` (jsdom пересоздаётся на файл, глобальная
+  очистка в `setup.ts` не нужна)
+- Системная схема: глобальный мок `matchMedia` в `setup.ts` всегда отдаёт
+  `matches: false`, поэтому для «система тёмная» используется
+  `vi.stubGlobal('matchMedia', ...)` — откатывается общим
+  `vi.unstubAllGlobals()` в `setup.ts`
+- Значение `auto` в `localStorage` не проверяем: `toggleColorScheme` всегда
+  пишет конкретную схему (`light`/`dark`), а `clearColorScheme` ключ удаляет —
+  состояние `auto` наш UI произвести не может. Проверяем реальный первый
+  визит: пустой `localStorage` + тёмная система
+- Не покрыто: FOUC-скрипт из `index.html` (jsdom не грузит `index.html`) и
+  параметр `getInitialValueInEffect: false` — проверяются вручную в браузере
+
 ## Соглашения для тестов
 
 - Провайдеры стенда: Mantine + QueryClientProvider (изолированный
