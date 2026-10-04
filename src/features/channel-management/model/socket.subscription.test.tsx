@@ -12,7 +12,7 @@ import {
 } from '@/shared/api/msw/ws/socketMock'
 import { renderWithProviders, renderHookWithProviders } from '@/test/test-utils'
 import { ChatPage } from '@/pages/chat'
-import { useCurrentChannelStore, type Channel } from '@/entities/channel/model'
+import { useCurrentChannelStore, type Channel } from '@/entities/channel'
 import { testChannels } from '@/test/fixtures/channels'
 import { testMessages } from '@/test/fixtures/messages'
 import type { Message } from '@/entities/message/model/types'

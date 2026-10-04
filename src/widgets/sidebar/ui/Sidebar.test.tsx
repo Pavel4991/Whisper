@@ -3,10 +3,9 @@ import { screen, fireEvent } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
 import { renderWithProviders } from '@/test/test-utils'
 import { Sidebar } from './Sidebar'
-import { useCurrentChannelStore } from '@/entities/channel/model'
+import { type Channel, useCurrentChannelStore } from '@/entities/channel'
 import { channelKeys } from '@/entities/channel/api/channel.queries'
 import { testChannels } from '@/test/fixtures/channels'
-import type { Channel } from '@/entities/channel/model'
 import { mockServerError } from '@/test/test-utils'
 
 describe('Sidebar', () => {
@@ -90,9 +89,8 @@ describe('Sidebar', () => {
 
   it('shows server error for channel list', async () => {
     mockServerError('get', '/channels')
-    const { queryClient } = renderWithProviders(<Sidebar />)
-    queryClient.setQueryData<Channel[]>(channelKeys.all, testChannels)
+    renderWithProviders(<Sidebar />)
 
-    expect(await screen.findByTestId('channel-list-server-error')).toBeInTheDocument()
+    expect(await screen.findByText('Ошибка загрузки каналов')).toBeInTheDocument()
   })
 })

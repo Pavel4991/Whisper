@@ -38,6 +38,8 @@ class ResizeObserver {
 
 window.ResizeObserver = ResizeObserver
 
+Element.prototype.scrollTo = vi.fn()
+
 server.listen({ onUnhandledRequest: 'error' })
 
 beforeAll(() => {

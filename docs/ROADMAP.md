@@ -67,10 +67,6 @@
       при вводе CSP скрипт молча заблокируется и тема станет всегда светлой —
       нужен nonce или sha256-хеш, не `'unsafe-inline'`. Тестами не покрыт:
       jsdom не грузит `index.html`, проверка только в браузере
-- [ ] Тема: хардкод цветов чата заменить на токены схемы — `Sidebar.tsx`
-      (`#F7F8FA`), `ChannelItem.tsx` (`#d4e9f2`), `MessageItem.module.css`
-      (`#388e92`), плюс `primaryShade: { light: 7, dark: 6 }` для brand.
-      Сейчас лендинг в тёмной теме корректен, а чат — нет
 - [ ] Хуки TanStack Query (`useLogin`, `useRegister`, `auth.queries`) живут в
       `features/auth/api/`, а не в `model/` — осознанное отклонение от конвенции
       в AGENTS.md. При рефакторинге решить: перенести в `model/` или обновить
@@ -107,6 +103,32 @@
 - [ ] Сообщения: `useMessages`/`messageApi` пока не переведены на паттерн
       `queryOptions()` (сделан только для каналов — `channelQueryOptions`);
       привести для единообразия при следующей правке message-хуков
+- [ ] Структура: выделить `widgets/chat/ui/ChatLayout.tsx` с собственным
+      CSS-модулем; `ChatPage` тогда сводится к `useChannelSubscription()` +
+      `<ChatLayout />`. Осознанно не сделано в коммите `feat(chat)`: размен
+      не давал выигрыша, а лишняя абстракция мешала. Вернуться, если
+      `ChatPage` снова начнёт расти
+- [ ] Публичные API: убрать живые сегментные баррели — удалить
+      `entities/message/ui/index.ts`, `features/channel-management/model/index.ts`
+      и завести root-barrel для `entities/message` и `features/channel-management`
+      (≈46 строк импортов в 19 файлах). Решить в одном отдельном
+      рефакторинг-коммите: смешивать с feature-коммитом не стоит
+- [ ] Барьер против возврата глубоких импортов: правило
+      `no-restricted-imports` в ESLint (paths/patterns по слоям) либо Steiger.
+      Сейчас структура держится только на дисциплине, поэтому баррели и
+      импорты вида `@/entities/channel/api/useChannels` снова размножаются
+- [ ] Слои: `shared/api/msw/ws/socketMock.ts` импортирует типы из `entities`
+      (`Channel`, `MessageSocketEvents`) — нарушение правила «shared не
+      зависит от приложения». Импорты type-only, в проде не тянет, но правило
+      нарушено; вынести типы сокетов в `shared` либо задокументировать
+      исключение рядом с уже существующим исключением `shared → test`
+- [ ] UI: ellipsis для длинных имён каналов в `ChatHeader` — `Title` без
+      ограничения ширины, длинное имя ломает раскладку шапки на мобильном
+- [ ] `MessageList` принимает `channelId: string | null`, хотя `null`
+      недостижим: `currentChannelStore` инициализируется `currentChannelId: '1'`,
+      а `general`/`random` неудаляемы — дефолтный канал всегда существует.
+      Из-за этого в хуке остаётся `channelId || ''`. Решено оставить как есть;
+      при сужении до `string` править стор и фикстуры тестов
 
 ## Тесты и инфраструктура
 
@@ -119,6 +141,12 @@
       контроль планки на стороне SonarCloud quality gate — по [TESTING_PLAN.md](TESTING_PLAN.md)
 - [ ] Playwright e2e
 - [x] CI: lint + format:check + build + coverage + SonarQube (GitHub Actions)
+- [ ] Покрытие адаптивного чата (`feat(chat)`): сторы `channelListStore` /
+      `channelModalStore`, состояния `ChannelList` (pending/error/empty) и
+      закрытие списка при выборе канала, мобильная кнопка в `ChatHeader`,
+      мобильная ветка `ChatPage` с `Drawer`, поведение `MessageList` —
+      три Skeleton и прилипание к низу в обе стороны (прилипает / не
+      прилипает после прокрутки вверх). Отложено на отдельный тестовый коммит
 
 ## Собственный бэкенд (отдельно)
 

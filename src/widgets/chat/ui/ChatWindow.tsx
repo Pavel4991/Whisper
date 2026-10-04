@@ -1,6 +1,6 @@
 import { Flex } from '@mantine/core'
 import { MessageList } from './MessageList'
-import { useCurrentChannelStore } from '@/entities/channel/model'
+import { useCurrentChannelStore } from '@/entities/channel'
 import { ChatHeader } from './ChatHeader'
 import { MessageInput } from '@/features/message-sending'
 import { useUsername } from '@/features/auth'

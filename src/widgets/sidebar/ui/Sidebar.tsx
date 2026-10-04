@@ -1,48 +1,41 @@
-import { Paper, Stack, Button, Text } from '@mantine/core'
-import { ChannelItem } from './ChannelItem'
+import { Flex, Stack, ScrollArea } from '@mantine/core'
 import { ChannelModal } from '@/features/channel-management/ui/ChannelModal'
-import { useDisclosure } from '@mantine/hooks'
-import { useState } from 'react'
-import type { ChannelModalType } from '@/features/channel-management/model/types'
-import { useChannels } from '@/entities/channel/api/useChannels'
-import { useTranslation } from 'react-i18next'
+import { SidebarHeader } from './SidebarHeader'
+import { ChannelList } from './ChannelList'
+import { useChannelModalStore } from '@/features/channel-management/model'
 
 export function Sidebar() {
-  const [opened, { open, close }] = useDisclosure(false)
-  const [modalType, setModalType] = useState<ChannelModalType>('createChannel')
-  const [channelModalId, setChannelModalId] = useState('')
-  const { data: channels, error } = useChannels()
-  const { t } = useTranslation()
+  const modalType = useChannelModalStore((state) => state.modalType)
+  const isOpened = useChannelModalStore((state) => state.isOpened)
+  const channelId = useChannelModalStore((state) => state.channelId)
+  const closeModal = useChannelModalStore((state) => state.closeModal)
+  const openCreateChannelModal = useChannelModalStore((state) => state.openCreateChannelModal)
 
-  const openModalHandler = (modalType: ChannelModalType, id?: string) => {
-    setModalType(modalType)
-    if (id) {
-      setChannelModalId(id)
-    }
-    open()
-  }
-
-  return channels ? (
-    <Paper withBorder p={20} radius={0} h="100%" bg="#F7F8FA" w={400}>
+  return (
+    <Flex
+      direction="column"
+      h="100%"
+      w={{ base: '100%', sm: 300, md: 400 }}
+      style={{
+        flexShrink: 0,
+        overflow: 'hidden',
+        borderRight: '1px solid var(--mantine-color-gray-4)',
+      }}
+      px={{ base: 12, sm: 24 }}
+      py={12}
+    >
       <Stack h="100%" gap={5}>
-        <Button onClick={() => openModalHandler('createChannel')}>
-          {t('ui.channelModals.createChannel')}
-        </Button>
-        {channels.map((channel) => (
-          <ChannelItem key={channel.id} channel={channel} openModal={openModalHandler} />
-        ))}
-        {error && (
-          <Text color="red" data-testid="channel-list-server-error">
-            Ошибка: {error.message}
-          </Text>
-        )}
+        <SidebarHeader onCreate={openCreateChannelModal} />
+        <ScrollArea h="100%" offsetScrollbars>
+          <ChannelList />
+        </ScrollArea>
       </Stack>
       <ChannelModal
         modalType={modalType}
-        isOpened={opened}
-        onClose={close}
-        channelId={channelModalId}
+        isOpened={isOpened}
+        onClose={closeModal}
+        channelId={channelId}
       />
-    </Paper>
-  ) : null
+    </Flex>
+  )
 }

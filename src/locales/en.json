@@ -28,7 +28,8 @@
     "chatPage": {
       "logoutButton": "Logout",
       "messageInput": "Write a message",
-      "sendButton": "Send"
+      "sendButton": "Send",
+      "openChannelList": "Open channel list"
     },
     "authModals": {
       "loginTitle": "Welcome back to your workspace",
@@ -59,6 +60,12 @@
     },
     "themeSwitcher": {
       "toggle": "Toggle theme"
+    },
+    "sidebar": {
+      "title": "Channels",
+      "addChannel": "Add channel",
+      "loadError": "Error loading channels",
+      "isEmpty": "No channels yet"
     }
   },
   "validation": {

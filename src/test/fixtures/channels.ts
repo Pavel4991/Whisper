@@ -1,4 +1,4 @@
-import type { Channel } from '@/entities/channel/model'
+import type { Channel } from '@/entities/channel'
 
 export const testChannels: Channel[] = [
   {

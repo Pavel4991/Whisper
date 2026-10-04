@@ -5,7 +5,7 @@ import { renderWithProviders } from '@/test/test-utils'
 import { mockServerError } from '@/test/test-utils'
 import userEvent from '@testing-library/user-event'
 import { sessionStorage } from '@/shared/api'
-import type { Channel } from '@/entities/channel/model'
+import type { Channel } from '@/entities/channel'
 import { channelKeys } from '@/entities/channel/api/channel.queries'
 import { testChannels } from '@/test/fixtures/channels'
 

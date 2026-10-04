@@ -7,7 +7,7 @@ import { getSocket, disconnectSocket } from '@/shared/api/socket-instance'
 import { emitNewMessage } from '@/shared/api/msw/ws/socketMock'
 import { renderWithProviders, renderHookWithProviders } from '@/test/test-utils'
 import { ChatWindow } from '@/widgets/chat/ui/ChatWindow'
-import { useCurrentChannelStore } from '@/entities/channel/model'
+import { useCurrentChannelStore } from '@/entities/channel'
 import { testMessages } from '@/test/fixtures/messages'
 import type { Message } from './types'
 

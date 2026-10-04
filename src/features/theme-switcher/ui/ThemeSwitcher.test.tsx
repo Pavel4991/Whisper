@@ -1,24 +1,12 @@
 import { describe, it, expect, afterEach, vi } from 'vitest'
 import { screen } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
-import { renderWithProviders } from '@/test/test-utils'
+import { renderWithProviders, matchMediaMock } from '@/test/test-utils'
 import { ThemeSwitcher } from './ThemeSwitcher'
 
 const STORAGE_KEY = 'mantine-color-scheme-value'
 
 const getColorScheme = () => document.documentElement.getAttribute('data-mantine-color-scheme')
-
-const matchMediaMock = (matches: boolean) =>
-  vi.fn().mockImplementation((query: string) => ({
-    matches,
-    media: query,
-    onchange: null,
-    addListener: vi.fn(),
-    removeListener: vi.fn(),
-    addEventListener: vi.fn(),
-    removeEventListener: vi.fn(),
-    dispatchEvent: vi.fn(),
-  }))
 
 describe('ThemeSwitcher', () => {
   afterEach(() => localStorage.removeItem(STORAGE_KEY))

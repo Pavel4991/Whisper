@@ -1,12 +1,17 @@
 .root {
-  min-width: 20%;
-  max-width: 65%;
+  min-width: 0;
+  max-width: min(85%, 40rem);
   margin-bottom: var(--mantine-spacing-xl);
   padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
   word-break: break-word;
   transition:
     background-color 0.2s ease,
     color 0.2s ease;
+  @media (min-width: 48em) {
+    .root {
+      max-width: 65%;
+    }
+  }
 }
 
 .root[data-owner='other'] {

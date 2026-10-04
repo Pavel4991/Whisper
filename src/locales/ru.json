@@ -28,7 +28,8 @@
     "chatPage": {
       "logoutButton": "Выйти",
       "messageInput": "Напишите сообщение",
-      "sendButton": "Отправить"
+      "sendButton": "Отправить",
+      "openChannelList": "Открыть список каналов"
     },
     "authModals": {
       "loginTitle": "С возвращением",
@@ -59,6 +60,12 @@
     },
     "themeSwitcher": {
       "toggle": "Переключить тему"
+    },
+    "sidebar": {
+      "title": "Каналы",
+      "addChannel": "Добавить канал",
+      "loadError": "Ошибка загрузки каналов",
+      "isEmpty": "Пока нет каналов"
     }
   },
   "validation": {

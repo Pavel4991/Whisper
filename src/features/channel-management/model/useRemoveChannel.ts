@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { channelApi } from '@/entities/channel/api/channelApi'
 import type { RemoveChannelPayload } from './types'
-import { useCurrentChannelStore, type Channel } from '@/entities/channel/model'
+import { useCurrentChannelStore, type Channel } from '@/entities/channel'
 import { channelKeys } from '@/entities/channel/api/channel.queries'
 import { removeChannelFromCache } from '@/entities/channel/model/channelCache'
 import { removeMessagesByChannelId } from '@/entities/message/model/messageCache'

@@ -43,7 +43,7 @@ export function MessageInput({
       onSubmit={form.onSubmit(handleSubmit)}
       w="100%"
       style={{ flexShrink: 0, borderTop: '1px solid var(--mantine-color-gray-3)' }}
-      px={24}
+      px={{ base: 12, sm: 24 }}
       py={14}
     >
       <Group h="100%" align="center" wrap="nowrap">

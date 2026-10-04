@@ -3,7 +3,7 @@ import { screen, fireEvent } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
 import { renderWithProviders } from '@/test/test-utils'
 import { ChannelItem } from './ChannelItem'
-import { useCurrentChannelStore } from '@/entities/channel/model'
+import { useCurrentChannelStore } from '../model/currentChannelStore'
 
 describe('ChannelItem', () => {
   afterEach(() => {
@@ -12,14 +12,32 @@ describe('ChannelItem', () => {
 
   it('renders channel name', () => {
     const channel = { id: '1', name: 'general', removable: false }
-    renderWithProviders(<ChannelItem channel={channel} openModal={() => {}} />)
+    renderWithProviders(
+      <ChannelItem
+        channel={channel}
+        isActive={true}
+        onSelect={() => {}}
+        onRename={() => {}}
+        onRemove={() => {}}
+      />,
+    )
 
     expect(screen.getByText('general')).toBeInTheDocument()
   })
 
   it('sets current channel on click', () => {
     const channel = { id: '2', name: 'random', removable: false }
-    renderWithProviders(<ChannelItem channel={channel} openModal={() => {}} />)
+    const setCurrentChannelId = useCurrentChannelStore.getState().setCurrentChannelId
+
+    renderWithProviders(
+      <ChannelItem
+        channel={channel}
+        isActive={false}
+        onSelect={() => setCurrentChannelId(channel.id)}
+        onRename={() => {}}
+        onRemove={() => {}}
+      />,
+    )
     const channelItem = screen.getByText('random')
 
     fireEvent.click(channelItem)
@@ -31,7 +49,15 @@ describe('ChannelItem', () => {
 
   it('does not show management button for non-removable channels', () => {
     const channel = { id: '1', name: 'general', removable: false }
-    renderWithProviders(<ChannelItem channel={channel} openModal={() => {}} />)
+    renderWithProviders(
+      <ChannelItem
+        channel={channel}
+        isActive={true}
+        onSelect={() => {}}
+        onRename={() => {}}
+        onRemove={() => {}}
+      />,
+    )
 
     expect(screen.queryByRole('button', { name: 'Управление каналом' })).not.toBeInTheDocument()
   })
@@ -40,7 +66,15 @@ describe('ChannelItem', () => {
     const user = userEvent.setup()
     const openModal = vi.fn()
     const channel = { id: '1', name: 'general', removable: true }
-    renderWithProviders(<ChannelItem channel={channel} openModal={openModal} />)
+    renderWithProviders(
+      <ChannelItem
+        channel={channel}
+        isActive={true}
+        onSelect={() => {}}
+        onRename={() => openModal('renameChannel', '1')}
+        onRemove={() => {}}
+      />,
+    )
     const channelMenuButton = screen.getByRole('button', { name: 'Управление каналом' })
     expect(channelMenuButton).toBeInTheDocument()
 
@@ -61,7 +95,15 @@ describe('ChannelItem', () => {
     const user = userEvent.setup()
     const openModal = vi.fn()
     const channel = { id: '1', name: 'general', removable: true }
-    renderWithProviders(<ChannelItem channel={channel} openModal={openModal} />)
+    renderWithProviders(
+      <ChannelItem
+        channel={channel}
+        isActive={true}
+        onSelect={() => {}}
+        onRename={() => {}}
+        onRemove={() => openModal('removeChannel', '1')}
+      />,
+    )
     const channelMenuButton = screen.getByRole('button', { name: 'Управление каналом' })
     expect(channelMenuButton).toBeInTheDocument()
 

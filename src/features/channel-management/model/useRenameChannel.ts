@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { channelApi } from '@/entities/channel/api/channelApi'
 import type { RenameChannelPayload } from './types'
-import type { Channel } from '@/entities/channel/model'
+import type { Channel } from '@/entities/channel'
 import { channelKeys } from '@/entities/channel/api/channel.queries'
 import { upsertChannelToCache } from '@/entities/channel/model/channelCache'
 

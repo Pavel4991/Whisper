@@ -43,18 +43,22 @@ src/
 ├── app/ # провайдеры (Mantine, Query, Router, i18n), глобальные стили
 ├── pages/ # маршруты-страницы (HomePage, ChatPage, NotFoundPage)
 ├── widgets/ # композиции UI из фич/сущностей; реализованы sidebar/ (Sidebar,
-│ # ChannelItem) и chat/ (ChatWindow, ChatHeader, MessageList) — Фаза 4.2:
-│ # список сообщений + заголовок канала через useCurrentChannel
+│ # ChannelList, SidebarHeader) и chat/ (ChatWindow, ChatHeader, MessageList):
+│ # список сообщений с прилипанием к низу + заголовок канала через
+│ # useCurrentChannel; адаптив: список каналов в Drawer на мобильном
 ├── features/ # auth/ (реализован); channel-management/ (реализован: мутации
-│ # + единый ChannelModal по modalType + channelFormConfig по типу);
+│ # + единый ChannelModal по modalType + channelFormConfig по типу +
+│ # channelModalStore);
 │ # message-sending/ (реализован: мутации 4.1 + MessageInput 4.3);
 │ # theme-switcher/ (реализован: ThemeSwitcher, схема auto + FOUC-скрипт
 │ # в index.html); profile/ — плановые
 ├── entities/ # channel/ (api: channelApi + useChannels/useCurrentChannel +
-│ # channelQueryOptions; model: currentChannelStore) и message/
+│ # channelQueryOptions; model: currentChannelStore, channelListStore;
+│ # ui: ChannelItem dumb; root index.ts — публичный API среза) и message/
 │ # (api: messageApi + useMessages; ui: MessageItem) — реализованы;
 │ # user/ — заглушка
-├── shared/ # ui/, api/, types/, utils/, lib/, validation/, hooks/
+├── shared/ # ui/, api/, types/, utils/, lib/, validation/, hooks/, config/
+│ # (config/breakpoints.ts — MOBILE_MEDIA_QUERY для useMediaQuery)
 ├── locales/
 └── styles/
 

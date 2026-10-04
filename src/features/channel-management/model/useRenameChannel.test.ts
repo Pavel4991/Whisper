@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 import { waitFor, act } from '@testing-library/react'
 import { renderHookWithProviders, mockServerError } from '@/test/test-utils'
 import { useRenameChannel } from './useRenameChannel'
-import type { Channel } from '@/entities/channel/model'
+import type { Channel } from '@/entities/channel'
 import { channelKeys } from '@/entities/channel/api/channel.queries'
 import { testChannels } from '@/test/fixtures/channels'
 
