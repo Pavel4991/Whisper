@@ -2,7 +2,7 @@ import { Box, Title, Group, ActionIcon } from '@mantine/core'
 import { IconSquarePlus } from '@tabler/icons-react'
 import { useTranslation } from 'react-i18next'
 
-export function SidebarHeader({ onCreate }: { onCreate: () => void }) {
+export function SidebarHeader({ onCreate }: { readonly onCreate: () => void }) {
   const { t } = useTranslation()
 
   return (

@@ -9,8 +9,8 @@ export function MessageInput({
   channelId,
   username,
 }: {
-  channelId: string | null
-  username: string | null
+  readonly channelId: string | null
+  readonly username: string | null
 }) {
   const { t } = useTranslation()
   const form = useForm({

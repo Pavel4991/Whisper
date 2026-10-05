@@ -7,7 +7,7 @@ import { ThemeSwitcher } from '@/features/theme-switcher'
 
 import { Link } from 'react-router'
 
-export function Header({ openModal }: { openModal: (modalType: AuthModalType) => void }) {
+export function Header({ openModal }: { readonly openModal: (modalType: AuthModalType) => void }) {
   const { t } = useTranslation()
 
   return (

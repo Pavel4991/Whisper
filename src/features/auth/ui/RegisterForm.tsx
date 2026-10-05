@@ -50,7 +50,7 @@ export function RegisterForm() {
           { username: values.username, password: values.password },
           {
             onSuccess: () => {
-              navigate('/chat', { replace: true })
+              void navigate('/chat', { replace: true })
               closeModal()
             },
           },

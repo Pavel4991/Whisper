@@ -21,13 +21,7 @@ export function useChannelSubscription() {
 
   useEffect(() => {
     const socket = getSocket<ChannelSocketEvents>()
-    const onNewChannel = (channel: Channel) => {
-      queryClient.setQueryData<Channel[]>(channelKeys.all, (channels) =>
-        upsertChannelToCache(channels, channel),
-      )
-    }
-
-    const onRenamedChannel = (channel: Channel) => {
+    const onUpsertedChannel = (channel: Channel) => {
       queryClient.setQueryData<Channel[]>(channelKeys.all, (channels) =>
         upsertChannelToCache(channels, channel),
       )
@@ -46,13 +40,13 @@ export function useChannelSubscription() {
       )
     }
 
-    socket.on('newChannel', onNewChannel)
-    socket.on('renameChannel', onRenamedChannel)
+    socket.on('newChannel', onUpsertedChannel)
+    socket.on('renameChannel', onUpsertedChannel)
     socket.on('removeChannel', onRemovedChannel)
 
     return () => {
-      socket.off('newChannel', onNewChannel)
-      socket.off('renameChannel', onRenamedChannel)
+      socket.off('newChannel', onUpsertedChannel)
+      socket.off('renameChannel', onUpsertedChannel)
       socket.off('removeChannel', onRemovedChannel)
     }
   }, [queryClient])

@@ -3,10 +3,10 @@ import type { GetInputPropsReturnType } from '@mantine/form'
 import type { ReactNode } from 'react'
 
 interface AuthFieldProps {
-  fieldName: string
-  label: string
-  error?: ReactNode
-  inputProps: GetInputPropsReturnType
+  readonly fieldName: string
+  readonly label: string
+  readonly error?: ReactNode
+  readonly inputProps: GetInputPropsReturnType
 }
 
 export function AuthField({ fieldName, label, error, inputProps }: AuthFieldProps) {

@@ -7,7 +7,7 @@ import { useRef, useEffect } from 'react'
 
 const STICK_THRESHOLD_PX = 64
 
-export function MessageList({ channelId }: { channelId: string | null }) {
+export function MessageList({ channelId }: { readonly channelId: string | null }) {
   const { data: currentUser } = useUsername()
   const { t } = useTranslation()
 

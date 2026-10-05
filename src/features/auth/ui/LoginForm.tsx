@@ -38,7 +38,7 @@ export function LoginForm() {
       onSubmit={form.onSubmit((values) =>
         login(values, {
           onSuccess: () => {
-            navigate('/chat', { replace: true })
+            void navigate('/chat', { replace: true })
             closeModal()
           },
         }),

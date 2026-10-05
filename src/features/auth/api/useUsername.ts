@@ -7,7 +7,7 @@ export const useUsername = () => {
 
   return useQuery({
     queryKey: authKeys.session(),
-    queryFn: async () => {
+    queryFn: () => {
       throw new Error('Session not found')
     },
     staleTime: Infinity,

@@ -4,7 +4,11 @@ import type { AuthModalType } from '@/features/auth/model/types'
 import classes from './HeroSection.module.css'
 import { IconArrowRight } from '@tabler/icons-react'
 
-export function HeroSection({ openModal }: { openModal: (modalType: AuthModalType) => void }) {
+export function HeroSection({
+  openModal,
+}: {
+  readonly openModal: (modalType: AuthModalType) => void
+}) {
   const { t } = useTranslation()
   return (
     <Box maw={540}>

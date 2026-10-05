@@ -4,7 +4,7 @@ import './i18n'
 import { MantineThemeProvider } from './mantine'
 import { QueryProvider } from './query'
 
-export function AppProviders({ children }: { children: ReactNode }) {
+export function AppProviders({ children }: { readonly children: ReactNode }) {
   return (
     <MantineThemeProvider>
       <QueryProvider>{children}</QueryProvider>

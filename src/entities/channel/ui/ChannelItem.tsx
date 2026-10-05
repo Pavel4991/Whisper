@@ -19,11 +19,11 @@ export function ChannelItem({
   onRename,
   onRemove,
 }: {
-  channel: Channel
-  isActive: boolean
-  onSelect: () => void
-  onRename: () => void
-  onRemove: () => void
+  readonly channel: Channel
+  readonly isActive: boolean
+  readonly onSelect: () => void
+  readonly onRename: () => void
+  readonly onRemove: () => void
 }) {
   const { t } = useTranslation()
   const bg = isActive ? Pallete.isActive.bg : Pallete.isNotActive.bg

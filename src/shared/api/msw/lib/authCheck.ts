@@ -3,7 +3,7 @@ import { createErrorResponse } from './createErrorResponse'
 export const authCheck = (request: Request) => {
   const authHeader = request.headers.get('Authorization')
 
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+  if (!authHeader?.startsWith('Bearer ')) {
     return createErrorResponse()
   }
 

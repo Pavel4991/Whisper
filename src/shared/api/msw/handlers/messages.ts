@@ -28,7 +28,7 @@ const fetchMessagesRequest: HttpResponseResolver<
   PathParams,
   MessageCredentials,
   MessageSuccessResponse[] | MessageErrorResponse
-> = async ({ request }) => {
+> = ({ request }) => {
   const authError = authCheck(request)
   if (authError) return authError
   return HttpResponse.json<MessageSuccessResponse[]>(testMessages)
@@ -93,15 +93,13 @@ const removeMessageRequest: HttpResponseResolver<
   MessagePathParams,
   MessageCredentials,
   DeletedMessageSuccessResponse | MessageErrorResponse
-> = async ({ params, request }) => {
+> = ({ params, request }) => {
   const authError = authCheck(request)
   if (authError) return authError
 
   const { id } = params
 
-  const messageToRemove = testMessages.find((message) => message.id === id)
-
-  if (!messageToRemove) {
+  if (!testMessages.some((message) => message.id === id)) {
     return createErrorResponse<MessageErrorResponse>('Not Found', 404)
   }
 

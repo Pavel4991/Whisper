@@ -25,7 +25,7 @@ const fetchChannelsRequest: HttpResponseResolver<
   PathParams,
   ChannelCredentials,
   ChannelSuccessResponse[] | ChannelErrorResponse
-> = async ({ request }) => {
+> = ({ request }) => {
   const authError = authCheck(request)
   if (authError) return authError
 
@@ -94,15 +94,13 @@ const removeChannelRequest: HttpResponseResolver<
   ChannelPathParams,
   ChannelCredentials,
   DeleteChannelSuccessResponse | ChannelErrorResponse
-> = async ({ params, request }) => {
+> = ({ params, request }) => {
   const authError = authCheck(request)
   if (authError) return authError
 
   const { id } = params
 
-  const channelToRemove = testChannels.find((channel) => channel.id === id)
-
-  if (!channelToRemove) {
+  if (!testChannels.some((channel) => channel.id === id)) {
     return createErrorResponse<ChannelErrorResponse>('Not Found', 404)
   }
 

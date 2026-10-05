@@ -15,7 +15,7 @@ export function LogoutButton() {
   const handleLogout = () => {
     logout()
     queryClient.removeQueries({ queryKey: authKeys.session() })
-    navigate('/', { replace: true })
+    void navigate('/', { replace: true })
   }
 
   return (

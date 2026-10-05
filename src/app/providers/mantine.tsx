@@ -22,7 +22,7 @@ const theme = createTheme({
   primaryShade: 7,
 })
 
-export function MantineThemeProvider({ children }: { children: ReactNode }) {
+export function MantineThemeProvider({ children }: { readonly children: ReactNode }) {
   return (
     <MantineProvider theme={theme} defaultColorScheme="auto">
       {children}

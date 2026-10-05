@@ -3,7 +3,7 @@
   max-width: min(85%, 40rem);
   margin-bottom: var(--mantine-spacing-xl);
   padding: var(--mantine-spacing-xs) var(--mantine-spacing-md);
-  word-break: break-word;
+  overflow-wrap: break-word;
   transition:
     background-color 0.2s ease,
     color 0.2s ease;

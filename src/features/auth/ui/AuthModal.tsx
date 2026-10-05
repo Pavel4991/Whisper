@@ -6,9 +6,9 @@ import { RegisterForm } from './RegisterForm'
 import { Logo } from '@/shared/ui/Logo'
 
 interface AuthModalProps {
-  modalType: AuthModalType
-  isOpened: boolean
-  onClose: () => void
+  readonly modalType: AuthModalType
+  readonly isOpened: boolean
+  readonly onClose: () => void
 }
 
 export function AuthModal({ modalType, isOpened, onClose }: AuthModalProps) {

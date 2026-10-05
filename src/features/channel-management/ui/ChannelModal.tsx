@@ -1,4 +1,5 @@
-import { Modal } from '@mantine/core'
+import { Modal, Box, Button, Text, TextInput, Group } from '@mantine/core'
+import { useForm, schemaResolver } from '@mantine/form'
 import { useTranslation } from 'react-i18next'
 import type { ChannelModalType } from '../model/types'
 import { channelFormConfig } from '../model/channelFormConfig'
@@ -6,15 +7,13 @@ import { channelFormConfig } from '../model/channelFormConfig'
 import { useCreateChannel, useRenameChannel, useRemoveChannel } from '../model'
 import { channelNameSchema } from '@/shared/validation'
 import { createTranslatedResolver } from '@/shared/lib'
-import { useForm, schemaResolver } from '@mantine/form'
-import { Box, Button, Text, TextInput, Group } from '@mantine/core'
 import { z } from 'zod'
 
 interface ChannelModalProps {
-  modalType: ChannelModalType
-  isOpened: boolean
-  onClose: () => void
-  channelId: string
+  readonly modalType: ChannelModalType
+  readonly isOpened: boolean
+  readonly onClose: () => void
+  readonly channelId: string
 }
 
 export function ChannelModal({ modalType, isOpened, onClose, channelId }: ChannelModalProps) {

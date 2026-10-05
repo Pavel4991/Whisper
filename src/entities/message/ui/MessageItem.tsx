@@ -3,8 +3,8 @@ import type { Message } from '../model/types'
 import classes from './MessageItem.module.css'
 
 interface MessageItemProps {
-  message: Message
-  currentUser: string
+  readonly message: Message
+  readonly currentUser: string
 }
 
 export function MessageItem({ message, currentUser }: MessageItemProps) {
