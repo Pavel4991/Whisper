@@ -1,195 +1,41 @@
-# План покрытия тестами
+# Тесты — Whisper
 
-Цель: **≥ 80%** покрытия (lines/statements). Стартовая точка: ~40–45% — покрыт только
-роутинг (`App.test.tsx`), auth-слайс и API-слой без тестов.
+Покрытие: **145 тестов / 41 файл**, 97.6% lines / 96.28% stmts / 100% funcs.
+Порог ≥ 80% контролируется SonarCloud quality gate (в vite.config пороги не
+фиксируются). Отчёт: `npm run test:coverage` → `coverage/lcov.info`.
 
-## Принятые решения
+## Решения
 
-- Мокирование зависимостей — **MSW** для API-слоя (сервер подключён глобально в
-  `src/test/setup.ts`); `vi.mock`/спаи — для изоляции стора и утилит
-- Пороги `coverage.thresholds` в vite.config не фиксируем — контроль планки на стороне
-  SonarCloud quality gate
-- Тонкие обёртки (`App.tsx`, провайдеры, конфиги форм) — только косвенное покрытие,
-  отдельные тесты признаны низкоэффективными
+- Мокирование API — **MSW** (сервер подключён глобально в `src/test/setup.ts`);
+  `vi.mock`/спаи — для изоляции сторов и утилит
+- Реалтайм — MSW ws-мок Engine.IO/Socket.IO (`shared/api/msw/ws/socketMock.ts`),
+  полифилл `ws` для `globalThis.WebSocket`; эмиттеры `emitNewMessage` /
+  `emitNewChannel` / `emitRenameChannel` / `emitRemoveChannel` вызываются из
+  REST-хэндлеров перед ответом
+- Тонкие обёртки (`App.tsx`, провайдеры, конфиги форм) — только косвенное
+  покрытие, отдельные тесты признаны низкоэффективными
+- Стабилизация флаки-тестов портального `Menu`: `maxWorkers: 4` в
+  `vite.config.ts` + таймаут `findByRole('menuitem', ...)`
 
-## Фаза 1 — слой данных ✅
+## Соглашения
 
-- [x] `src/shared/api/token-storage.test.ts`
-      roundtrip get/set/clear; SSR-ветка (`typeof window === 'undefined'`) через
-      `vi.stubGlobal('window', undefined)`
-- [x] `src/features/auth/model/authStore.test.ts`
-      старт из пустого localStorage; `login()` пишет токен и ставит флаг;
-      `logout()` чистит токен и флаг
-- [x] `src/features/auth/api/authApi.test.ts`
-      через MSW: эндпоинты `/login` и `/signup`, возврат `response.data`
-- [ ] `src/features/auth/api/useLogin.test.tsx`,
-      `src/features/auth/api/useRegister.test.tsx` — пока не выделены отдельно;
-      флоу успеха/ошибки покрыт в UI-тестах форм (см. Фаза 2)
+- Провайдеры стенда: Mantine + изолированный `QueryClient` + RouterProvider
+  (`createMemoryRouter`) — `renderWithProviders` / `renderHookWithProviders` в
+  `src/test/test-utils.tsx`
+- Изоляция zustand: сброс сторов в `afterEach` (`channelListStore`,
+  `channelModalStore`, `currentChannelStore`, `useModalStore` — в `setup.ts`
+  и локально); мутируемый MSW-state между тестами не сбрасывается — учитывать
+- Навигация: реальный редирект через `createMemoryRouter`, не мок `useNavigate`
+- Формы: `data-testid` на полях ошибок и серверной ошибке
+- Портал Mantine: `getEnv()` всегда 'development' → `autosize` активен и в
+  тестах; `matchMedia`/`ResizeObserver`/`document.fonts` замоканы в `setup.ts`
+- История моков не чистится автоматически (нет `clearMocks`/`restoreMocks`) —
+  чистить вручную
+- Viewport `ScrollArea` в jsdom имеет нулевые размеры — `scrollHeight`/
+  `clientHeight` подменять через `Object.defineProperty`
 
-## Фаза 2 — UI-компоненты ✅- [x] `src/features/auth/ui/ProtectedRoute.test.tsx`
+## Не покрыто (намеренно)
 
-      авторизованный → рендер `<Outlet />`; неавторизованный → redirect на `/`
-
-- [x] `src/features/auth/ui/AuthModal.test.tsx`
-      заголовок и форма соответствуют `modalType` ('login' | 'register')
-- [x] `src/features/auth/ui/LoginForm.test.tsx`,
-      `src/features/auth/ui/RegisterForm.test.tsx`
-      сабмит вызывает мутацию и выполняет `navigate('/chat', { replace: true })`;
-      показ ошибки при 401
-      (TODO: блокировка кнопки при `isPending` ещё не покрыта)
-- [x] `src/features/auth/ui/LogoutButton.test.tsx`
-      клик: токен удалён из хранилища, `navigate('/', { replace: true })`
-      (кэш сессии `authKeys.session()` — проверить явно)
-- [x] `src/pages/home/ui/HomePage.test.tsx`
-      кнопки Header открывают модалку (login/register); CTA hero открывают модалку
-      (primary → register, secondary → login); smoke-тест hero-визуала
-      (placeholder «Напишите что-то важное...»); переключение login↔register
-      через redirection-ссылки форм
-- [x] `src/widgets/header/ui/Header.test.tsx`
-      рендер логотипа (`Whisper`); клики «Sign in»/«Get started» вызывают
-      `openModal('login')` / `openModal('register')`
-
-## Фаза 3 — каналы (мутации + UI)
-
-- [x] `src/entities/channel/model/currentChannelStore.test.ts`
-      старт на `'1'`, set (реализовано в Коммите 1)
-- [x] `src/features/channel-management/model/useCreateChannel.test.ts`,
-      `useRenameChannel.test.ts`, `useRemoveChannel.test.ts`
-      успех (обновление кэша через `setQueryData`) и ошибка (кэш без изменений) —
-      реализовано в Коммите 1
-- [x] `src/features/channel-management/ui/ChannelModal.test.tsx`
-      рендер по `modalType`; сабмит add/rename + проверка кэша; remove-подтверждение;
-      валидация; серверная ошибка — реализовано в Пункте G
-- [x] `src/widgets/sidebar/ui/ChannelItem.test.tsx`
-      рендер; клик вызывает `setCurrentChannelId`; Menu rename/remove вызывает
-      `openModal` с правильными аргументами; не-removable: меню нет — реализовано в Пункте G
-- [x] `src/widgets/sidebar/ui/Sidebar.test.tsx`
-      список каналов из `setQueryData`; клик выбирает канал;
-      кнопки Add/Dropdown открывают модалку; серверная ошибка GET — реализовано в Пункте G
-
-## Рефакторинг тест-инфраструктуры ✅
-
-- [x] `src/app/App.test.tsx` — добавлен смоук-тест рендера `<App />`
-      (провайдеры + реальный `createBrowserRouter` на `/`) — закрыто покрытие `App.tsx`
-- [x] Фикстуры типизированы доменными типами:
-      `testChannels: Channel[]` (`@/test/fixtures/channels.ts`),
-      `testMessages: Message[]` (`@/test/fixtures/messages.ts`)
-- [x] Глобальный тестовый токен: `tokenStorage.setToken('test-token')` в `beforeAll`
-      и `clearToken` в `afterAll` `src/test/setup.ts` — убраны дублирующие сетапы
-      из `useChannels`/`useMessages`/мутаций/`ChannelModal`/`authStore`
-- [x] `mockServerError(method, path, status = 400)` — добавлен параметр статуса
-      (закрыт TODO из `src/test/test-utils.tsx`)
-- [x] `useCurrentChannelStore` сбрасывается в `afterEach` глобального `setup.ts`
-- [x] Стабилизация флаки: `maxWorkers: 4` в `vite.config.ts` + таймаут
-      `findByRole('menuitem', ..., { timeout: 3000 })` в `ChannelItem.test.tsx`
-- [x] Нейминг тестов унифицирован (ед. стиль: глагол в настоящем времени,
-      грамматически корректно) — `ChannelItem`/`Sidebar`/`ChannelModal`/`currentChannelStore`
-
-## MSW ws — socket.io/Engine.IO мок (Фаза 4.4, спайк)
-
-- [x] `src/shared/api/msw/ws/socketMock.ts` — link на `^ws://[^/]+(?:\/socket\.io)?\/?$`
-      (MSW вырезает `/socket.io/` из pathname при матчинге) + фреймы Engine.IO:
-      open `0{"sid":...}`, ping `2→3`, CONNECT `40→40{"sid":...}`
-- [x] `src/shared/api/msw/ws/rawWebSocket.test.tsx` — сырой WebSocket-обмен через MSW
-      (слушатели вешаются ДО open — иначе гонка микротасков уводит доставку)
-- [x] `src/shared/api/msw/ws/socketMock.test.tsx` — spike: `io({ transports: ['websocket'] })`
-      коннектится (`socket.connected === true`, `transport.ws` — `WebSocketOverride`)
-- Полифилл `globalThis.WebSocket` (npm-пакет `ws`) в `src/test/setup.ts`;
-  `server.listen()` на топ-левеле (engine.io-client захватывает WebSocket при
-  загрузке модуля — до eval тест-модулей)
-- vite.config.ts: absolute-алиасы socket.io/engine.io → `build/esm`,
-  `test.server.deps.inline`, плагин `engineioBrowserTransports` (node-транспорты
-  `*.node.js` → browser `*.js`), `ws` в devDependencies
-
-## Реалтайм `newMessage` (Фаза 4.4 + 4.5)
-
-- [x] `src/shared/api/socket-instance.test.ts` — синглтон: тот же экземпляр при
-      повторном `getSocket()`, новый — после `disconnectSocket()`
-- [x] `src/entities/message/model/socket.subscription.test.tsx` — REST→сокет→кэш
-      с дедупом (id `'3'` ровно один): `useAddMessage` + подписка на одном
-      QueryClient; «второе окно» — `ChatWindow` (канал `'2'`) получает
-      `emitNewMessage(...)` от «другого пользователя»
-- [x] `socketMock.ts` — `emitNewMessage(message)` через `socketLink.broadcast('42["newMessage",...]')`;
-      CONNECT с auth обрабатывается `data.startsWith('40')` (с токеном кадр
-      `40{"token":...}`, без — `40`)
-- [x] `useAddMessage.onSuccess` дедуплицирует через `appendMessageToCache`
-      (вместе с подпиской — общий хелпер `messageCache.ts`)
-- [x] `afterAll` в `src/test/setup.ts`: `disconnectSocket()` (динамический импорт
-      — чтобы не сдвинуть момент захвата `WebSocket` раньше `server.listen()`)
-
-## Реалтайм каналов (Фаза 5)
-
-- [x] `src/features/channel-management/model/socket.subscription.ts` — подписчик
-      `newChannel`/`renameChannel`/`removeChannel` (живёт в feature, а не в
-      `entities/channel`: FSD — срезы одного слоя не импортируют друг друга,
-      а при removeChannel нужна чистка сообщений из `entities/message`)
-- [x] `src/entities/channel/model/channelCache.ts` — единые хелперы кэша:
-      `upsertChannelToCache` (new+rename), `removeChannelFromCache`;
-      `src/entities/message/model/messageCache.ts` − `removeMessagesByChannelId`
-      (удаление канала чистит и его сообщения — в `useRemoveChannel.onSuccess`
-      и в WS-подписке)
-- [x] `useChannelSubscription()` смонтирован в `ChatPage`; remove сбрасывает
-      `currentChannelId` на `'1'` через `useCurrentChannelStore.getState()`
-      (без stale closure в обработчике)
-- [x] `renderHookWithProviders(callback, existingQueryClient?)` — опциональный
-      `QueryClient` для сценариев «мутация + подписка на одном клиенте»
-- [x] `src/features/channel-management/model/socket.subscription.test.tsx` — тест 1:
-      дедуп create (канал id `'3'` ровно один в кэше); тест 2: интеграция через
-      `<ChatPage/>` — `emitNewChannel` (появляется в Sidebar), `emitRenameChannel`
-      (имя обновилось в DOM), `emitRemoveChannel('2')` (канал и его сообщения
-      убраны, `currentChannelId` → `'1'`)
-- [x] `socketMock.ts` — `emitNewChannel`/`emitRenameChannel`/`emitRemoveChannel`
-      через `socketLink.broadcast('42["...",...]')`; вызываются из
-      `handlers/channels.ts` перед REST-ответом (как `app.io.emit` на бэкенде)
-
-## Редизайн auth-модалки (zustand modalStore)
-
-- [x] `src/features/auth/model/modalStore.test.ts` — дефолты (`isOpened: false`,
-      `modalType: 'login'`), `openLoginModal`/`openRegisterModal`/`closeModal`;
-      сброс стора целиком в `beforeEach`
-- [x] `AuthModal.test.tsx` / `HomePage.test.tsx` — полный сброс
-      `useModalStore.setState({ isOpened: false, modalType: 'login' })`
-- [x] `HomePage.test.tsx` — switch-тесты: из login-модалки по ссылке
-      «Зарегистрироваться» → register-заголовок, из register по ссылке «Войти» →
-      login-заголовок
-
-## Тёмная тема (переключатель)
-
-- [x] `src/features/theme-switcher/ui/ThemeSwitcher.test.tsx` — 4 теста: рендер
-      кнопки; переключение light → dark → light с проверкой
-      `data-mantine-color-scheme` на `documentElement`, значения в
-      `localStorage` (`mantine-color-scheme-value`) и смены иконки
-      (`data-testid="theme-icon-moon"` / `theme-icon-sun`); восстановление
-      сохранённой схемы при монтировании; ключевой кейс — первый клик при
-      тёмной системной схеме и пустом `localStorage`: даёт `light`
-- Изоляция темы: сброс `localStorage.removeItem('mantine-color-scheme-value')`
-  в `afterEach` внутри `describe` (jsdom пересоздаётся на файл, глобальная
-  очистка в `setup.ts` не нужна)
-- Системная схема: глобальный мок `matchMedia` в `setup.ts` всегда отдаёт
-  `matches: false`, поэтому для «система тёмная» используется
-  `vi.stubGlobal('matchMedia', ...)` — откатывается общим
-  `vi.unstubAllGlobals()` в `setup.ts`
-- Значение `auto` в `localStorage` не проверяем: `toggleColorScheme` всегда
-  пишет конкретную схему (`light`/`dark`), а `clearColorScheme` ключ удаляет —
-  состояние `auto` наш UI произвести не может. Проверяем реальный первый
-  визит: пустой `localStorage` + тёмная система
-- Не покрыто: FOUC-скрипт из `index.html` (jsdom не грузит `index.html`) и
-  параметр `getInitialValueInEffect: false` — проверяются вручную в браузере
-
-## Соглашения для тестов
-
-- Провайдеры стенда: Mantine + QueryClientProvider (изолированный
-  `new QueryClient()`) + RouterProvider (`createMemoryRouter`) — хелпер
-  `renderWithProviders` в `src/test/test-utils.tsx`
-- Изоляция zustand-стора: `useAuthStore.setState(...)` перед тестом,
-  сброс в `afterEach` (стор живёт между тестами)
-- Навигация: проверяем реальный редирект через маршруты `createMemoryRouter`
-  (например, `initialEntries: ['/chat']`), а не мок `useNavigate`
-- Формы: `data-testid` на полях ошибок (`${name}-error`) и серверной ошибке —
-  чтобы надёжно находить текст ошибки Mantine
-
-## Критерий готовности
-
-- [x] `npm run test:coverage` ≥ 80% по lines и statements — достигнуто
-      (96.96% lines / 95.34% stmts / 100% funcs)
-- Коммит: `test: cover auth flow and api layer with unit tests`
+- FOUC-скрипт в `index.html` (jsdom не грузит index.html) — вручную в браузере
+- Хуки `useLogin`/`useRegister` отдельно — pending/error проверяются в
+  UI-тестах форм

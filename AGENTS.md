@@ -31,7 +31,7 @@ Whisper — чат в реальном времени, улучшенная ве
 - Axios — HTTP-клиент (`shared/api/api-instance.ts`, Bearer-токен из `sessionStorage` — единый модуль сессии token+username)
 - Mantine — UI-кит (core/hooks/form); @mantine/form — формы и валидация
 - @tabler/icons-react — иконки (используется в ChannelItem: Menu rename/remove)
-- Zod —声明式 валидация (схемы в shared/validation/)
+- Zod — декларативная валидация (схемы в shared/validation/)
 - i18next — локализация
 - Vite, Vitest, Prettier
 

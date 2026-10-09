@@ -119,4 +119,64 @@ describe('ChannelItem', () => {
 
     expect(openModal).toHaveBeenCalledWith('removeChannel', '1')
   })
+
+  it('does not select the channel when the menu button is clicked', async () => {
+    const user = userEvent.setup()
+    const onSelect = vi.fn()
+    const channel = { id: '1', name: 'general', removable: true }
+
+    renderWithProviders(
+      <ChannelItem
+        channel={channel}
+        isActive={true}
+        onSelect={() => onSelect()}
+        onRename={() => {}}
+        onRemove={() => {}}
+      />,
+    )
+
+    await user.click(screen.getByRole('button', { name: 'Управление каналом' }))
+
+    expect(onSelect).not.toHaveBeenCalled()
+  })
+
+  it('does not select the channel when a menu action is clicked', async () => {
+    const user = userEvent.setup()
+    const onSelect = vi.fn()
+    const onRename = vi.fn()
+    const channel = { id: '1', name: 'general', removable: true }
+
+    renderWithProviders(
+      <ChannelItem
+        channel={channel}
+        isActive={true}
+        onSelect={() => onSelect()}
+        onRename={() => onRename('renameChannel', channel.id)}
+        onRemove={() => {}}
+      />,
+    )
+    await user.click(screen.getByRole('button', { name: 'Управление каналом' }))
+    await user.click(await screen.findByRole('menuitem', { name: 'Переименовать канал' }))
+
+    expect(onRename).toHaveBeenCalledWith('renameChannel', '1')
+    expect(onSelect).not.toHaveBeenCalled()
+  })
+
+  it('selects the channel on name click even when it has a menu', async () => {
+    const onSelect = vi.fn()
+    const channel = { id: '1', name: 'general', removable: true }
+
+    renderWithProviders(
+      <ChannelItem
+        channel={channel}
+        isActive={true}
+        onSelect={() => onSelect()}
+        onRename={() => {}}
+        onRemove={() => {}}
+      />,
+    )
+    fireEvent.click(screen.getByText('general'))
+
+    expect(onSelect).toHaveBeenCalled()
+  })
 })
