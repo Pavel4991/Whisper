@@ -1,9 +1,8 @@
 import { describe, expect, it } from 'vitest'
 import { mockServerError, renderHookWithProviders } from '@/test/test-utils'
-import { messageKeys } from '@/entities/message/api/message.queries'
+import { messageKeys, type Message } from '@/entities/message'
 import { useRemoveMessage } from './useRemoveMessage'
 import { testMessages } from '@/test/fixtures/messages'
-import type { Message } from '@/entities/message/model/types'
 import { act, waitFor } from '@testing-library/react'
 
 describe('useRemoveMessage', () => {

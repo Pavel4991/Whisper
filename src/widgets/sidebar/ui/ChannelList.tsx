@@ -5,7 +5,7 @@ import {
   useCurrentChannelStore,
   useChannelListStore,
 } from '@/entities/channel'
-import { useChannelModalStore } from '@/features/channel-management/model'
+import { useChannelModalStore } from '@/features/channel-management'
 import { useTranslation } from 'react-i18next'
 
 export function ChannelList() {

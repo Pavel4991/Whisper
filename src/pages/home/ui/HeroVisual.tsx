@@ -1,7 +1,6 @@
 import { Box, Group, Paper, Stack, Text, Divider } from '@mantine/core'
-import { MessageItem } from '@/entities/message/ui/MessageItem'
+import { MessageItem, type Message } from '@/entities/message'
 import { useTranslation } from 'react-i18next'
-import type { Message } from '@/entities/message/model/types'
 
 export function HeroVisual() {
   const { t } = useTranslation()

@@ -4,7 +4,7 @@ import { useCurrentChannelStore } from '@/entities/channel'
 import { ChatHeader } from './ChatHeader'
 import { MessageInput } from '@/features/message-sending'
 import { useUsername } from '@/features/auth'
-import { useNewMessageSubscription } from '@/entities/message/model/socket.subscription'
+import { useNewMessageSubscription } from '@/entities/message'
 
 export function ChatWindow() {
   const { data: currentUser } = useUsername()

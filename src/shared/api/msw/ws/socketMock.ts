@@ -1,5 +1,5 @@
 import { ws } from 'msw'
-import type { Message } from '@/entities/message/model/types'
+import type { Message } from '@/entities/message'
 import type { Channel } from '@/entities/channel/model/types'
 
 const openFrame =

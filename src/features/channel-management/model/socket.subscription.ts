@@ -2,12 +2,10 @@ import { useEffect } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import { getSocket } from '@/shared/api/socket-instance'
 import type { Channel } from '@/entities/channel/model/types'
-import type { Message } from '@/entities/message/model/types'
 import { channelKeys } from '@/entities/channel/api/channel.queries'
 import { upsertChannelToCache, removeChannelFromCache } from '@/entities/channel/model/channelCache'
 import { useCurrentChannelStore } from '@/entities/channel'
-import { removeMessagesByChannelId } from '@/entities/message/model/messageCache'
-import { messageKeys } from '@/entities/message/api/message.queries'
+import { removeMessagesByChannelId, messageKeys, type Message } from '@/entities/message'
 import type { RemoveChannelPayload } from './types'
 
 export type ChannelSocketEvents = {

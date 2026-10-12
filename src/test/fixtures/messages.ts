@@ -1,4 +1,4 @@
-import type { Message } from '@/entities/message/model/types'
+import type { Message } from '@/entities/message'
 
 export const testMessages: Message[] = [
   { id: '1', body: 'test-text-message-1', channelId: '1', username: 'admin' },

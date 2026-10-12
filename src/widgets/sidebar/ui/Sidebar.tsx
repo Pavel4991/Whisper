@@ -1,8 +1,7 @@
 import { Flex, Stack, ScrollArea } from '@mantine/core'
-import { ChannelModal } from '@/features/channel-management/ui/ChannelModal'
+import { ChannelModal, useChannelModalStore } from '@/features/channel-management'
 import { SidebarHeader } from './SidebarHeader'
 import { ChannelList } from './ChannelList'
-import { useChannelModalStore } from '@/features/channel-management/model'
 
 export function Sidebar() {
   const modalType = useChannelModalStore((state) => state.modalType)

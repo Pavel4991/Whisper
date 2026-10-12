@@ -4,9 +4,7 @@ import type { RemoveChannelPayload } from './types'
 import { useCurrentChannelStore, type Channel } from '@/entities/channel'
 import { channelKeys } from '@/entities/channel/api/channel.queries'
 import { removeChannelFromCache } from '@/entities/channel/model/channelCache'
-import { removeMessagesByChannelId } from '@/entities/message/model/messageCache'
-import { messageKeys } from '@/entities/message/api/message.queries'
-import type { Message } from '@/entities/message/model/types'
+import { removeMessagesByChannelId, messageKeys, type Message } from '@/entities/message'
 
 export const useRemoveChannel = () => {
   const queryClient = useQueryClient()

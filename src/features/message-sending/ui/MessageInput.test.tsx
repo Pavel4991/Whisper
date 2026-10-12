@@ -4,7 +4,7 @@ import { userEvent } from '@testing-library/user-event'
 import { renderWithProviders } from '@/test/test-utils'
 import { testMessages } from '@/test/fixtures/messages'
 import { MessageInput } from './MessageInput'
-import { messageKeys } from '@/entities/message/api/message.queries'
+import { messageKeys } from '@/entities/message'
 import { mockServerError } from '@/test/test-utils'
 
 describe('MessageInput', () => {

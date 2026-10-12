@@ -1,7 +1,7 @@
 import { Drawer, Box, Flex } from '@mantine/core'
 import { Sidebar } from '@/widgets/sidebar'
 import { ChatWindow } from '@/widgets/chat'
-import { useChannelSubscription } from '@/features/channel-management/model/socket.subscription'
+import { useChannelSubscription } from '@/features/channel-management'
 import { useMediaQuery } from '@mantine/hooks'
 import { MOBILE_MEDIA_QUERY } from '@/shared/config/breakpoints'
 import { useChannelListStore } from '@/entities/channel'

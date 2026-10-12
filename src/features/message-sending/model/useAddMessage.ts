@@ -1,9 +1,6 @@
-import { messageKeys } from '@/entities/message/api/message.queries'
-import { messageApi } from '@/entities/message/api/messageApi'
+import { messageKeys, messageApi, appendMessageToCache, type Message } from '@/entities/message'
 import { useQueryClient, useMutation } from '@tanstack/react-query'
 import type { AddMessagePayload } from './types'
-import type { Message } from '@/entities/message/model/types'
-import { appendMessageToCache } from '@/entities/message/model/messageCache'
 
 export function useAddMessage() {
   const queryClient = useQueryClient()

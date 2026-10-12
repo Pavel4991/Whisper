@@ -1,7 +1,6 @@
 import { Box, ScrollArea, Flex, Text, Stack, Skeleton } from '@mantine/core'
-import { MessageItem } from '@/entities/message/ui'
+import { MessageItem, useMessages } from '@/entities/message'
 import { useUsername } from '@/features/auth'
-import { useMessages } from '@/entities/message/api/useMessages'
 import { useTranslation } from 'react-i18next'
 import { useRef, useEffect } from 'react'
 

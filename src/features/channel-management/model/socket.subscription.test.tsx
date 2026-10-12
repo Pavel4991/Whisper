@@ -3,7 +3,7 @@ import { act, screen, waitFor } from '@testing-library/react'
 import { useChannelSubscription } from './socket.subscription'
 import { useCreateChannel } from './useCreateChannel'
 import { channelKeys } from '@/entities/channel/api/channel.queries'
-import { messageKeys } from '@/entities/message/api/message.queries'
+import { messageKeys, type Message } from '@/entities/message'
 import { getSocket, disconnectSocket } from '@/shared/api/socket-instance'
 import {
   emitNewChannel,
@@ -15,7 +15,6 @@ import { ChatPage } from '@/pages/chat'
 import { useCurrentChannelStore, type Channel } from '@/entities/channel'
 import { testChannels } from '@/test/fixtures/channels'
 import { testMessages } from '@/test/fixtures/messages'
-import type { Message } from '@/entities/message/model/types'
 
 afterAll(() => disconnectSocket())
 
