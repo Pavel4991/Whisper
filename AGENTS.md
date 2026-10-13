@@ -29,7 +29,9 @@ Whisper — чат в реальном времени, улучшенная ве
   `ws` — polyfill `globalThis.WebSocket` в vitest и основа будущего
   собственного сервера (см. ROADMAP)
 - Axios — HTTP-клиент (`shared/api/api-instance.ts`, Bearer-токен из `sessionStorage` — единый модуль сессии token+username)
-- Mantine — UI-кит (core/hooks/form); @mantine/form — формы и валидация
+- Mantine — UI-кит (core/hooks/form/notifications); @mantine/form — формы и
+  валидация; @mantine/notifications — уведомления (провайдер
+  `<Notifications position="top-right">` в `src/app/providers/mantine.tsx`)
 - @tabler/icons-react — иконки (используется в ChannelItem: Menu rename/remove)
 - Zod — декларативная валидация (схемы в shared/validation/)
 - i18next — локализация
@@ -48,14 +50,14 @@ src/
 │ # useCurrentChannel; адаптив: список каналов в Drawer на мобильном
 ├── features/ # auth/ (реализован); channel-management/ (реализован: мутации
 │ # + единый ChannelModal по modalType + channelFormConfig по типу +
-│ # channelModalStore);
+│ # channelModalStore + success-уведомления через notifications.show);
 │ # message-sending/ (реализован: мутации 4.1 + MessageInput 4.3);
 │ # theme-switcher/ (реализован: ThemeSwitcher, схема auto + FOUC-скрипт
 │ # в index.html); profile/ — плановые
-├── entities/ # channel/ (api: channelApi + useChannels/useCurrentChannel +
-│ # channelQueryOptions; model: currentChannelStore, channelListStore;
-│ # ui: ChannelItem dumb; root index.ts — публичный API среза) и message/
-│ # (api: messageApi + useMessages; ui: MessageItem) — реализованы;
+├── entities/ # channel/ (api: channelApi + useChannels/useCurrentChannel/
+│ # useChannelById + channelQueryOptions; model: currentChannelStore,
+│ # channelListStore; ui: ChannelItem dumb; root index.ts — публичный API среза)
+│ # и message/ (api: messageApi + useMessages; ui: MessageItem) — реализованы;
 │ # user/ — заглушка
 ├── shared/ # ui/, api/, types/, utils/, lib/, validation/, hooks/, config/
 │ # (config/breakpoints.ts — MOBILE_MEDIA_QUERY для useMediaQuery)
@@ -89,9 +91,11 @@ src/
   обновлениях и сохраняет флаги `isPending`/`isError`
 - Компоненты списков мемоизированы; селекторы Zustand без лишних ре-рендеров
 - Ошибки: Error Boundaries + уведомления Mantine; API-ошибки нормализуются.
-  Серверные ошибки форм/мутаций показываются общими уведомлениями
-  (план: @mantine/notifications, см. ROADMAP) — инлайн-блок ошибки в
-  MessageInput сознательно не вводится
+  Серверные ошибки форм/мутаций показываются инлайн-блоком
+  (`channel-modal-server-error`); инлайн-блок ошибки в MessageInput
+  сознательно не вводится. Единый показ ошибок через @mantine/notifications —
+  планово (см. ROADMAP). Success-уведомления CRUD канала реализованы:
+  `notifications.show` в `ChannelModal`
 - React Router v7: Link/RouterProvider/createBrowserRouter/createMemoryRouter
   импортируются из корневого 'react-router'; НЕ из 'react-router/dom' (в vitest
   это даёт два экземпляра пакета и Link падает с NavigationContext: null).
@@ -115,7 +119,9 @@ src/
   `mockServerError(method, path)` (захардкожен на 400 — TODO расширить на коды)
 - В `src/test/setup.ts` — моки `matchMedia`/`ResizeObserver`/`document.fonts`
   (jsdom без FontFaceSet; Mantine `getEnv()` в этой версии всегда
-  'development', поэтому `autosize` у Textarea включается и в тестах)
+  'development', поэтому `autosize` у Textarea включается и в тестах);
+  стор нотификаций чистится в общем `afterEach` (`notifications.clean()` +
+  `notifications.cleanQueue()`)
 - Планируется: Playwright e2e (регистрация → создание канала → обмен сообщениями)
 
 ## CI

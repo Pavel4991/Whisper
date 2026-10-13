@@ -2,8 +2,10 @@
 
 База (аналог hexlet-chat) реализована полностью: роутинг, auth, каналы,
 сообщения, реалтайм (socket.io + MSW ws-мок), тёмная тема, редизайн лендинга
-и auth-модалки, адаптивный чат с тестами. Текущее покрытие: 145 тестов /
-41 файл, 97.6% lines / 96.28% stmts / 100% funcs (контроль — SonarCloud
+и auth-модалки, адаптивный чат с тестами. Реализовано дополнительно:
+root-баррели в entities/features, уведомления об успехе CRUD канала
+(@mantine/notifications, `useChannelById`). Текущее покрытие: 148 тестов /
+42 файла, 97.63% lines / 96.34% stmts / 100% funcs (контроль — SonarCloud
 quality gate, см. [TESTING_PLAN.md](TESTING_PLAN.md)).
 
 ## Функциональные улучшения
@@ -57,10 +59,6 @@ quality gate, см. [TESTING_PLAN.md](TESTING_PLAN.md)).
 - [ ] Сообщения: `useMessages`/`messageApi` не переведены на паттерн
       `queryOptions()` (сделано только для каналов) — привести для
       единообразия при следующей правке
-- [ ] Публичные API: убрать живые сегментные баррели —
-      `entities/message/ui/index.ts`, `features/channel-management/model/index.ts`
-      → завести root-barrel (≈46 строк импортов в 19 файлах). Отдельным
-      рефакторинг-коммитом
 - [ ] Барьер против возврата глубоких импортов: правило
       `no-restricted-imports` в ESLint либо Steiger. Сейчас структура держится
       только на дисциплине

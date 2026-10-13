@@ -1,6 +1,6 @@
 # Тесты — Whisper
 
-Покрытие: **145 тестов / 41 файл**, 97.6% lines / 96.28% stmts / 100% funcs.
+Покрытие: **148 тестов / 42 файла**, 97.63% lines / 96.34% stmts / 100% funcs.
 Порог ≥ 80% контролируется SonarCloud quality gate (в vite.config пороги не
 фиксируются). Отчёт: `npm run test:coverage` → `coverage/lcov.info`.
 
@@ -24,7 +24,9 @@
   `src/test/test-utils.tsx`
 - Изоляция zustand: сброс сторов в `afterEach` (`channelListStore`,
   `channelModalStore`, `currentChannelStore`, `useModalStore` — в `setup.ts`
-  и локально); мутируемый MSW-state между тестами не сбрасывается — учитывать
+  и локально); стор `@mantine/notifications` очищается `clean()`/
+  `cleanQueue()` в общем `afterEach` в `setup.ts`; мутируемый MSW-state
+  между тестами не сбрасывается — учитывать
 - Навигация: реальный редирект через `createMemoryRouter`, не мок `useNavigate`
 - Формы: `data-testid` на полях ошибок и серверной ошибке
 - Портал Mantine: `getEnv()` всегда 'development' → `autosize` активен и в
