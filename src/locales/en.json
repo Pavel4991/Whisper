@@ -66,6 +66,13 @@
       "addChannel": "Add channel",
       "loadError": "Error loading channels",
       "isEmpty": "No channels yet"
+    },
+    "notifications": {
+      "onSuccess": {
+        "createChannel": "Channel {{newName}} created.",
+        "renameChannel": "Channel renamed: {{oldName}} -> {{newName}}.",
+        "removeChannel": "Channel {{oldName}} removed."
+      }
     }
   },
   "validation": {

@@ -66,6 +66,7 @@ describe('ChannelModal', () => {
     const cachedChannels = queryClient.getQueryData<Channel[]>(channelKeys.all)
 
     expect(cachedChannels).toContainEqual(expect.objectContaining({ name: 'Новый канал' }))
+    expect(await screen.findByText('Канал Новый канал создан.')).toBeInTheDocument()
   })
 
   it('closes after submission and adds renamed channel to cache', async () => {
@@ -90,6 +91,9 @@ describe('ChannelModal', () => {
     const cachedChannels = queryClient.getQueryData<Channel[]>(channelKeys.all)
 
     expect(cachedChannels).toContainEqual(expect.objectContaining({ id: '1', name: 'Новый канал' }))
+    expect(
+      await screen.findByText('Канал переименован: test-channel-name-1 -> Новый канал.'),
+    ).toBeInTheDocument()
   })
 
   it('closes after submission and removes channel from cache', async () => {
@@ -112,6 +116,7 @@ describe('ChannelModal', () => {
     const cachedChannels = queryClient.getQueryData<Channel[]>(channelKeys.all)
 
     expect(cachedChannels).not.toContainEqual(expect.objectContaining({ id: '1' }))
+    expect(await screen.findByText('Канал test-channel-name-1 удален.')).toBeInTheDocument()
   })
 
   it('renders server error', async () => {

@@ -66,6 +66,13 @@
       "addChannel": "Добавить канал",
       "loadError": "Ошибка загрузки каналов",
       "isEmpty": "Пока нет каналов"
+    },
+    "notifications": {
+      "onSuccess": {
+        "createChannel": "Канал {{newName}} создан.",
+        "renameChannel": "Канал переименован: {{oldName}} -> {{newName}}.",
+        "removeChannel": "Канал {{oldName}} удален."
+      }
     }
   },
   "validation": {

@@ -4,6 +4,7 @@ import { afterEach, afterAll, beforeAll, vi } from 'vitest'
 import { server } from '../shared/api/msw/server'
 import { sessionStorage } from '@/shared/api'
 import { useCurrentChannelStore } from '@/entities/channel/model/currentChannelStore'
+import { notifications } from '@mantine/notifications'
 
 const { WebSocket } = await import('ws')
 globalThis.WebSocket = WebSocket as unknown as typeof globalThis.WebSocket
@@ -46,15 +47,13 @@ beforeAll(() => {
   sessionStorage.setSession({ token: 'test-token', username: 'test-username' })
 })
 
-afterEach(() => vi.unstubAllGlobals())
-
 afterEach(() => {
   server.resetHandlers()
   useCurrentChannelStore.setState({ currentChannelId: '1' })
-})
-
-afterEach(() => {
   cleanup()
+  notifications.clean()
+  notifications.cleanQueue()
+  vi.unstubAllGlobals()
 })
 
 afterAll(async () => {

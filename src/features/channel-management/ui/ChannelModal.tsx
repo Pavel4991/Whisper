@@ -7,9 +7,12 @@ import { channelFormConfig } from '../model/channelFormConfig'
 import { useCreateChannel } from '../model/useCreateChannel'
 import { useRenameChannel } from '../model/useRenameChannel'
 import { useRemoveChannel } from '../model/useRemoveChannel'
+import { useChannelById } from '@/entities/channel'
 import { channelNameSchema } from '@/shared/validation'
 import { createTranslatedResolver } from '@/shared/lib'
 import { z } from 'zod'
+import { notifications } from '@mantine/notifications'
+import { IconCheck } from '@tabler/icons-react'
 
 interface ChannelModalProps {
   readonly modalType: ChannelModalType
@@ -23,6 +26,7 @@ export function ChannelModal({ modalType, isOpened, onClose, channelId }: Channe
   const { mutate: createChannel, isPending: isCreating, error: createError } = useCreateChannel()
   const { mutate: renameChannel, isPending: isRenaming, error: renameError } = useRenameChannel()
   const { mutate: removeChannel, isPending: isRemoving, error: removeError } = useRemoveChannel()
+  const { data: channel } = useChannelById(channelId)
 
   const isPending = isCreating || isRenaming || isRemoving
   const currentError = createError || renameError || removeError
@@ -40,10 +44,18 @@ export function ChannelModal({ modalType, isOpened, onClose, channelId }: Channe
   })
 
   const channelHandler = (values: typeof form.values) => {
+    const oldName = channel?.name
     const mutationConfig = {
       onSuccess: () => {
         form.reset()
         onClose()
+        notifications.show({
+          icon: <IconCheck />,
+          message: t(`ui.notifications.onSuccess.${modalType}`, {
+            oldName,
+            newName: values.name,
+          }),
+        })
       },
     }
 

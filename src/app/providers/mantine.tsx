@@ -1,6 +1,8 @@
-import '@mantine/core/styles.css' // 1. Сначала базовые стили Mantine
+import '@mantine/core/styles.css'
+import '@mantine/notifications/styles.css'
 import '../styles/global.css'
 import { MantineProvider, createTheme } from '@mantine/core'
+import { Notifications } from '@mantine/notifications'
 import type { ReactNode } from 'react'
 
 const theme = createTheme({
@@ -25,6 +27,7 @@ const theme = createTheme({
 export function MantineThemeProvider({ children }: { readonly children: ReactNode }) {
   return (
     <MantineProvider theme={theme} defaultColorScheme="auto">
+      <Notifications position="top-right" />
       {children}
     </MantineProvider>
   )
