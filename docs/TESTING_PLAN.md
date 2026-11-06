@@ -2,11 +2,13 @@
 
 Покрытие: **148 тестов / 42 файла**, 97.63% lines / 96.34% stmts / 100% funcs.
 Порог ≥ 80% контролируется SonarCloud quality gate (в vite.config пороги не
-фиксируются). Отчёт: `npm run test:coverage` → `coverage/lcov.info`.
+фиксируются). Отчёт: `npm run test:coverage` →
+`packages/client/coverage/lcov.info`.
 
 ## Решения
 
-- Мокирование API — **MSW** (сервер подключён глобально в `src/test/setup.ts`);
+- Мокирование API — **MSW** (сервер подключён глобально в
+  `packages/client/src/test/setup.ts`);
   `vi.mock`/спаи — для изоляции сторов и утилит
 - Реалтайм — MSW ws-мок Engine.IO/Socket.IO (`shared/api/msw/ws/socketMock.ts`),
   полифилл `ws` для `globalThis.WebSocket`; эмиттеры `emitNewMessage` /
@@ -21,7 +23,7 @@
 
 - Провайдеры стенда: Mantine + изолированный `QueryClient` + RouterProvider
   (`createMemoryRouter`) — `renderWithProviders` / `renderHookWithProviders` в
-  `src/test/test-utils.tsx`
+  `packages/client/src/test/test-utils.tsx`
 - Изоляция zustand: сброс сторов в `afterEach` (`channelListStore`,
   `channelModalStore`, `currentChannelStore`, `useModalStore` — в `setup.ts`
   и локально); стор `@mantine/notifications` очищается `clean()`/

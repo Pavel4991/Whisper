@@ -1,7 +1,12 @@
 import { fileURLToPath, URL } from 'node:url'
 import path from 'node:path'
+import { createRequire } from 'node:module'
 import { defineConfig, type Plugin } from 'vitest/config'
 import react from '@vitejs/plugin-react'
+
+const require = createRequire(import.meta.url)
+const esmEntry = (packageName: string) =>
+  path.join(path.dirname(require.resolve(`${packageName}/package.json`)), 'build/esm/index.js')
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -9,12 +14,8 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
-      'socket.io-client': fileURLToPath(
-        new URL('./node_modules/socket.io-client/build/esm/index.js', import.meta.url),
-      ),
-      'engine.io-client': fileURLToPath(
-        new URL('./node_modules/engine.io-client/build/esm/index.js', import.meta.url),
-      ),
+      'socket.io-client': esmEntry('socket.io-client'),
+      'engine.io-client': esmEntry('engine.io-client'),
     },
   },
   server: {

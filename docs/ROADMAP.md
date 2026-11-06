@@ -4,9 +4,11 @@
 сообщения, реалтайм (socket.io + MSW ws-мок), тёмная тема, редизайн лендинга
 и auth-модалки, адаптивный чат с тестами. Реализовано дополнительно:
 root-баррели в entities/features, уведомления об успехе CRUD канала
-(@mantine/notifications, `useChannelById`). Текущее покрытие: 148 тестов /
-42 файла, 97.63% lines / 96.34% stmts / 100% funcs (контроль — SonarCloud
-quality gate, см. [TESTING_PLAN.md](TESTING_PLAN.md)).
+(@mantine/notifications, `useChannelById`). M0 «Монорепо» выполнен:
+фронтенд в `packages/client`, каркас `@whisper/shared` в `packages/shared`.
+Текущее покрытие: 148 тестов / 42 файла, 97.63% lines / 96.34% stmts /
+100% funcs (контроль — SonarCloud quality gate, см.
+[TESTING_PLAN.md](TESTING_PLAN.md)).
 
 ## Функциональные улучшения
 
@@ -77,7 +79,7 @@ quality gate, см. [TESTING_PLAN.md](TESTING_PLAN.md)).
 Стек утверждён (2026-09-25): Node 22 + Fastify + нативный ws + PostgreSQL
 (Drizzle) в npm-workspaces монорепо `packages/{client,server,shared}`.
 
-- [ ] M0 Монорепо — следующий шаг
+- [x] M0 Монорепо — выполнен (`packages/client`, `packages/shared`)
 - [ ] M1 Контракты (типы/DTO/zod/`WsEventMap` в shared)
 - [ ] M2 Сервер REST (+ `/users/me`, bcrypt, JWT)
 - [ ] M3 WS (auth-first-frame, reconnect, миграция клиента с socket.io на ws)

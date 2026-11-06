@@ -29,15 +29,18 @@
 | TanStack Query                 | Серверное состояние (каналы, сообщения)              |
 | Zustand                        | Клиентское состояние (модалки, текущий канал, draft) |
 | React Router                   | Маршрутизация                                        |
-| ws                             | Реалтайм                                             |
+| socket.io-client               | Реалтайм                                             |
 | Axios                          | HTTP-клиент (REST)                                   |
-| Mantine + @mantine/form + Zod  | UI-кит, формы и声明式 валидация                      |
+| Mantine + @mantine/form + Zod  | UI-кит, формы и декларативная валидация              |
 | i18next                        | Локализация                                          |
 | Vite, Vitest                   | Сборка и тесты                                       |
 
 Планируется подключить: Playwright (e2e) — см. [роадмап](docs/ROADMAP.md).
 
 ## Установка и запуск
+
+Репозиторий — npm-workspaces монорепо: фронтенд в `packages/client`,
+общие контракты — в `packages/shared`. Все команды выполняются из корня.
 
 ```bash
 # Установка зависимостей
@@ -67,7 +70,7 @@ CORS-запросы не возникают. Базовый URL API переоп
 
 ## Тесты и CI
 
-- Vitest + React Testing Library; MSW и Playwright (e2e) запланированы
+- Vitest + React Testing Library + MSW; Playwright (e2e) запланирован
 - GitHub Actions: lint + format:check + build + coverage (включая тесты) + SonarQube scan на каждый PR — [статус](https://github.com/Pavel4991/Whisper/actions)
 - SonarCloud: [анализ качества кода](https://sonarcloud.io/project/overview?id=Pavel4991_Whisper)
 

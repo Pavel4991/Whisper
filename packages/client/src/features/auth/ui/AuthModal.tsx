@@ -20,7 +20,7 @@ export function AuthModal({ modalType, isOpened, onClose }: AuthModalProps) {
       <Modal.Content radius="xl" p={28}>
         <Modal.Header p={0}>
           <Modal.Title>
-            <Logo />
+            <Logo hideTextOnMobile={true} />
           </Modal.Title>
           <Modal.CloseButton />
         </Modal.Header>

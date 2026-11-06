@@ -4,9 +4,14 @@
 
 Whisper — чат в реальном времени, улучшенная версия hexlet-chat (Slack-аналог).
 Фронтенд: React 19 + TypeScript (strict). Бэкенд сейчас — @hexlet/chat-server
-(ws + REST); собственный сервер планируется отдельно.
+(REST + socket.io); собственный сервер планируется отдельно. Репозиторий —
+npm-workspaces монорепо: `packages/client` (фронт) и `packages/shared`
+(каркас общих контрактов, наполняется в M1).
 
 ## Команды
+
+Все команды запускаются из корня и делегируют в `@whisper/client`
+(`npm run <script> -w @whisper/client`).
 
 - `npm run dev` — Vite dev server (HMR)
 - `npm run start-server` — бэкенд @hexlet/chat-server (порт 5001)
@@ -15,7 +20,8 @@ Whisper — чат в реальном времени, улучшенная ве
 - `npm run lint` — eslint
 - `npm run format` / `npm run format:check` — Prettier (format:check также шаг в CI)
 - `npm test` — vitest (npm run test:watch — watch)
-- `npm run test:coverage` — vitest с покрытием (lcov → coverage/lcov.info)
+- `npm run test:coverage` — vitest с покрытием
+  (lcov → `packages/client/coverage/lcov.info`)
 - Makefile дублирует команды: make install/build/lint/test/coverage/develop
 
 ## Стек
@@ -28,44 +34,50 @@ Whisper — чат в реальном времени, улучшенная ве
   в тестах коннектится через MSW ws (мок фреймов Engine.IO/Socket.IO);
   `ws` — polyfill `globalThis.WebSocket` в vitest и основа будущего
   собственного сервера (см. ROADMAP)
-- Axios — HTTP-клиент (`shared/api/api-instance.ts`, Bearer-токен из `sessionStorage` — единый модуль сессии token+username)
+- Axios — HTTP-клиент (`packages/client/src/shared/api/api-instance.ts`,
+  Bearer-токен из `sessionStorage` — единый модуль сессии token+username)
 - Mantine — UI-кит (core/hooks/form/notifications); @mantine/form — формы и
   валидация; @mantine/notifications — уведомления (провайдер
-  `<Notifications position="top-right">` в `src/app/providers/mantine.tsx`)
+  `<Notifications position="top-right">` в
+  `packages/client/src/app/providers/mantine.tsx`)
 - @tabler/icons-react — иконки (используется в ChannelItem: Menu rename/remove)
-- Zod — декларативная валидация (схемы в shared/validation/)
+- Zod — декларативная валидация (схемы в `shared/validation/`)
 - i18next — локализация
 - Vite, Vitest, Prettier
 
 Планируется (пока не установлен): Playwright — e2e.
 
-## Структура (Feature-Sliced Design)
+## Структура (npm-workspaces монорепо, Feature-Sliced Design)
 
-src/
-├── app/ # провайдеры (Mantine, Query, Router, i18n), глобальные стили
-├── pages/ # маршруты-страницы (HomePage, ChatPage, NotFoundPage)
-├── widgets/ # композиции UI из фич/сущностей; реализованы sidebar/ (Sidebar,
-│ # ChannelList, SidebarHeader) и chat/ (ChatWindow, ChatHeader, MessageList):
-│ # список сообщений с прилипанием к низу + заголовок канала через
-│ # useCurrentChannel; адаптив: список каналов в Drawer на мобильном
-├── features/ # auth/ (реализован); channel-management/ (реализован: мутации
-│ # + единый ChannelModal по modalType + channelFormConfig по типу +
-│ # channelModalStore + success-уведомления через notifications.show);
-│ # message-sending/ (реализован: мутации 4.1 + MessageInput 4.3);
-│ # theme-switcher/ (реализован: ThemeSwitcher, схема auto + FOUC-скрипт
-│ # в index.html); profile/ — плановые
-├── entities/ # channel/ (api: channelApi + useChannels/useCurrentChannel/
-│ # useChannelById + channelQueryOptions; model: currentChannelStore,
-│ # channelListStore; ui: ChannelItem dumb; root index.ts — публичный API среза)
-│ # и message/ (api: messageApi + useMessages; ui: MessageItem) — реализованы;
-│ # user/ — заглушка
-├── shared/ # ui/, api/, types/, utils/, lib/, validation/, hooks/, config/
-│ # (config/breakpoints.ts — MOBILE_MEDIA_QUERY для useMediaQuery)
-├── locales/
-└── styles/
+packages/
+├── client/ # @whisper/client — фронтенд (Vite, tsconfig, eslint)
+│ └── src/
+│ ├── app/ # провайдеры (Mantine, Query, Router, i18n), глобальные стили
+│ ├── pages/ # маршруты-страницы (HomePage, ChatPage, NotFoundPage)
+│ ├── widgets/ # композиции UI из фич/сущностей; реализованы sidebar/ (Sidebar,
+│ │ # ChannelList, SidebarHeader) и chat/ (ChatWindow, ChatHeader, MessageList):
+│ │ # список сообщений с прилипанием к низу + заголовок канала через
+│ │ # useCurrentChannel; адаптив: список каналов в Drawer на мобильном
+│ ├── features/ # auth/ (реализован); channel-management/ (реализован: мутации
+│ │ # + единый ChannelModal по modalType + channelFormConfig по типу +
+│ │ # channelModalStore + success-уведомления через notifications.show);
+│ │ # message-sending/ (реализован: мутации 4.1 + MessageInput 4.3);
+│ │ # theme-switcher/ (реализован: ThemeSwitcher, схема auto + FOUC-скрипт
+│ │ # в index.html); profile/ — плановые
+│ ├── entities/ # channel/ (api: channelApi + useChannels/useCurrentChannel/
+│ │ # useChannelById + channelQueryOptions; model: currentChannelStore,
+│ │ # channelListStore; ui: ChannelItem dumb; root index.ts — публичный API среза)
+│ │ # и message/ (api: messageApi + useMessages; ui: MessageItem) — реализованы;
+│ │ # user/ — заглушка
+│ ├── shared/ # ui/, api/, types/, utils/, lib/, validation/, hooks/, config/
+│ │ # (config/breakpoints.ts — MOBILE_MEDIA_QUERY для useMediaQuery)
+│ ├── locales/
+│ └── styles/
+└── shared/ # @whisper/shared — каркас общих контрактов (типы/DTO/zod в M1)
+└── src/index.ts
 
 Каждый срез (feature/entity): ui/, model/ (сторы, TanStack Query), api/, lib/.
-Алиас `@/` → `src/`.
+Алиас `@/` → `packages/client/src/`.
 
 ## Правила импортов (FSD)
 
@@ -110,14 +122,19 @@ src/
 
 - Vitest + React Testing Library — сторы, формы, хуки
 - Новые фичи требуют тестов
-- Покрытие: vitest v8 → coverage/lcov.info (SonarQube читает этот отчёт)
+- Покрытие: vitest v8 → `packages/client/coverage/lcov.info`
+  (SonarQube читает этот отчёт)
 - MSW — мок REST (handlers в `shared/api/msw/`, сервер глобально подключён в
-  `src/test/setup.ts`); тест-хелпер `renderWithProviders` — в `src/test/test-utils.tsx`
-- Фикстуры тестовых данных — `src/test/fixtures/channels.ts` (`testChannels`)
-  и `messages.ts` (`testMessages`); все каналы в фикстурах `removable: true`
-- Хелперы в `src/test/test-utils.tsx`: `renderHookWithProviders` (хуки и сторы),
-  `mockServerError(method, path)` (захардкожен на 400 — TODO расширить на коды)
-- В `src/test/setup.ts` — моки `matchMedia`/`ResizeObserver`/`document.fonts`
+  `packages/client/src/test/setup.ts`); тест-хелпер `renderWithProviders` — в
+  `packages/client/src/test/test-utils.tsx`
+- Фикстуры тестовых данных — `packages/client/src/test/fixtures/channels.ts`
+  (`testChannels`) и `messages.ts` (`testMessages`); все каналы в фикстурах
+  `removable: true`
+- Хелперы в `packages/client/src/test/test-utils.tsx`:
+  `renderHookWithProviders` (хуки и сторы), `mockServerError(method, path)`
+  (захардкожен на 400 — TODO расширить на коды)
+- В `packages/client/src/test/setup.ts` — моки
+  `matchMedia`/`ResizeObserver`/`document.fonts`
   (jsdom без FontFaceSet; Mantine `getEnv()` в этой версии всегда
   'development', поэтому `autosize` у Textarea включается и в тестах);
   стор нотификаций чистится в общем `afterEach` (`notifications.clean()` +
